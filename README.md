@@ -1,21 +1,27 @@
 
-**Village**
+# Village
 
-**Vinny Antoine-Fils, Gabriel Inniss, Vincent Lamanno, Christian Knox-Phillips**
+### Team Members
 
-**Mission Statement**
+Vinny Antoine-Fils, Gabriel Inniss, Vincent Lamanno, Christian Knox-Phillips
+
+
+### Mission Statement
 
 Our mission is to facilitate connection between community members, by giving them a platform to connect, discuss, and organize. By empowering individuals to come together, we aim to shift the focus from isolated struggles to collective efforts, enabling them to address common challenges and work towards shared goals.
 
-**Who We Serve**
+
+### Who We Serve
 
 We aim to serve local community members who either just wish to stay in the know about what their community is experiencing or those who want to let their fellow community members know what issues they are experiencing.
 
-**Product Overview**
+
+### Product Overview
 
 Union is an application for local community members who wish to stay engaged in their community's issues or wish to let their community know what problem they are experiencing. The app will feature the ability to create an account, your account can then post an issue, if the users issue experiences enough interaction at certain thresholds different options arrive such as locating a government official near you to write a message, creating a petition or creating a protest for your issue. Users will then be able to mainly see issues around their area to know what issues that their community is currently having.
 
-**Summary**
+
+### Summary
 
 A study published in the Journal of Personality and Social Psychology found that people were more likely to sign a petition to save a local park if they believed that their neighbors were also concerned about the park's future ([APA](https://www.apa.org/pubs/journals/psp)). Similarly, a study published in the Journal of Consumer Research found that people were more likely to boycott a company if they believed that their friends and family were also boycotting the company ([APA](https://psycnet.apa.org/record/2004-16173-007)).
 
@@ -23,15 +29,18 @@ These studies suggest that social influence can play a powerful role in shaping 
 
 In any form of change or movement, the people are the most vital piece. Any elected official can just brush off the voice of one person saying they have a problem, but it's a lot harder when you have hundreds or thousands of people rallying behind a common issue. “Community organizing enables people to turn their resources into the power they need to make the change they want (Chow). Power comes from our commitment to work together to achieve a common purpose, and commitment is developed through relationships.” ([Open Library](https://ecampusontario.pressbooks.pub/communitydevelopmentpractice/chapter/community-organizing-people-power-and-change/#:~:text=7.-,Strategies%20for%20building%20relationships%20for%20community%20organizing,commitment%20is%20developed%20through%20relationships))
 
-**The Problem**
+
+### The Problem
 
 People are trying to solve real issues in their communities such as heating, rent inflation and even card driving too fast in their neighborhoods. People love their communities and want to make it better. But, if you’re not deeply engaged with the community already, then you may not realize that you are not the only one with that problem. According to a 2018 study by the Pew Research Center, only 29% of Americans say they are very or somewhat involved in their local community ([pew](https://www.pewresearch.org/social-trends/2018/05/22/americans-satisfaction-with-and-attachment-to-their-communities/)). The same study found that only 18% of Americans say they have attended a meeting of a community group or organization in the past year. A 2019 study by the National Conference on Citizenship found that only 40% of Americans say they feel a sense of civic duty to help solve problems in their community ([NCOC](https://ncoc.org/)).
+
 
 **Solution**
 
 If community members had a way to get updates on issues that their local community is complaining about, then more people would be willing to take action and not ignore the issue because now they know they are not alone.  
 
-**User Story**
+
+### User Story
 
 User Story A:
 
@@ -62,9 +71,9 @@ User Story D:
 
 * A user can join a local community so that posts within a certain distance from the user, get sent to the users main feed/ home page.
 
-**We Need:**
+#### <ins>We Need</ins>
 
-**Tables: **
+**Tables:**
 
 
 
@@ -74,7 +83,7 @@ User Story D:
 * Communities
 * users_issues
 
-**Key Technical Challenges**
+### Key Technical Challenges
 
 
 
@@ -82,7 +91,7 @@ User Story D:
 * Managing multiple tables that will need to be joined for us to extract data.
 * Finding ways to censor the users so they aren’t completely able to type bad words or harmful protests
 
-**Extension Opportunities**
+### Extension Opportunities
 
 
 
@@ -91,7 +100,7 @@ User Story D:
 * Chat Rooms (possibly)
 * Messages (possibly)
 
-**Sources**
+### Sources
 
 Earl, J., & Kimport, K. (2011). Digitally Enabled Social Change: Activism in the Internet Age. MIT Press.
 
