@@ -5,6 +5,7 @@
 exports.up = (knex) => knex.schema.createTable('villages', (table) => {
   table.increments('village_id');
   table.string('name').notNullable().unique();
+  table.string('images').notNullable()
   table.string('location').notNullable();
 });
 
