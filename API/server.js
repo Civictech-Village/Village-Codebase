@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const handleCookieSessions = require('./middleware/handle-cookie-sessions');
 const routes = require('./routes');
+const villageRoutes = require('./villageRoutes')
 
 const logRoutes = require('./middleware/log-routes');
 
@@ -13,6 +14,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use('/api', routes);
+app.use('/api', villageRoutes);
+
 
 app.get('*', (req, res, next) => {
   if (req.originalUrl.startsWith('/api')) next();
