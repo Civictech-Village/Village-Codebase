@@ -40,6 +40,16 @@ class Posts {
     }
   }
 
+  static async update(post_id, message, image) {
+    try {
+      const query = `UPDATE posts SET message = ?, image = ?, WHERE post_id = ${post_id} RETURNING *;`;
+      const { rows: [party] } = await knex.raw(query, [message, image]);
+      return new Posts(party);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   static async deleteAll() {
     return knex.raw('TRUNCATE posts;');
   }
