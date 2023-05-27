@@ -16,7 +16,7 @@ class Posts {
     VALUES (?, ?, ?, ?, ?) RETURNING *`;
     const { rows: [posts] } = await knex.raw(query, [user_id, username, issue_id, message, image]);
     return new Posts(posts);
-}
+  }
 
   static async listByIssue(issue_id) {
     const query = 'SELECT * FROM posts WHERE issue_id = ?';

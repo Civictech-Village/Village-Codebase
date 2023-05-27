@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const handleCookieSessions = require('./middleware/handle-cookie-sessions');
 const routes = require('./routes');
+
 const logRoutes = require('./middleware/log-routes');
 
 const app = express();
