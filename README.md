@@ -23,7 +23,7 @@ These studies suggest that social influence can play a powerful role in shaping 
 
 In any form of change or movement, the people are the most vital piece. Any elected official can just brush off the voice of one person saying they have a problem, but it's a lot harder when you have hundreds or thousands of people rallying behind a common issue. “Community organizing enables people to turn their resources into the power they need to make the change they want (Chow). Power comes from our commitment to work together to achieve a common purpose, and commitment is developed through relationships.” ([Open Library](https://ecampusontario.pressbooks.pub/communitydevelopmentpractice/chapter/community-organizing-people-power-and-change/#:~:text=7.-,Strategies%20for%20building%20relationships%20for%20community%20organizing,commitment%20is%20developed%20through%20relationships))
 
-**The Problem **
+**The Problem**
 
 People are trying to solve real issues in their communities such as heating, rent inflation and even card driving too fast in their neighborhoods. People love their communities and want to make it better. But, if you’re not deeply engaged with the community already, then you may not realize that you are not the only one with that problem. According to a 2018 study by the Pew Research Center, only 29% of Americans say they are very or somewhat involved in their local community ([pew](https://www.pewresearch.org/social-trends/2018/05/22/americans-satisfaction-with-and-attachment-to-their-communities/)). The same study found that only 18% of Americans say they have attended a meeting of a community group or organization in the past year. A 2019 study by the National Conference on Citizenship found that only 40% of Americans say they feel a sense of civic duty to help solve problems in their community ([NCOC](https://ncoc.org/)).
 
@@ -62,7 +62,7 @@ User Story D:
 
 * A user can join a local community so that posts within a certain distance from the user, get sent to the users main feed/ home page.
 
-**We Need: **
+**We Need:**
 
 **Tables: **
 
@@ -82,7 +82,7 @@ User Story D:
 * Managing multiple tables that will need to be joined for us to extract data.
 * Finding ways to censor the users so they aren’t completely able to type bad words or harmful protests
 
-**Extension Opportunities **
+**Extension Opportunities**
 
 
 
