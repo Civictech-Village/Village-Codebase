@@ -11,7 +11,7 @@ Our mission is to facilitate connection between community members, by giving the
 
 We aim to serve local community members who either just wish to stay in the know about what their community is experiencing or those who want to let their fellow community members know what issues they are experiencing.
 
-**Product Overview **
+**Product Overview**
 
 Union is an application for local community members who wish to stay engaged in their community's issues or wish to let their community know what problem they are experiencing. The app will feature the ability to create an account, your account can then post an issue, if the users issue experiences enough interaction at certain thresholds different options arrive such as locating a government official near you to write a message, creating a petition or creating a protest for your issue. Users will then be able to mainly see issues around their area to know what issues that their community is currently having.
 
