@@ -2,13 +2,13 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = (knex) => knex.schema.createTable('users', (table) => {
+exports.up = (knex) => knex.schema.createTable('posts', (table) => {
   table.increments('post_id');
   table.integer('user_id').notNullable();
-  table.integer('village_id').notNullable();
-  table.string('username');
-  table.string('image');
+  table.integer('issue_id').notNullable();
   table.string('message');
+  table.string('image');
+  table.string('username');
   table.timestamps(true, true);
 });
 
