@@ -31,8 +31,6 @@ export default function LoginPage() {
   const [NameClass, setNameClass] = useState("");
   const [PasswordClass, setPasswordClass] = useState("");
 
-
-
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   const handleTooltipOneClose = () => {
@@ -43,7 +41,6 @@ export default function LoginPage() {
     setTooltipOne(true);
   };
 
-  
   const handleTooltipTwoClose = () => {
     setTooltipTwo(false);
   };
@@ -78,30 +75,31 @@ export default function LoginPage() {
     event.preventDefault();
     setErrorText("");
     const formData = new FormData(event.target);
-    const postObject = Object.fromEntries(formData.entries())
+    const postObject = Object.fromEntries(formData.entries());
     console.log(postObject);
-    if(postObject.username.length < 1) {
+    if (postObject.username.length < 1) {
       setErrorText("Please enter a username");
-      setNameClass("animate__animated animate__headShake")
+      setNameClass("animate__animated animate__headShake");
 
-      setTimeout(() => setNameClass(""), 500)
+      setTimeout(() => setNameClass(""), 500);
       return handleTooltipTwoOpen();
     }
-    if(postObject.password.length < 1) {
+    if (postObject.password.length < 1) {
       setErrorText("Please enter a password");
-      setPasswordClass("animate__animated animate__headShake")
-      setTimeout(() => setPasswordClass(""), 500)
+      setPasswordClass("animate__animated animate__headShake");
+      setTimeout(() => setPasswordClass(""), 500);
 
       return handleTooltipOneOpen();
     }
     const [user, error] = await logUserIn(
-      postObject
+      Object.fromEntries(formData.entries())
     );
     if (error) {
       handleTooltipOneOpen();
       return setErrorText(error.statusText);
     }
     setCurrentUser(user);
+    console.log(user);
     navigate(`/users/${user.id}`);
   };
 
@@ -170,7 +168,6 @@ export default function LoginPage() {
                 }}
                 onClose={handleTooltipTwoClose}
                 open={TooltipTwo}
-                
                 disableHoverListener
                 disableTouchListener
                 arrow
@@ -195,7 +192,6 @@ export default function LoginPage() {
                 }}
                 onClose={handleTooltipOneClose}
                 open={TooltipOne}
-                
                 disableHoverListener
                 disableTouchListener
                 arrow
@@ -214,7 +210,14 @@ export default function LoginPage() {
                 />
               </Tooltip>
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={
+                  <Checkbox
+                    value={true}
+                    name="remember"
+                    id="remember"
+                    color="primary"
+                  />
+                }
                 label="Remember me"
               />
               <Button

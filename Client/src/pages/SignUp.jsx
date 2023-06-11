@@ -111,6 +111,7 @@ export default function SignUpPage() {
       handleTooltipOneOpen();
       return setErrorText(error.statusText);
     }
+    console.log(user)
     setCurrentUser(user);
     navigate('/');
   };

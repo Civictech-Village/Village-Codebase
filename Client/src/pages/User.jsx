@@ -13,7 +13,7 @@ export default function UserPage() {
   const [errorText, setErrorText] = useState(null);
   const { id } = useParams();
   const isCurrentUserProfile = currentUser && currentUser.id === Number(id);
-
+  console.log(currentUser)
   useEffect(() => {
     const loadUser = async () => {
       const [user, error] = await getUser(id);
