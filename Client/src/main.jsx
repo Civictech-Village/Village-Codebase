@@ -5,6 +5,8 @@ import App from './App.jsx';
 import UserContextProvider from './contexts/CurrentUserContextProvider.jsx';
 import './index.css';
 import 'animate.css';
+import '@fontsource-variable/nunito';
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <UserContextProvider>
