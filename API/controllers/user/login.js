@@ -2,7 +2,8 @@ const loginUser = async (req, res) => {
   const {
     session,
     db: { User },
-    body: { username, password },
+    body: { username, password, remember },
+    sessionOptions
   } = req;
 
   const user = await User.findByUsername(username);
@@ -11,7 +12,15 @@ const loginUser = async (req, res) => {
   const isPasswordValid = await user.isValidPassword(password);
   if (!isPasswordValid) return res.sendStatus(401);
 
-  session.userId = user.id;
+
+  session.userId = user.id ;
+  console.log(user)
+  console.log(remember)
+  if(remember) {
+    const newExpiration = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // Extend session by 30 days
+    sessionOptions.expires = newExpiration
+    console.log(`Session expiration extended to: ${newExpiration}`);
+  }
   res.send(user);
 };
 

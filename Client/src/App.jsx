@@ -1,4 +1,5 @@
 import { useContext, useEffect } from 'react';
+import React from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import SignUpPage from './pages/SignUp';
@@ -9,6 +10,8 @@ import UserContext from './contexts/current-user-context';
 import { checkForLoggedInUser } from './adapters/auth-adapter';
 import UsersPage from './pages/Users';
 import UserPage from './pages/User';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 export default function App() {
   const { setCurrentUser } = useContext(UserContext);
@@ -18,6 +21,7 @@ export default function App() {
 
   return <>
     <SiteHeadingAndNav />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <main>
       <Routes>
         <Route path='/' element={<Home />} />
@@ -28,5 +32,6 @@ export default function App() {
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </main>
+    </LocalizationProvider>
   </>;
 }
