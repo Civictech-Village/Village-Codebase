@@ -15,6 +15,12 @@ export const getPostOptions = (body) => ({
   body: JSON.stringify(body),
 });
 
+export const formDataPostOptions = (formData) => ({
+  method: 'POST',
+  credentials: 'include',
+  body: formData,
+});
+
 export const getPatchOptions = (body) => ({
   method: 'PATCH',
   credentials: 'include',

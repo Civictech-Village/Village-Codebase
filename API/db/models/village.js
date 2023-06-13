@@ -33,7 +33,7 @@ class Village {
   static async create(name, image, location, user_id) {
     try {
       const createQuery = `
-      INSERT INTO villages (name, images, location) VALUES (?,?,?) RETURNING *;
+      INSERT INTO villages (name, image, location) VALUES (?,?,?) RETURNING *;
     `;
       const joinQuery = `
       INSERT INTO users_villages (user_id, user_type, village_id) VALUES (?,?,?) RETURNING *;
