@@ -14,19 +14,31 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import BackgroundHeader from "../components/BackgroundHeader";
 import CakeIcon from "@mui/icons-material/Cake";
 import PostsProfile from "../components/PostsComponent";
-import {Divider} from "@mui/material";
+import { Divider } from "@mui/material";
+import ResponsiveDrawer from "../components/SideBar";
+import { Drawer } from "@mui/material";
 
 export default function UserPage() {
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [userProfile, setUserProfile] = useState(null);
   const [errorText, setErrorText] = useState(null);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   const { id } = useParams();
   const isCurrentUserProfile = currentUser && currentUser.id === Number(id);
   console.log(currentUser);
+  if(!currentUser) {
+    navigate("/")
+  }
   useEffect(() => {
     const loadUser = async () => {
       const [user, error] = await getUser(id);
+      console.log(user)
       if (error) return setErrorText(error.statusText);
       setUserProfile(user);
     };
@@ -53,33 +65,31 @@ export default function UserPage() {
     profileUsername,
     currentUser,
     isCurrentUserProfile,
-    id
-  }
+    id,
+  };
   return (
     <>
-      <Grid container component="main" sx={{ height: "100vh", width:"100%" }}>
         <CssBaseline />
         <Grid
           item
-          component={Paper}
           square
           sx={{
-            backgroundColor: "#5DBB63",
+            backgroundColor: "#F5F5F5",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
             width: "100%",
+            overflowX:"hidden"
           }}
         >
           <BackgroundHeader props={propObject} />
-
           <Grid
             sx={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
-              width:{xs:"100%",md:"100%",lg:"85%"},
+              width: { xs: "100%", md: "100%", lg: "85%" },
               height: "50%",
             }}
           >
@@ -96,9 +106,12 @@ export default function UserPage() {
                 width: "250px",
                 padding: "43px 0px 49px 24px",
                 borderRadius: "10px",
+                mx:3,
               }}
             >
-              <Typography variant="h5" sx={{fontWeight:"bold"}}>About</Typography>
+              <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                About
+              </Typography>
               <Box
                 sx={{
                   height: "90%",
@@ -108,37 +121,37 @@ export default function UserPage() {
                   alignItems: "flex-start",
                   justifyContent: "space-between",
                   mt: 2,
-                  paddingBottom:"40px"
+                  paddingBottom: "40px",
                 }}
               >
                 <Typography
                   component="h4"
                   sx={{
-                    borderBottom: "1px solid black",
+                    borderBottom: "1px solid rgba(0,0,0, 0.1)",
                     padding: "12px 0",
                     display: "flex",
                     width: "100%",
                   }}
                 >
                   <PersonIcon sx={{ mr: 1 }}></PersonIcon>
-                  {currentUser.gender ? currentUser.gender : "Unknown"}
+                  {userProfile.gender ? userProfile.gender : "Unknown"}
                 </Typography>
                 <Typography
                   component="h4"
                   sx={{
-                    borderBottom: "1px solid black",
+                    borderBottom: "1px solid  rgba(0,0,0, 0.1)",
                     padding: "12px 0",
                     display: "flex",
                     width: "100%",
                   }}
                 >
                   <CakeIcon sx={{ mr: 1 }}></CakeIcon>
-                  {currentUser.birthday ? currentUser.birthday : "Unknown"}
+                  {userProfile.birthday ? userProfile.birthday : "Unknown"}
                 </Typography>
                 <Typography
                   component="h4"
                   sx={{
-                    borderBottom: "1px solid black",
+                    borderBottom: "1px solid  rgba(0,0,0, 0.1)",
                     display: "flex",
                     width: "100%",
                     padding: "12px 0",
@@ -150,14 +163,14 @@ export default function UserPage() {
                 <Typography
                   component="h4"
                   sx={{
-                    borderBottom: "1px solid black",
+                    borderBottom: "1px solid  rgba(0,0,0, 0.1)",
                     padding: "12px 0",
                     display: "flex",
                     width: "100%",
                   }}
                 >
                   <EmailIcon sx={{ mr: 1 }}></EmailIcon>
-                  {currentUser.email ? currentUser.email : "Unknown"}
+                  {userProfile.email ? userProfile.email : "Unknown"}
                 </Typography>
                 <Typography
                   component="h4"
@@ -179,12 +192,23 @@ export default function UserPage() {
                 height: "40%",
                 width: "200px",
                 borderRadius: "10px",
-                padding:"10px 0px",
-                textAlign:'center',
-                mt:6
+                padding: "10px 0px",
+                textAlign: "center",
+                mt: 6,
+                mx:3
               }}
             >
-              <Typography variant="h5" sx={{width:"100%", borderBottom:"1px solid black", paddingBottom:"5px", fontWeight:"bold"}}>Their Villages</Typography>
+              <Typography
+                variant="h5"
+                sx={{
+                  width: "100%",
+                  borderBottom: "1px solid black",
+                  paddingBottom: "5px",
+                  fontWeight: "bold",
+                }}
+              >
+                Their Villages
+              </Typography>
             </Box>
           </Grid>
 
@@ -199,7 +223,6 @@ export default function UserPage() {
             />
           )}
         </Grid>
-      </Grid>
     </>
   );
 }

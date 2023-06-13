@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, Navigate, Link as RouterLink } from "react-router-dom";
 import CurrentUserContext from "../contexts/current-user-context";
 import { createUser } from "../adapters/user-adapter";
@@ -33,6 +33,7 @@ export default function SignUpPage() {
   const [PasswordClass, setPasswordClass] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
   const [allFormData, setFormData] = useState({});
+  const [formValidation, setFormValidation] = useState(false)
 
 
   const handleNext = (e) => {
@@ -73,6 +74,20 @@ export default function SignUpPage() {
   const handleConfrimChange = (e) => {
     setconfirmPassword(e.target.value);
   };
+
+  const formChecker = () => {
+    console.log(allFormData.date, allFormData.email, allFormData.gender)
+    if(!allFormData.email ||  !/\S+@\S+\.\S+/.test(allFormData.email) || !allFormData.date || !allFormData.gender) {
+      setFormValidation(false)
+      return false
+    }
+    setFormValidation(true)
+    return true
+  }
+
+  useEffect(() => {
+      formChecker()
+  }, [allFormData])
 
   function Copyright(props) {
     return (
@@ -287,6 +302,7 @@ export default function SignUpPage() {
                       onClick={handleNext}
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
+                      disabled={formValidation ? false : true}
                     >
                       Next
                     </Button>
