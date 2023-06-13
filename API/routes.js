@@ -1,8 +1,10 @@
 const express = require('express');
 const userController = require('./controllers/user');
 const postController = require('./controllers/posts');
+const villageController = require('./controllers/village');
 const addModels = require('./middleware/add-models');
 const checkAuthentication = require('./middleware/check-authentication');
+const upload = require('./utils/multer');
 
 const Router = express.Router();
 Router.use(addModels);
@@ -11,6 +13,8 @@ Router.post('/posts', postController.create);
 Router.get('/posts/:id', postController.listByIssue);
 Router.patch('/posts/:id', postController.update);
 Router.delete('/posts/:id', postController.destroy);
+
+Router.post('/villages', upload.single('image'), villageController.create);
 
 Router.get('/users', userController.list);
 Router.post('/users', userController.create);
