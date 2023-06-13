@@ -57,7 +57,7 @@ export default function HomePage() {
                     </div>
                     <div className="field ui fluid">
                         <label>Image URL</label>
-                        <input type="text" name="image" placeholder="Image" />
+                        <input type="image" name="image" placeholder="Image" />
                     </div>
                 </div>
                 <button className="ui button" type="submit">Submit</button>
