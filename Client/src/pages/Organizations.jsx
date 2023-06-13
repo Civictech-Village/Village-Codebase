@@ -2,10 +2,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import CurrentUserContext from '../contexts/current-user-context';
-import handleFetch from '../utils'
+import { serializeFormData } from '../utils'
+import { createVillage } from '../adapters/organizations-adapter';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -28,15 +28,9 @@ export default function HomePage() {
   console.log(currentUser)
   const handleSubmit = async(e) => {
     e.preventDefault();
-    const options = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(serializeForm(e.target)),
-    }
-    const result = await handleFetch("/village", options);
-    
+    const postBody = serializeFormData(e.target)
+    postBody.user_id = currentUser.id
+    createVillage(postBody)
     }
 
 
@@ -59,11 +53,11 @@ export default function HomePage() {
                     </div>
                     <div className="field ui fluid">
                         <label>Location</label>
-                        <input type="text" name="hp" placeholder="County" />
+                        <input type="text" name="location" placeholder="County" />
                     </div>
                     <div className="field ui fluid">
                         <label>Image URL</label>
-                        <input type="text" name="frontUrl" placeholder="Image" />
+                        <input type="text" name="image" placeholder="Image" />
                     </div>
                 </div>
                 <button className="ui button" type="submit">Submit</button>

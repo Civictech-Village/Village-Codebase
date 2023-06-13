@@ -1,9 +1,9 @@
 import { fetchHandler, getPostOptions, getPatchOptions } from "../utils";
 
-const baseUrl = '/api/users';
+const baseUrl = '/api/villages';
 
-export const createUser = async ({ username, password, email, gender }, birthday) => (
-  fetchHandler(baseUrl, getPostOptions({ username, password, email, gender, birthday }))
+export const createVillage = async ({ name, image, location, user_id }) => (
+  fetchHandler(baseUrl, getPostOptions({ name, image, location, user_id }))
 );
 
 // eating errors here for simplicity

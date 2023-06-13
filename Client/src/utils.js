@@ -22,6 +22,14 @@ export const getPatchOptions = (body) => ({
   body: JSON.stringify(body),
 });
 
+export const serializeFormData = function (form) {
+  const obj = {};
+  const formData = new FormData(form);
+  for (var key of formData.keys()) {
+    obj[key] = formData.get(key);
+  }
+  return obj;
+};
 export const fetchHandler = async (url, options = basicFetchOptions) => {
   try {
     const res = await fetch(url, options);
