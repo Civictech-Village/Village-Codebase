@@ -32,6 +32,9 @@ export default function UserPage() {
   const { id } = useParams();
   const isCurrentUserProfile = currentUser && currentUser.id === Number(id);
   console.log(currentUser);
+  if(!currentUser) {
+    navigate("/")
+  }
   useEffect(() => {
     const loadUser = async () => {
       const [user, error] = await getUser(id);
@@ -66,7 +69,6 @@ export default function UserPage() {
   };
   return (
     <>
-      <Grid container component="main" sx={{  width: "100%" }}>
         <CssBaseline />
         <Grid
           item
@@ -221,7 +223,6 @@ export default function UserPage() {
             />
           )}
         </Grid>
-      </Grid>
     </>
   );
 }

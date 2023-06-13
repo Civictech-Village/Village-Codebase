@@ -20,13 +20,24 @@ import HomeIcon from '@mui/icons-material/Home';
 import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import { logUserOut } from "../adapters/auth-adapter";
+import { useNavigate, useParams } from "react-router-dom";
+import CurrentUserContext from "../contexts/current-user-context";
 
 export default function ResponsiveDrawer({ window, Children }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const { currentUser, setCurrentUser } = React.useContext(CurrentUserContext);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  
+  const handleLogout = async () => {
+    logUserOut();
+    setCurrentUser(null);
+    navigate("/");
   };
 
   const drawer = (
@@ -53,7 +64,7 @@ export default function ResponsiveDrawer({ window, Children }) {
       <List sx={{ display: "flex", flexDirection: "column" }}>
         {
           <ListItem key={"Logout"} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={handleLogout}>
               <ListItemIcon>
                 <LogoutIcon></LogoutIcon>
               </ListItemIcon>
@@ -74,7 +85,7 @@ export default function ResponsiveDrawer({ window, Children }) {
         display: "flex",
         backgroundColor: "#F5F5F5",
         height: "100%",
-        width: "90%",
+        width: "100%",
       }}
     >
       <CssBaseline />
