@@ -10,6 +10,7 @@ import UserContext from './contexts/current-user-context';
 import { checkForLoggedInUser } from './adapters/auth-adapter';
 import UsersPage from './pages/Users';
 import UserPage from './pages/User';
+import ResponsiveDrawer from './components/SideBar';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
@@ -27,8 +28,8 @@ export default function App() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/sign-up' element={<SignUpPage />} />
-        <Route path='/users' element={<UsersPage />} />
-        <Route path='/users/:id' element={<UserPage />} />
+        <Route path='/users' element={<ResponsiveDrawer window={window} Children={<UsersPage />} />} />
+        <Route path='/users/:id' element={<ResponsiveDrawer window={window} Children={<UserPage />} />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </main>

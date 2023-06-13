@@ -35,14 +35,14 @@ function FeaturedPost({ props }) {
           sx={{
             bgcolor: "orange",
             position: "absolute",
-            width: 100,
-            height: 100,
-            top: "40%",
+            width: 80,
+            height: 80,
+            top: "35%",
             left: "1.5%",
             zIndex: 1,
           }}
         >
-          N
+          {props.profileUsername[0]}
         </Avatar>
        {props.currentUser && props.currentUser.id === Number(props.id) && <Button
               variant="contianed"

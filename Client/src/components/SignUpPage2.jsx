@@ -34,6 +34,7 @@ function SignUpPageTwo({ setFormData }) {
       setFormData((prevData) => ({ ...prevData, date }));
   };
   
+
   const handleTooltipOneClose = () => {
     setTooltipOne(false);
   };
@@ -66,6 +67,20 @@ function SignUpPageTwo({ setFormData }) {
       </Typography>
     );
   }
+
+  const handleFocusChange = (e) => {
+    const isValidEmail = /\S+@\S+\.\S+/.test(e.target.value);
+
+    if(e.target.value !== '' && isValidEmail === false) {
+      console.log(isValidEmail)
+      setErrorText("Please enter a valid Email Address")
+      handleTooltipOneOpen()
+    } else {
+      setErrorText("")
+      handleTooltipOneClose()
+    }
+  }
+  
   return (
     <>
       <Tooltip
@@ -73,7 +88,7 @@ function SignUpPageTwo({ setFormData }) {
           disablePortal: true,
         }}
         onClose={handleTooltipOneClose}
-        open={TooltipOne}
+        open={true}
         disableHoverListener
         disableTouchListener
         arrow
@@ -88,20 +103,11 @@ function SignUpPageTwo({ setFormData }) {
           type="email"
           id="email"
           onChange={handleInputChange}
-          onFocus={handleTooltipOneClose}
+          onBlur={handleFocusChange}
+          autoFocus
         />
       </Tooltip>
-      <Tooltip
-        PopperProps={{
-          disablePortal: true,
-        }}
-        onClose={handleTooltipTwoClose}
-        open={TooltipTwo}
-        disableHoverListener
-        disableTouchListener
-        arrow
-        title={errorText}
-      >
+      
         <DatePicker
           sx={{ width: "100%" }}
           name="birthday"
@@ -111,7 +117,6 @@ function SignUpPageTwo({ setFormData }) {
           onChange={handleDateChange}
 
         />
-      </Tooltip>
       <Tooltip
         PopperProps={{
           disablePortal: true,
