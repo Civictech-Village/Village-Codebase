@@ -1,10 +1,16 @@
 const express = require('express');
 const userController = require('./controllers/user');
+const postController = require('./controllers/posts');
 const addModels = require('./middleware/add-models');
 const checkAuthentication = require('./middleware/check-authentication');
 
 const Router = express.Router();
 Router.use(addModels);
+
+Router.post('/posts', postController.create);
+Router.get('/posts/:id', postController.listByIssue);
+Router.patch('/posts/:id', postController.update);
+Router.delete('/posts/:id', postController.destroy);
 
 Router.get('/users', userController.list);
 Router.post('/users', userController.create);
