@@ -15,6 +15,12 @@ export const getPostOptions = (body) => ({
   body: JSON.stringify(body),
 });
 
+export const formDataPostOptions = (formData) => ({
+  method: 'POST',
+  credentials: 'include',
+  body: formData,
+});
+
 export const getPatchOptions = (body) => ({
   method: 'PATCH',
   credentials: 'include',
@@ -25,7 +31,8 @@ export const getPatchOptions = (body) => ({
 export const serializeFormData = function (form) {
   const obj = {};
   const formData = new FormData(form);
-  for (var key of formData.keys()) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const key of formData.keys()) {
     obj[key] = formData.get(key);
   }
   return obj;

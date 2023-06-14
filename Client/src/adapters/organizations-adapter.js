@@ -1,9 +1,9 @@
-import { fetchHandler, getPostOptions, getPatchOptions } from "../utils";
+import { fetchHandler, formDataPostOptions } from "../utils";
 
 const baseUrl = '/api/villages';
 
-export const createVillage = async ({ name, image, location, user_id }) => (
-  fetchHandler(baseUrl, getPostOptions({ name, image, location, user_id }))
+export const createVillage = async (formData) => (
+  fetchHandler(baseUrl, formDataPostOptions(formData))
 );
 // Do Not try anyother methods yet
 // eating errors here for simplicity

@@ -28,9 +28,10 @@ export default function HomePage() {
   console.log(currentUser)
   const handleSubmit = async(e) => {
     e.preventDefault();
-    const postBody = serializeFormData(e.target)
-    postBody.user_id = currentUser.id
-    createVillage(postBody)
+    const data = new FormData(e.target);
+    data.append("user_id", String(currentUser.id))
+    createVillage(data);
+    handleClose();
     }
 
 
@@ -57,7 +58,7 @@ export default function HomePage() {
                     </div>
                     <div className="field ui fluid">
                         <label>Image URL</label>
-                        <input type="image" name="image" placeholder="Image" />
+                        <input type="file" name="image" placeholder="Image" />
                     </div>
                 </div>
                 <button className="ui button" type="submit">Submit</button>
