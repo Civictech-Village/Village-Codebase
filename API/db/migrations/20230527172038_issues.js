@@ -5,6 +5,7 @@
 exports.up = (knex) => knex.schema.createTable('issues', (table) => {
   table.increments('issue_id');
   table.integer('user_id').notNullable();
+  table.string('name').notNullable();
   table.integer('village_id').notNullable();
   table.timestamps(true, true);
 });
