@@ -3,7 +3,7 @@ const listPosts = async (req, res) => {
     db: { Posts },
     params: { issue_id },
   } = req;
-  const parties = await Posts.list(issue_id);
+  const parties = await Posts.listByIssue(issue_id);
   res.send(parties);
 };
 
