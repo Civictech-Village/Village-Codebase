@@ -15,6 +15,7 @@ Router.patch('/posts/:id', postController.update);
 Router.delete('/posts/:id', postController.destroy);
 
 Router.post('/villages', upload.single('image'), villageController.create);
+Router.get('/villages', villageController.list());
 
 Router.get('/users', userController.list);
 Router.post('/users', userController.create);

@@ -6,7 +6,7 @@ const addModels = (req, res, next) => {
   req.db = {
     User,
     Posts,
-    Village
+    Village,
   };
   next();
 };
