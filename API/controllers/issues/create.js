@@ -3,10 +3,11 @@ const createIssue = async (req, res) => {
   const {
     session,
     db: { Issues },
-    body: {name, village_id, user_id },
+    body: {name,},
+    params: { id }
   } = req;
   //Replace user_id with session.userId if you end up connecting front end
-  const issue = await Issues.create(name, user_id , village_id);
+  const issue = await Issues.create(name, session.userId , id);
   res.send(issue);
 };
 
