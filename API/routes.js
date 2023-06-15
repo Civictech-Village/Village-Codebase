@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const userController = require('./controllers/user');
 const postController = require('./controllers/posts');
 const issueController = require('./controllers/issues')
@@ -15,11 +16,18 @@ Router.get('/posts/:id', postController.listByIssue);
 Router.patch('/posts/:id', postController.update);
 Router.delete('/posts/:id', postController.destroy);
 
+Router.get("/image/:name", (req, res) => {
+  const { params: { name } } = req;
+  res.type('jpg');
+  res.sendFile(path.join(__dirname, "./images", name));
+});
+
 Router.get('/issues', issueController.list)
 Router.post('/issues', issueController.create)
 Router.delete('/issues/:issue_id', issueController.destroy)
 
 Router.post('/villages', upload.single('image'), villageController.create);
+Router.get('/villages', villageController.list);
 
 Router.get('/users', userController.list);
 Router.post('/users', userController.create);

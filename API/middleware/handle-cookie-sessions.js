@@ -10,7 +10,7 @@ Router.use(cookieSession({
   // But in real life you'd set the cookie to expire,
   // and implement an auto re-auth flow, but that's too much at this point.
   name: 'session',
-  maxAge: 1000 * 60 * 60 * 24  // 24 hours
+  maxAge: 1000 * 60 * 60 * 24, // 24 hours
 }));
 
 module.exports = Router;

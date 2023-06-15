@@ -22,7 +22,7 @@ class Village {
   static async find(id) {
     try {
       const query = `SELECT * FROM villages WHERE village_id = ?`;
-      const { rows:[village] } = await knex.raw(query,[id]);
+      const { rows: [village] } = await knex.raw(query, [id]);
       return village ? new Village(village) : null;
     } catch (err) {
       console.error(err);
@@ -62,8 +62,8 @@ class Village {
 
   static async join(user_id, village_id) {
     try {
-      const query = `INSERT INTO users_villages (user_id, village_id) VALUES (?,?) RETURNING *`
-      const { rows: [village] } = await knex.raw(query, [user_id,village_id])
+      const query = `INSERT INTO users_villages (user_id, village_id) VALUES (?,?) RETURNING *`;
+      const { rows: [village] } = await knex.raw(query, [user_id, village_id]);
       return village;
     } catch (err) {
       console.error(err);

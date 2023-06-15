@@ -8,7 +8,7 @@ const addModels = (req, res, next) => {
     User,
     Posts,
     Village,
-    Issues
+    Issues,
   };
   next();
 };
