@@ -3,7 +3,7 @@ const path = require('path');
 const handleCookieSessions = require('./middleware/handle-cookie-sessions');
 const routes = require('./routes');
 
-const villageRoutes = require('./villageRoutes')
+const villageRoutes = require('./villageRoutes');
 
 const logRoutes = require('./middleware/log-routes');
 
@@ -16,7 +16,6 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use('/api', routes);
 app.use('/api', villageRoutes);
-
 
 app.get('*', (req, res, next) => {
   if (req.originalUrl.startsWith('/api')) next();
