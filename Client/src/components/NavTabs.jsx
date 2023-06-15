@@ -1,16 +1,15 @@
 import Nav from 'react-bootstrap/Nav';
 
-export default function BasicExample() {
+export default function BasicExample({handleIssues, handlePost}) {
   return (
     <Nav
-      activeKey="/home"
-      onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
+      variant="pills"
     >
-      <Nav.Item>
-        <Nav.Link href="/home">Posts</Nav.Link>
+      <Nav.Item onClick={handleIssues}>
+        <Nav.Link>Posts</Nav.Link>
       </Nav.Item>
-      <Nav.Item>
-        <Nav.Link eventKey="link-1">Issues</Nav.Link>
+      <Nav.Item onClick={handlePost}>
+        <Nav.Link>Issues</Nav.Link>
       </Nav.Item>
     </Nav>
   );

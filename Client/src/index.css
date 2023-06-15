@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Bebas';
+  src: url('./assets/fonts/BebasNeue-Regular.ttf');
+
+  font-family: 'Dancing';
+  src: url('./assets/fonts/DancingScript-VariableFont_wght.ttf');
+}
 body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   margin: 0;
@@ -66,6 +73,6 @@ form {
   position: absolute;
   top: 0;
   left: 0;
-  filter: blur(0.25em);
+  filter: blur(0.1em) brightness(0.4);
   z-index: -100;
 }

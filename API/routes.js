@@ -22,8 +22,8 @@ Router.get("/image/:name", (req, res) => {
   res.sendFile(path.join(__dirname, "./images", name));
 });
 
-Router.get('/issues', issueController.list)
-Router.post('/issues', issueController.create)
+Router.get('/issues/:id', issueController.list)
+Router.post('/issues/:id', issueController.create)
 Router.delete('/issues/:issue_id', issueController.destroy)
 
 Router.post('/villages', upload.single('image'), villageController.create);

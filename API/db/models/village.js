@@ -1,10 +1,10 @@
 const knex = require("../knex");
 
 class Village {
-  constructor({ village_id, name, images, location }) {
+  constructor({ village_id, name, image, location }) {
     this.village_id = village_id;
     this.name = name;
-    this.image = images;
+    this.image = image;
     this.location = location;
   }
 
@@ -16,6 +16,17 @@ class Village {
     } catch (err) {
       console.error(err);
       return null;
+    }
+  }
+
+  static async findUser(userId, villageId) {
+    try{
+      const query = `SELECT * FROM users_villages WHERE village_id = ? AND user_id = ?`
+      const {rows:[row]} = await knex.raw(query,[villageId, userId])
+      return row;
+    }catch(err) {
+      console.error(err)
+      return null
     }
   }
 
@@ -63,6 +74,17 @@ class Village {
   static async join(user_id, village_id) {
     try {
       const query = `INSERT INTO users_villages (user_id, village_id) VALUES (?,?) RETURNING *`;
+      const { rows: [village] } = await knex.raw(query, [user_id, village_id]);
+      return village;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  static async destroy(user_id, village_id) {
+    try {
+      const query = `DELETE FROM users_villages WHERE village_id = ? AND user_id = ?`;
       const { rows: [village] } = await knex.raw(query, [user_id, village_id]);
       return village;
     } catch (err) {
