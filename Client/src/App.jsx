@@ -39,7 +39,6 @@ export default function App() {
               path="/login"
               element={
                 <>
-                  <SiteHeadingAndNav />
                   <LoginPage />
                 </>
               }
@@ -67,7 +66,6 @@ export default function App() {
               path="/sign-up"
               element={
                 <>
-                  <SiteHeadingAndNav />
                   <SignUpPage />
                 </>
               }
