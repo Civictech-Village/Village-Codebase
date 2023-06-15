@@ -1,9 +1,9 @@
 const listIssues = async (req, res) => {
   const {
     db: { Issues },
-    body: { village_id },
+    params: { id },
   } = req;
-  const issues = await Issues.list(village_id);
+  const issues = await Issues.list(id);
   res.send(issues);
 };
 

@@ -4,7 +4,7 @@ import BackgroundImage from "../assets/Backgroundimage.jpg";
 import BackgroundVideo from "../assets/BackgrounVideo.mp4";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import MediaCard from "../components/Card";
-import Community from '../assets/Community.jpg'
+import Community from "../assets/Community.jpg";
 export default function LandingPage() {
   return (
     <>
@@ -20,10 +20,17 @@ export default function LandingPage() {
           alignItems: "center",
           flexDirection: "column",
           padding: 0,
+          overflow: "hidden",
         }}
       >
-        <div class="fullscreen-bg">
-          <video loop muted autoPlay class="fullscreen-bg__video">
+        <div class="fullscreen-bg" style={{ overflow: "hidden" }}>
+          <video
+            loop
+            muted
+            autoPlay
+            class="fullscreen-bg__video"
+            style={{ overflow: "hidden" }}
+          >
             <source src={BackgroundVideo} type="video/webm" />
           </video>
         </div>
@@ -33,8 +40,8 @@ export default function LandingPage() {
             variant="h1"
             sx={{
               color: "white",
-              fontFamily: "Trebuchet MS",
-              fontWeight: "bold",
+              fontFamily: "Bebas",
+              fontWeight: "bolder",
               textAlign: "center",
               mb: 3,
             }}
@@ -47,7 +54,7 @@ export default function LandingPage() {
             className="animate__animated animate__fadeIn animate__slow"
             sx={{
               color: "white",
-              fontFamily: "Trebuchet MS",
+              fontFamily: "Bebas",
               fontWeight: "lighter",
               textAlign: "center",
             }}
@@ -60,7 +67,7 @@ export default function LandingPage() {
             className="animate__animated animate__fadeIn animate__delay-1s animate__slower"
             sx={{
               color: "white",
-              fontFamily: "Trebuchet MS",
+              fontFamily: "Bebas",
               fontWeight: "lighter",
               textAlign: "center",
             }}
@@ -70,12 +77,12 @@ export default function LandingPage() {
         </Box>
         <Box sx={{ mt: 7 }}>
           <Link to="/sign-up">
-            <Button variant="contained" sx={{ mx: 3 }}>
+            <Button  color="success" variant="contained" sx={{ fontFamily: "Bebas", mx: 3 }}>
               Sign Up
             </Button>
           </Link>
           <Link to="/login">
-            <Button variant="contained" sx={{ mx: 3 }}>
+            <Button  color="success" variant="contained" sx={{ fontFamily: "Bebas", mx: 3 }}>
               Log In
             </Button>
           </Link>
