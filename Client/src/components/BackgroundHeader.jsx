@@ -14,7 +14,7 @@ function FeaturedPost({ props }) {
     <Card
       sx={{
         display: "flex",
-        height: "35%",
+        height: "450px",
         width: {xs:"100%",md: "90%",lg:"70%"},
         flexDirection: "column",
         justifyContent: "center",
@@ -37,7 +37,7 @@ function FeaturedPost({ props }) {
             position: "absolute",
             width: 80,
             height: 80,
-            top: "35%",
+            top: "42%",
             left: "1.5%",
             zIndex: 1,
           }}
