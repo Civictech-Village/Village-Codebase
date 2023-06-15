@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Home from '../assets/Home.jpg'
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import CurrentUserContext from "../contexts/current-user-context";
@@ -35,7 +35,6 @@ function Bio() {
     </div>
   );
 }
-
 
 function App() {
   const navigate = useNavigate();
