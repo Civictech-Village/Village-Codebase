@@ -4,18 +4,41 @@ import CurrentUserContext from "../contexts/current-user-context";
 import { getUser } from "../adapters/user-adapter";
 import { logUserOut } from "../adapters/auth-adapter";
 import UpdateUsernameForm from "../components/UpdateUsernameForm";
+import React from "react";
+import Box from "@mui/material/Box";
+import { Typography, Grid, CssBaseline, Paper } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import EmailIcon from "@mui/icons-material/Email";
+import PhoneIcon from "@mui/icons-material/Phone";
+import BackgroundHeader from "../components/BackgroundHeader";
+import CakeIcon from "@mui/icons-material/Cake";
+import PostsProfile from "../components/PostsComponent";
+import { Divider } from "@mui/material";
+import ResponsiveDrawer from "../components/SideBar";
+import { Drawer } from "@mui/material";
 
 export default function UserPage() {
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [userProfile, setUserProfile] = useState(null);
   const [errorText, setErrorText] = useState(null);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   const { id } = useParams();
   const isCurrentUserProfile = currentUser && currentUser.id === Number(id);
-
+  console.log(currentUser);
+  if(!currentUser) {
+    navigate("/")
+  }
   useEffect(() => {
     const loadUser = async () => {
       const [user, error] = await getUser(id);
+      console.log(user)
       if (error) return setErrorText(error.statusText);
       setUserProfile(user);
     };
@@ -26,7 +49,7 @@ export default function UserPage() {
   const handleLogout = async () => {
     logUserOut();
     setCurrentUser(null);
-    navigate('/');
+    navigate("/");
   };
 
   if (!userProfile && !errorText) return null;
@@ -35,16 +58,171 @@ export default function UserPage() {
   // What parts of state would change if we altered our currentUser context?
   // Ideally, this would update if we mutated it
   // But we also have to consider that we may NOT be on the current users page
-  const profileUsername = isCurrentUserProfile ? currentUser.username : userProfile.username;
+  const profileUsername = isCurrentUserProfile
+    ? currentUser.username
+    : userProfile.username;
+  const propObject = {
+    profileUsername,
+    currentUser,
+    isCurrentUserProfile,
+    id,
+  };
+  return (
+    <>
+        <CssBaseline />
+        <Grid
+          item
+          square
+          sx={{
+            backgroundColor: "#F5F5F5",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            width: "100%",
+            overflowX:"hidden"
+          }}
+        >
+          <BackgroundHeader props={propObject} />
+          <Grid
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: { xs: "100%", md: "100%", lg: "85%" },
+              height: "50%",
+            }}
+          >
+            <Box
+              md={3}
+              elevation={6}
+              sx={{
+                backgroundColor: "white",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                justifyContent: "space-between",
+                height: "68%",
+                width: "250px",
+                padding: "43px 0px 49px 24px",
+                borderRadius: "10px",
+                mx:3,
+              }}
+            >
+              <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                About
+              </Typography>
+              <Box
+                sx={{
+                  height: "90%",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  justifyContent: "space-between",
+                  mt: 2,
+                  paddingBottom: "40px",
+                }}
+              >
+                <Typography
+                  component="h4"
+                  sx={{
+                    borderBottom: "1px solid rgba(0,0,0, 0.1)",
+                    padding: "12px 0",
+                    display: "flex",
+                    width: "100%",
+                  }}
+                >
+                  <PersonIcon sx={{ mr: 1 }}></PersonIcon>
+                  {userProfile.gender ? userProfile.gender : "Unknown"}
+                </Typography>
+                <Typography
+                  component="h4"
+                  sx={{
+                    borderBottom: "1px solid  rgba(0,0,0, 0.1)",
+                    padding: "12px 0",
+                    display: "flex",
+                    width: "100%",
+                  }}
+                >
+                  <CakeIcon sx={{ mr: 1 }}></CakeIcon>
+                  {userProfile.birthday ? userProfile.birthday : "Unknown"}
+                </Typography>
+                <Typography
+                  component="h4"
+                  sx={{
+                    borderBottom: "1px solid  rgba(0,0,0, 0.1)",
+                    display: "flex",
+                    width: "100%",
+                    padding: "12px 0",
+                  }}
+                >
+                  <LocationOnIcon sx={{ mr: 1 }}></LocationOnIcon>
+                  Location
+                </Typography>
+                <Typography
+                  component="h4"
+                  sx={{
+                    borderBottom: "1px solid  rgba(0,0,0, 0.1)",
+                    padding: "12px 0",
+                    display: "flex",
+                    width: "100%",
+                  }}
+                >
+                  <EmailIcon sx={{ mr: 1 }}></EmailIcon>
+                  {userProfile.email ? userProfile.email : "Unknown"}
+                </Typography>
+                <Typography
+                  component="h4"
+                  sx={{ display: "flex", width: "100%", padding: "12px 0" }}
+                >
+                  <PhoneIcon sx={{ mr: 1 }}></PhoneIcon>
+                  Phone
+                </Typography>
+              </Box>
+            </Box>
+            <PostsProfile></PostsProfile>
+            <Box
+              md={3}
+              sx={{
+                backgroundColor: "white",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                height: "40%",
+                width: "200px",
+                borderRadius: "10px",
+                padding: "10px 0px",
+                textAlign: "center",
+                mt: 6,
+                mx:3
+              }}
+            >
+              <Typography
+                variant="h5"
+                sx={{
+                  width: "100%",
+                  borderBottom: "1px solid black",
+                  paddingBottom: "5px",
+                  fontWeight: "bold",
+                }}
+              >
+                Their Villages
+              </Typography>
+            </Box>
+          </Grid>
 
-  return <>
-    <h1>{profileUsername}</h1>
-    { !!isCurrentUserProfile && <button onClick={handleLogout}>Log Out</button> }
-    <p>If the user had any data, here it would be</p>
-    <p>Fake Bio or something</p>
-    {
-      !!isCurrentUserProfile
-        && <UpdateUsernameForm currentUser={currentUser} setCurrentUser={setCurrentUser}/>
-    }
-  </>;
+          {!!isCurrentUserProfile && (
+            <button onClick={handleLogout}>Log Out</button>
+          )}
+
+          {!!isCurrentUserProfile && (
+            <UpdateUsernameForm
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+            />
+          )}
+        </Grid>
+    </>
+  );
 }

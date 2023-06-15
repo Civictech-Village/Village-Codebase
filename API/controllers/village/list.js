@@ -3,5 +3,4 @@ const listVillages = async (req, res) => {
   const villages = await Village.list();
   res.send(villages);
 };
-
 module.exports = listVillages;

@@ -15,6 +15,12 @@ export const getPostOptions = (body) => ({
   body: JSON.stringify(body),
 });
 
+export const formDataPostOptions = (formData) => ({
+  method: 'POST',
+  credentials: 'include',
+  body: formData,
+});
+
 export const getPatchOptions = (body) => ({
   method: 'PATCH',
   credentials: 'include',
@@ -22,6 +28,15 @@ export const getPatchOptions = (body) => ({
   body: JSON.stringify(body),
 });
 
+export const serializeFormData = function (form) {
+  const obj = {};
+  const formData = new FormData(form);
+  // eslint-disable-next-line no-restricted-syntax
+  for (const key of formData.keys()) {
+    obj[key] = formData.get(key);
+  }
+  return obj;
+};
 export const fetchHandler = async (url, options = basicFetchOptions) => {
   try {
     const res = await fetch(url, options);
@@ -30,6 +45,18 @@ export const fetchHandler = async (url, options = basicFetchOptions) => {
 
     const data = await res.json();
     return [data, null];
+  } catch (error) {
+    return [null, error];
+  }
+};
+
+export const fetchImageHandler = async (url, options = basicFetchOptions) => {
+  try {
+    const res = await fetch(url, options);
+    if (!res.ok) return [null, { status: res.status, statusText: res.statusText }];
+    if (res.status === 204) return [true, null];
+    const text = await res.text();
+    return [text, null];
   } catch (error) {
     return [null, error];
   }
