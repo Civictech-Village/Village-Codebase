@@ -9,60 +9,46 @@ import CardMedia from "@mui/material/CardMedia";
 import Avatar from "@mui/material/Avatar";
 import { Button, Box } from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
-function BackgroundVillage({ props }) {
+
+function BackgroundVillage({
+  props,
+  name,
+  userId,
+  location,
+  handler,
+  userJoined,
+  leaveHandle,
+  image
+}) {
+  console.log(image)
   return (
     <Card
       sx={{
         display: "flex",
         height: "35%",
-        width: {xs:"100%",md: "90%",lg:"100%"},
-        flexDirection: "column",
+        width: { xs: "100%", md: "90%", lg: "70%" },
+        flexDirection: "row",
         justifyContent: "center",
+        alignItems:"center",
         borderRadius: "10px",
         mb: 7,
-        paddingBottom: "30px",
         position: "relative",
       }}
     >
-      <div style={{ position: "relative" , display: "contents"}}>
-        <CardMedia
+      <div style={{}}>
+      {image ? (<CardMedia
           component="img"
-          sx={{ width: "100%", height:"60%"}}
-          image={"https://via.placeholder.com/350x150"}
-          alt={"placeHolder"}
-        ></CardMedia>
-        <Avatar
-          sx={{
-            bgcolor: "orange",
-            position: "absolute",
-            width: 80,
-            height: 80,
-            top: "35%",
-            left: "1.5%",
-            zIndex: 1,
-          }}
-        >
-          {props.profileUsername[0]}
-        </Avatar>
-       {props.currentUser && props.currentUser.id === Number(props.id) && <Button
-              variant="contianed"
-              sx={{
-                position: "absolute",
-                height: "fit-content",
-                color: "black",
-                top: "40%",
-                left: "71.95%",
-                borderColor: "green",
-                border:"1px solid",
-                backgroundColor:"white"
-              }}
-            >
-              Edit Background Photo
-            </Button>}
+          sx={{width:"100%", objectFit:"cover",height:"100%"}}
+          image={`/src/images/${image}`}
+          alt="placeHolder"
+        />
+      ) : (
+        <p>Loading...</p>
+      )}
       </div>
       <CardContent
         sx={{
-          flexGrow:1,
+          flexGrow: 1,
           padding: "0 0 0 0",
           paddingTop: "20px",
           display: "flex",
@@ -72,10 +58,10 @@ function BackgroundVillage({ props }) {
       >
         <Box>
           <Typography component="h1" variant="h3" sx={{ mb: 2 }}>
-            {props.profileUsername}
+            {name}
           </Typography>
           <Typography variant="subtitle1" sx={{ mb: 2 }}>
-            "Fake Bio"
+            {location}
           </Typography>
           <Box sx={{ display: "flex" }}>
             <Typography variant="h6" gutterBottom sx={{ mr: 4 }}>
@@ -84,15 +70,25 @@ function BackgroundVillage({ props }) {
           </Box>
         </Box>
         <Box sx={{ display: "flex" }}>
-        
-            <>
+          <>
+            {!userJoined ? (
               <Button
                 variant="contained"
                 sx={{ height: "fit-content", backgroundColor: "green" }}
+                onClick={handler}
               >
                 Join
               </Button>
-            </>
+            ) : (
+              <Button
+                variant="contained"
+                sx={{ height: "fit-content", backgroundColor: "red" }}
+                onClick={leaveHandle}
+              >
+                Leave
+              </Button>
+            )}
+          </>
         </Box>
       </CardContent>
     </Card>
