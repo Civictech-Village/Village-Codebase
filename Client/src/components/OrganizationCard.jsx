@@ -10,7 +10,7 @@ export default function OrganizationCard(village) {
   console.log(village.village)
   return (
     <Link to={'/organizations/' + village.village.village_id}>
-      <Card sx={{ maxWidth: 345, display: "inline-block", margin: 2 }}>
+      <Card sx={{ width: 345, display: "inline-block", margin: 2 }}>
         <CardActionArea>
           <CardMedia
             component="img"
