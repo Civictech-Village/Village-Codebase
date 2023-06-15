@@ -13,6 +13,7 @@ import UserPage from './pages/User';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import Organizations from './pages/Organizations'
+import OrgLayoutPage from './pages/OrgLayout'
 export default function App() {
   const { currentUser, setCurrentUser } = useContext(UserContext);
   useEffect(() => {
@@ -27,6 +28,7 @@ export default function App() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/organizations' element={<Organizations />} />
+        <Route path='/organizations/:id' element={<OrgLayoutPage />} />
         <Route path='/sign-up' element={<SignUpPage />} />
         <Route path='/users' element={<UsersPage />} />
         <Route path='/users/:id' element={<UserPage />} />
