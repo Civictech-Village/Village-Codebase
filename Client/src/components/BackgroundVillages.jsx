@@ -18,7 +18,8 @@ function BackgroundVillage({
   handler,
   userJoined,
   leaveHandle,
-  image
+  image,
+  members
 }) {
   console.log(image)
   return (
@@ -38,7 +39,7 @@ function BackgroundVillage({
       <div style={{}}>
       {image ? (<CardMedia
           component="img"
-          sx={{width:"100%", objectFit:"cover",height:"100%"}}
+          sx={{width:"400px", objectFit:"cover",height:"265px"}}
           image={`/src/images/${image}`}
           alt="placeHolder"
         />
@@ -65,7 +66,7 @@ function BackgroundVillage({
           </Typography>
           <Box sx={{ display: "flex" }}>
             <Typography variant="h6" gutterBottom sx={{ mr: 4 }}>
-              {0} Members
+              {members} Members
             </Typography>
           </Box>
         </Box>

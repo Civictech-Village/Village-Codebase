@@ -17,6 +17,7 @@ import PostsProfile from "../components/PostsComponent";
 import { Divider } from "@mui/material";
 import ResponsiveDrawer from "../components/SideBar";
 import { Drawer } from "@mui/material";
+import Button from "react-bootstrap/esm/Button";
 
 export default function UserPage() {
   const navigate = useNavigate();
@@ -28,6 +29,17 @@ export default function UserPage() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const date = (date) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+
+    const parsed = new Date(date)
+    const month = parsed.getMonth()
+    const day = parsed.getDay()
+    const year = parsed.getFullYear()
+    return `${months[month]} ${day}, ${year}`
+  }
 
   const { id } = useParams();
   const isCurrentUserProfile = currentUser && currentUser.id === Number(id);
@@ -146,7 +158,7 @@ export default function UserPage() {
                   }}
                 >
                   <CakeIcon sx={{ mr: 1 }}></CakeIcon>
-                  {userProfile.birthday ? userProfile.birthday : "Unknown"}
+                  {userProfile.birthday ? date(userProfile.birthday) : "Unknown"}
                 </Typography>
                 <Typography
                   component="h4"
@@ -213,7 +225,7 @@ export default function UserPage() {
           </Grid>
 
           {!!isCurrentUserProfile && (
-            <button onClick={handleLogout}>Log Out</button>
+            <Button variant="danger" onClick={handleLogout}>Log Out</Button>
           )}
 
           {!!isCurrentUserProfile && (
