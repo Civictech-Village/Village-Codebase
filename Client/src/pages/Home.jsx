@@ -8,7 +8,7 @@ function HomePage() {
       <h1 style={{textAlign:'center'}}>
         Village
       </h1>
-      <p>
+      <p style={{textAlign:'center'}}>
         We aim to serve local community members who either just wish to stay in the know about what their community is experiencing or those who want to let their fellow community members know what issues they are experiencing.
       </p>
     </div>
@@ -39,7 +39,10 @@ function Bio() {
 function App() {
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-  if (!currentUser) return <Navigate to="/landingpage" />;
+
+  setTimeout(() => {
+    if (!currentUser) return navigate('/landingpage')
+  },400)
 
   return (
     <div style={{backgroundColor: '#b2f1d5', height:"100%", display:'flex', alignItems:'center', flexDirection:'column',justifyContent:'center'}}>
