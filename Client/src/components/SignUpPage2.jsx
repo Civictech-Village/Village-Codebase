@@ -17,12 +17,13 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Select, InputLabel, MenuItem, FormControl } from "@mui/material";
 
 function SignUpPageTwo({ setFormData }) {
   const [errorText, setErrorText] = useState("");
   const [TooltipOne, setTooltipOne] = useState(false);
   const [TooltipTwo, setTooltipTwo] = useState(false);
-
+  const [gender, setGender] = useState("");
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -30,10 +31,16 @@ function SignUpPageTwo({ setFormData }) {
 
   const handleDateChange = (date) => {
     // The 'date' parameter represents the selected date from the DatePicker
-    if(date)
-      setFormData((prevData) => ({ ...prevData, date }));
+    if (date) setFormData((prevData) => ({ ...prevData, date }));
   };
-  
+
+  const handleGenderChange = (e) => {
+    console.log(e.target.value);
+    setGender(e.target.value);
+
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
   const handleTooltipOneClose = () => {
     setTooltipOne(false);
@@ -71,16 +78,16 @@ function SignUpPageTwo({ setFormData }) {
   const handleFocusChange = (e) => {
     const isValidEmail = /\S+@\S+\.\S+/.test(e.target.value);
 
-    if(e.target.value !== '' && isValidEmail === false) {
-      console.log(isValidEmail)
-      setErrorText("Please enter a valid Email Address")
-      handleTooltipOneOpen()
+    if (e.target.value !== "" && isValidEmail === false) {
+      console.log(isValidEmail);
+      setErrorText("Please enter a valid Email Address");
+      handleTooltipOneOpen();
     } else {
-      setErrorText("")
-      handleTooltipOneClose()
+      setErrorText("");
+      handleTooltipOneClose();
     }
-  }
-  
+  };
+
   return (
     <>
       <Tooltip
@@ -107,16 +114,15 @@ function SignUpPageTwo({ setFormData }) {
           autoFocus
         />
       </Tooltip>
-      
-        <DatePicker
-          sx={{ width: "100%" }}
-          name="birthday"
-          id="birthday"
-          margin="normal"
-          label="Birthday"
-          onChange={handleDateChange}
 
-        />
+      <DatePicker
+        sx={{ width: "100%" }}
+        name="birthday"
+        id="birthday"
+        margin="normal"
+        label="Birthday"
+        onChange={handleDateChange}
+      />
       <Tooltip
         PopperProps={{
           disablePortal: true,
@@ -128,7 +134,7 @@ function SignUpPageTwo({ setFormData }) {
         arrow
         title={errorText}
       >
-        <TextField
+        {/* <TextField
           margin="normal"
           required
           fullWidth
@@ -137,7 +143,24 @@ function SignUpPageTwo({ setFormData }) {
           id="gender"
           onChange={handleInputChange}
           onFocus={handleTooltipOneClose}
-        />
+        /> */}
+    <Box sx={{ minWidth: 120, mt:1,}}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={gender}
+          label="Gender"
+          onChange={handleGenderChange}
+          name="gender"
+        >
+          <MenuItem value={"Male"}>Male</MenuItem>
+          <MenuItem value={"Female"}>Female</MenuItem>
+          <MenuItem value={"Non-Binary"}>Non-Binary</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
       </Tooltip>
     </>
   );

@@ -6,4 +6,5 @@ const destroy = async (req, res) => {
   const updatedList = await Post.destroy(post_id);
   res.send(updatedList);
 };
+
 module.exports = destroy;
