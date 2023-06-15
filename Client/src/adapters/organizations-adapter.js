@@ -7,10 +7,10 @@ export const createVillage = async (formData) => (
 );
 // Do Not try anyother methods yet
 // eating errors here for simplicity
-// export const getAllUsers = async () => {
-//   const [users] = await fetchHandler(baseUrl);
-//   return users || [];
-// };
+export const getAllVillages = async () => {
+  const [villages] = await fetchHandler(baseUrl);
+  return villages || [];
+};
 
 export const getUser = async (id) => fetchHandler(`${baseUrl}/${id}`);
 

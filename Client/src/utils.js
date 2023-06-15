@@ -49,3 +49,15 @@ export const fetchHandler = async (url, options = basicFetchOptions) => {
     return [null, error];
   }
 };
+
+export const fetchImageHandler = async (url, options = basicFetchOptions) => {
+  try {
+    const res = await fetch(url, options);
+    if (!res.ok) return [null, { status: res.status, statusText: res.statusText }];
+    if (res.status === 204) return [true, null];
+    const text = await res.text();
+    return [text, null];
+  } catch (error) {
+    return [null, error];
+  }
+};
