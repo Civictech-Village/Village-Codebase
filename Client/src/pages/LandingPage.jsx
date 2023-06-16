@@ -23,12 +23,12 @@ export default function LandingPage() {
           overflow: "hidden",
         }}
       >
-        <div class="fullscreen-bg" style={{ overflow: "hidden" }}>
+        <div className="fullscreen-bg" style={{ overflow: "hidden" }}>
           <video
             loop
             muted
             autoPlay
-            class="fullscreen-bg__video"
+            className="fullscreen-bg__video"
             style={{ overflow: "hidden" }}
           >
             <source src={BackgroundVideo} type="video/webm" />
@@ -77,12 +77,12 @@ export default function LandingPage() {
         </Box>
         <Box sx={{ mt: 7 }}>
           <Link to="/sign-up">
-            <Button  color="success" variant="contained" sx={{ fontFamily: "Bebas", mx: 3 }}>
+            <Button color="success" variant="contained" sx={{ fontFamily: "Bebas", mx: 3 }}>
               Sign Up
             </Button>
           </Link>
           <Link to="/login">
-            <Button  color="success" variant="contained" sx={{ fontFamily: "Bebas", mx: 3 }}>
+            <Button color="success" variant="contained" sx={{ fontFamily: "Bebas", mx: 3 }}>
               Log In
             </Button>
           </Link>

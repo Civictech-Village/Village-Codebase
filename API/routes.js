@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const userController = require('./controllers/user');
 const postController = require('./controllers/posts');
-const issueController = require('./controllers/issues')
+const issueController = require('./controllers/issues');
 const villageController = require('./controllers/village');
 const addModels = require('./middleware/add-models');
 const checkAuthentication = require('./middleware/check-authentication');
@@ -23,9 +23,9 @@ Router.get("/image/:name", (req, res) => {
   res.sendFile(path.join(__dirname, "./images", name));
 });
 
-Router.get('/issues/:id', issueController.list)
-Router.post('/issues/:id', issueController.create)
-Router.delete('/issues/:issue_id', issueController.destroy)
+Router.get('/issues/:id', issueController.list);
+Router.post('/issues/:id', issueController.create);
+Router.delete('/issues/:issue_id', issueController.destroy);
 
 Router.post('/villages', upload.single('image'), villageController.create);
 Router.get('/villages', villageController.list);
