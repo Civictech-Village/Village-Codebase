@@ -14,7 +14,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Organizations from "./pages/Organizations";
 import OrgLayoutPage from "./pages/OrgLayout";
-import LandingPage from "./pages/landingpage";
+import LandingPage from "./pages/LandingPage";
+import SingleOrg from "./pages/SingleOrg";
+
 export default function App() {
   const { currentUser, setCurrentUser } = useContext(UserContext);
   useEffect(() => {
@@ -58,7 +60,7 @@ export default function App() {
               element={
                 <>
                   <SiteHeadingAndNav />
-                  <OrgLayoutPage />
+                 <OrgLayoutPage></OrgLayoutPage>
                 </>
               }
             />

@@ -42,6 +42,7 @@ export default function OrgLayoutPage() {
 
     doFetch();
   }, []);
+
   useEffect(() => {
     const doFetch = async () => {
       const responseData = await fetchHandler("/api/issues/" + id);

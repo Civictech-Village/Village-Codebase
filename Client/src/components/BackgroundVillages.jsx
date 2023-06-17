@@ -40,7 +40,7 @@ function BackgroundVillage({
       {image ? (<CardMedia
           component="img"
           sx={{width:"400px", objectFit:"cover",height:"265px"}}
-          image={`/src/images/${image}`}
+          image={image}
           alt="placeHolder"
         />
       ) : (

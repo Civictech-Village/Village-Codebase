@@ -6,24 +6,23 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export default function OrganizationCard(village) {
-  console.log(village.village)
+export default function OrganizationCard({ village }) {
   return (
-    <Link to={'/organizations/' + village.village.village_id}>
+    <Link to={'/organizations/' + village.village_id}>
       <Card sx={{ width: 345, display: "inline-block", margin: 2 }}>
         <CardActionArea>
           <CardMedia
             component="img"
             height="140"
-            image={`src/images/${village.village.image}`}
+            image={village.image}
             alt="City "
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {village.village.name}
+              {village.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {village.village.location}
+              {village.location}
             </Typography>
           </CardContent>
         </CardActionArea>

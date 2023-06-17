@@ -8,8 +8,6 @@ import 'animate.css';
 import '@fontsource-variable/nunito';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
     <UserContextProvider>
       <BrowserRouter>
