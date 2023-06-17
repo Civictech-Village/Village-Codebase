@@ -50,9 +50,9 @@ export default function HomePage() {
   };
 
   return (
-    <div style={{display:'flex',flexDirection:"column", alignItems:"center",justifyContent:'center'}}>
+    <div style={{display:'flex',flexDirection:"column", alignItems:"center",justifyContent:'center', height:"100%", backgroundColor:'#f5f5f5', width:'100%'}}>
       <h1>Organizations</h1>
-      <div style={{width:"100%", display:'flex',flexDirection:"column", alignItems:"center",justifyContent:'center'}}>
+      <div style={{width:"100%", display:'flex',flexDirection:"column", alignItems:"center",justifyContent:'center', height:"100%",}}>
         <Button variant="contained" onClick={handleOpen}>
           Create Oraganization
         </Button>
@@ -84,7 +84,7 @@ export default function HomePage() {
             </form>
           </Box>
         </Modal>
-        <div id="org-gallery">
+        <div id="org-gallery" style={{height:"100%", padding:'100px'}}>
           {Organizations.map((organization, index) => (
             <OrganizationCard key={index} village={organization} />
           ))}

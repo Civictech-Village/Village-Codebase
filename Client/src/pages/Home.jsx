@@ -1,23 +1,73 @@
 import { motion, useTransform, useScroll } from "framer-motion";
+import SearchBar from "../components/NavBar";
+import Avatar from "../components/Avatar";
+import Tabs from "../components/Tabs";
+import HomeCard from "../components/HomeCard";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
   return (
-    <div>
-    <div style={{ backgroundImage: `url("src/images/pexels-miki-czetti-111963.jpg")`, backgroundAttachment: "fixed", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover", height: "100vh" }}>
+    <div style={{width: "100%" }}>
+      <div style={{width:"100%", display: "flex", height:'fit-content', alignItems:'center', padding:'10px'}}>
+        <SearchBar />
+        <Avatar />
+      </div>
+      <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', marginTop:'6em'}}>
+        <Tabs />
+        <HomeCard />
+        <HomeCard />
+        <HomeCard />
+        <HomeCard />
 
-      </div>
-      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-        <h1 style={{ color: "white", fontSize: "100px", textShadow: "5px 5px black" }}>Village</h1>
-    
-      </div>
-      <div style={{ backgroundColor: "whitesmoke", height: "100vh" }}>
-          <h1>We aim to serve local community members who either just wish to stay in the know about what their community is experiencing or those who want to let their fellow community members know what issues they are experiencing.</h1>
       </div>
     </div>
   );
 }
+
+//Old code part two
+{
+  /* <div
+style={{
+  backgroundImage: `url("src/images/pexels-miki-czetti-111963.jpg")`,
+  backgroundAttachment: "fixed",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+  height: "100vh",
+}}
+></div>
+<div
+style={{
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+}}
+>
+<h1
+  style={{
+    color: "white",
+    fontSize: "100px",
+    textShadow: "5px 5px black",
+  }}
+>
+  Village
+</h1>
+</div>
+<div style={{ backgroundColor: "whitesmoke", height: "100vh" }}>
+<div style={{ display: "flex", alignItems: "center" }}>
+
+</div>
+<h1>
+  We aim to serve local community members who either just wish to stay
+  in the know about what their community is experiencing or those who
+  want to let their fellow community members know what issues they are
+  experiencing.
+</h1>
+</div> */
+}
+
 //   return (
 //     <div style={{ backgroundColor: '#b2f1d5', padding: '20px' }}>
 //       <h1 style={{textAlign:'center'}}>
