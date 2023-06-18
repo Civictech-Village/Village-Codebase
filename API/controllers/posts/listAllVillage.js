@@ -4,6 +4,7 @@ const listPostsVillage = async (req, res) => {
       params: { id },
     } = req;
     const parties = await Posts.listVillages(id);
+    console.log(parties)
     res.send(parties);
   };
   

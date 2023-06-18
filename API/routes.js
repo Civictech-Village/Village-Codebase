@@ -16,6 +16,11 @@ Router.get('/posts/:id', postController.listByIssue);
 Router.get('/postsVillage/:id', postController.listAll)
 Router.patch('/posts/:id', postController.update);
 Router.delete('/posts/:id', postController.destroy);
+Router.post('/like/:id', postController.like)
+Router.get('/like/:id', postController.likeCount)
+Router.get('/hasliked/:id', postController.hasLiked)
+Router.delete('/destroylike/:id', postController.destroyLike)
+
 
 Router.get("/image/:name", (req, res) => {
   const { params: { name } } = req;

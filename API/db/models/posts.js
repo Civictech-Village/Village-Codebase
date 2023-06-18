@@ -40,6 +40,7 @@ class Posts {
       posts.issue_id,
       posts.message,
       posts.village_id,
+      posts.post_id,
       issues.name
       FROM posts 
       JOIN issues ON issues.issue_id=posts.issue_id
@@ -84,6 +85,68 @@ class Posts {
     }
   }
 
+  static async like(userId, postId) {
+    try {
+      const countQuery = `SELECT COUNT(*) AS likeCount
+      FROM likes
+      WHERE user_id = ? AND post_id = ?;`;
+      const result = await knex.raw(countQuery, [userId, postId]);
+      if (Number(result.rows[0].likecount) < 1) {
+        const query = `INSERT INTO likes (user_id, post_id) VALUES (?, ?) RETURNING *`;
+        const { rows } = await knex.raw(query, [userId, postId]);
+        return rows;
+      } else {
+        return { result: false };
+      }
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  static async likeCount(postId) {
+    try {
+      const query = `SELECT COUNT(*) AS likecount
+      FROM likes
+      WHERE post_id = ?;`;
+      const { rows } = await knex.raw(query, [postId]);
+      return rows[0].likecount;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  static async hasLiked(userId, postId) {
+    try {
+      const countQuery = `SELECT COUNT(*) AS likeCount
+      FROM likes
+      WHERE user_id = ? AND post_id = ?;`;
+      const {rows:[like]} = await knex.raw(countQuery, [userId, postId]);
+      if(like.likecount > 0) {
+        return true
+      } else {
+        return false
+      }
+    }catch(err) {
+      console.error(err)
+      return null
+    }
+  }
+
+  static async destroyLike(userId, postId) {
+    try {
+      const countQuery = `DELETE FROM likes
+      WHERE user_id = ? AND post_id = ?
+      RETURNING *;
+      `;
+      const {rows:[like]} = await knex.raw(countQuery, [userId, postId]);
+      return like
+    }catch(err) {
+      console.error(err)
+      return null
+    }
+  }
   static async deleteAll() {
     return knex.raw("TRUNCATE posts;");
   }

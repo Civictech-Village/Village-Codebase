@@ -1,7 +1,7 @@
 import gallery from "../../assets/gallery-add.png";
 export default function SettingsProfile() {
   return (
-    <div style={{ margin: "5em 0em"}}>
+    <div style={{ margin: "5em 2em"}}>
       <div>
         <h5>Your Profile Picture</h5>
         <div

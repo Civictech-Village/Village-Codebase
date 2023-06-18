@@ -3,10 +3,16 @@ import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
 import Tabs from "../components/Tabs";
 import HomeCard from "../components/HomeCard";
+import { useContext } from "react";
+import CurrentUserContext from "../contexts/current-user-context";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
+  const navigate = useNavigate();
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  setTimeout(() => {if(!currentUser) {navigate('/landingpage')}},500)
   return (
     <div style={{width: "100%" }}>
       <div style={{width:"100%", display: "flex", height:'fit-content', alignItems:'center', padding:'10px'}}>

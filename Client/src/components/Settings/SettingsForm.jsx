@@ -1,6 +1,10 @@
 export default function SettingsForm() {
+  const handleReset = (e) => {
+    console.log(e.target)
+    document.getElementById('settingsForm').reset()
+  }
   return (
-    <form style={{ border: 0, width: "100%" }}>
+    <form id="settingsForm" style={{ border: 0, width: "100%" }}>
       <div
         style={{
           display: "flex",
@@ -90,7 +94,7 @@ export default function SettingsForm() {
         <button style={{marginRight:'20px', background:'#29B94A', color:'white', padding:'10px 20px'}} type="button" class="btn">
           Update Profile
         </button>
-        <button type="button" class="btn">
+        <button type="button" class="btn" onClick={handleReset}>
           Reset
         </button>
       </div>
