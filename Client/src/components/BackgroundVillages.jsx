@@ -19,9 +19,10 @@ function BackgroundVillage({
   userJoined,
   leaveHandle,
   image,
-  members
+  members,
+  userType,
 }) {
-  console.log(image)
+  console.log(image);
   return (
     <Card
       sx={{
@@ -30,7 +31,7 @@ function BackgroundVillage({
         width: { xs: "100%", md: "90%", lg: "70%" },
         flexDirection: "row",
         justifyContent: "center",
-        alignItems:"center",
+        alignItems: "center",
         borderRadius: "10px",
         mb: 7,
         position: "relative",
@@ -79,6 +80,14 @@ function BackgroundVillage({
                 onClick={handler}
               >
                 Join
+              </Button>
+            ) : userType == "owner" ? (
+              <Button
+                variant="contained"
+                sx={{ height: "fit-content", backgroundColor: "red" }}
+                onClick={leaveHandle}
+              >
+                Disband
               </Button>
             ) : (
               <Button

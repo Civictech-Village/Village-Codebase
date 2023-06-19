@@ -10,7 +10,8 @@ import BasicExample from "../components/NavTabs";
 import { useParams } from "react-router-dom";
 import CurrentUserContext from "../contexts/current-user-context";
 import { getUser } from "../adapters/user-adapter";
-import Badge from 'react-bootstrap/Badge';
+import Badge from "react-bootstrap/Badge";
+import { Navigate } from "react-router-dom";
 
 export default function OrgLayoutPage() {
   //Village
@@ -23,7 +24,9 @@ export default function OrgLayoutPage() {
   const [issues, setIssues] = useState([]);
   const [members, setMembers] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [userType, setUserType] = useState(null)
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+
   console.log(currentUser);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -101,7 +104,7 @@ export default function OrgLayoutPage() {
     arr.push(responseData[0]);
     setPosts(arr);
     console.log(responseData);
-    handleClose()
+    handleClose();
   };
 
   const handleLeave = async () => {
@@ -135,6 +138,7 @@ export default function OrgLayoutPage() {
         console.log(responseData);
         if (responseData[0]) {
           setUserJoined(true);
+          setUserType(responseData[0].user_type)
           const userData = await getUser(responseData[0]["user_id"]);
           console.log(userData);
           const arr = [...members];
@@ -148,6 +152,11 @@ export default function OrgLayoutPage() {
 
     doFetch();
   }, []);
+
+  setTimeout(() => {
+    if (!currentUser) return <Navigate to="/" />;
+  }, 500);
+
   return (
     <div style={{ backgroundColor: "#FFF9E3", height: "100vh" }}>
       <div style={{ width: "100%", justifyContent: "center", display: "flex" }}>
@@ -159,6 +168,7 @@ export default function OrgLayoutPage() {
           userJoined={userJoined}
           image={image}
           members={members.length}
+          userType={userType}
         />
       </div>
       <Example
@@ -181,7 +191,7 @@ export default function OrgLayoutPage() {
             display: "flex",
             flexDirection: "column",
             width: "100%",
-            height:"100%",
+            height: "100%",
             maxHeight: "800px",
             marginLeft: "100px",
           }}
@@ -202,13 +212,15 @@ export default function OrgLayoutPage() {
                 height: "100%",
                 justifyContent: "center",
                 alignItems: "center",
-                paddingBottom:'30px'
+                paddingBottom: "30px",
               }}
             >
               <h1>Posts</h1>
-              <Button variant="contained" onClick={handleShow}>
-                Create Post
-              </Button>
+              {userJoined && (
+                <Button variant="contained" onClick={handleShow}>
+                  Create Post
+                </Button>
+              )}
               <div style={{ overflowY: "scroll", maxHeight: "300px" }}>
                 {posts.map((elem) => (
                   <PostCards elem={elem} />
@@ -227,26 +239,32 @@ export default function OrgLayoutPage() {
                 height: "100%",
                 justifyContent: "center",
                 alignItems: "center",
-                padding:"20px",
-                paddingBottom:"30px"
+                padding: "20px",
+                paddingBottom: "30px",
               }}
             >
               <div style={{ marginBottom: "30px", textAlign: "center" }}>
                 <h1>Issues</h1>
-                <Button variant="contained" onClick={handleShow}>
-                  Create Issue
-                </Button>
+                {userJoined && (
+                  <Button variant="contained" onClick={handleShow}>
+                    Create Issue
+                  </Button>
+                )}
               </div>
               <div
                 style={{
                   paddingTop: "10px",
                   maxHeight: "120px",
                   overflowY: "scroll",
-                  border:'1px solid black'
+                  border: "1px solid black",
                 }}
               >
                 {issues.map((elem) => {
-                  return <Badge bg="danger" style={{margin:"0 5px",}}>{elem.name}</Badge>;
+                  return (
+                    <Badge bg="danger" style={{ margin: "0 5px" }}>
+                      {elem.name}
+                    </Badge>
+                  );
                 })}
               </div>
             </div>

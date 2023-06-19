@@ -16,9 +16,13 @@ import Organizations from "./pages/Organizations";
 import OrgLayoutPage from "./pages/OrgLayout";
 import LandingPage from "./pages/LandingPage";
 import SingleOrg from "./pages/SingleOrg";
+import SideBar from "./components/SideBar";
+import StickyBox from "react-sticky-box";
+import Settings from "./pages/Settings";
+import CurrentUserContext from "./contexts/current-user-context";
 
 export default function App() {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   useEffect(() => {
     checkForLoggedInUser().then(setCurrentUser);
   }, [setCurrentUser]);
@@ -32,7 +36,7 @@ export default function App() {
               path="/"
               element={
                 <>
-                  <SiteHeadingAndNav />
+                  <SideBar />
                   <Home />
                 </>
               }
@@ -50,7 +54,7 @@ export default function App() {
               path="/organizations"
               element={
                 <>
-                  <SiteHeadingAndNav />
+                  <SideBar />
                   <Organizations />
                 </>
               }
@@ -59,7 +63,7 @@ export default function App() {
               path="/organizations/:id"
               element={
                 <>
-                  <SiteHeadingAndNav />
+                  <SideBar />
                  <SingleOrg></SingleOrg>
                 </>
               }
@@ -76,7 +80,7 @@ export default function App() {
               path="/users"
               element={
                 <>
-                  <SiteHeadingAndNav />
+                  <SideBar />
                   <UsersPage />
                 </>
               }
@@ -85,8 +89,17 @@ export default function App() {
               path="/users/:id"
               element={
                 <>
-                  <SiteHeadingAndNav />
+                  <SideBar />
                   <UserPage />
+                </>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <>
+                  <SideBar />
+                  <Settings />
                 </>
               }
             />

@@ -6,10 +6,57 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export default function OrganizationCard({ village }) {
+export default function OrganizationCard(village) {
+  console.log(village.village);
   return (
-    <Link to={'/organizations/' + village.village_id}>
-      <Card sx={{ width: 345, display: "inline-block", margin: 2 }}>
+    <div style={{ borderBottom: "2px solid #E5E7EB", marginBottom:"2em" }}>
+      <div
+        className="card mb-3"
+        style={{
+          width: "760px",
+        }}
+      >
+        <div className="row g-0">
+          <div className="col-md-4">
+            <img
+              src={`src/images/${village.village.image}`}
+              style={{
+                width: "300px",
+                height: "200px",
+                backgroundSize: "cover",
+                objectFit: "cover",
+              }}
+              className="img-fluid rounded-start"
+              alt="..."
+            />
+          </div>
+          <div className="col-md-8">
+            <div className="card-body">
+              <h6 className="card-title"> {village.village.location}</h6>
+              <h5 className="card-title"> {village.village.name}</h5>
+              <p className="card-text">
+                *Possible Village Bio*
+              </p>
+              <p className="card-text">
+                <Link
+                  to={"/organizations/" + village.village.village_id}
+                  style={{
+                    textDecoration: "none",
+                    borderBottom: "2px solid black",
+                  }}
+                >
+                  <button className="btn btn-success">View More</button>
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* <Card sx={{ width: 345, display: "inline-block", margin: 2 }}>
         <CardActionArea>
           <CardMedia
             component="img"
@@ -26,7 +73,4 @@ export default function OrganizationCard({ village }) {
             </Typography>
           </CardContent>
         </CardActionArea>
-      </Card>
-      </Link>
-  );
-}
+      </Card> */

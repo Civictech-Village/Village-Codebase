@@ -5,52 +5,57 @@ import { getUser } from "../adapters/user-adapter";
 import { logUserOut } from "../adapters/auth-adapter";
 import UpdateUsernameForm from "../components/UpdateUsernameForm";
 import React from "react";
-import Box from "@mui/material/Box";
-import { Typography, Grid, CssBaseline, Paper } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
+import SearchBar from "../components/NavBar";
+import Avatar from "../components/Avatar";
+import Person2Icon from "@mui/icons-material/Person2";
+import CakeIcon from "@mui/icons-material/Cake";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmailIcon from "@mui/icons-material/Email";
-import PhoneIcon from "@mui/icons-material/Phone";
-import BackgroundHeader from "../components/BackgroundHeader";
-import CakeIcon from "@mui/icons-material/Cake";
-import PostsProfile from "../components/PostsComponent";
-import { Divider } from "@mui/material";
-import ResponsiveDrawer from "../components/SideBar";
-import { Drawer } from "@mui/material";
-import Button from "react-bootstrap/esm/Button";
+import { Link } from "react-router-dom";
+import UserPostCard from "../components/UserPostCard";
+import { fetchHandler } from "../utils";
+import { deleteOptions } from "../utils";
 
 export default function UserPage() {
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [userProfile, setUserProfile] = useState(null);
+  const [posts, setPosts] = useState([]);
   const [errorText, setErrorText] = useState(null);
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+
+
 
   const date = (date) => {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
 
-
-    const parsed = new Date(date)
-    const month = parsed.getMonth()
-    const day = parsed.getDay()
-    const year = parsed.getFullYear()
-    return `${months[month]} ${day}, ${year}`
-  }
+    const parsed = new Date(date);
+    const month = parsed.getMonth();
+    const day = parsed.getDay();
+    const year = parsed.getFullYear();
+    return `${months[month]} ${day}, ${year}`;
+  };
 
   const { id } = useParams();
   const isCurrentUserProfile = currentUser && currentUser.id === Number(id);
-  console.log(currentUser);
-  if(!currentUser) {
-    navigate("/")
-  }
+
+ 
   useEffect(() => {
     const loadUser = async () => {
       const [user, error] = await getUser(id);
-      console.log(user)
       if (error) return setErrorText(error.statusText);
       setUserProfile(user);
     };
@@ -58,10 +63,34 @@ export default function UserPage() {
     loadUser();
   }, [id]);
 
+  useEffect(() => {
+    const doFetch = async () => {
+      const posts = await fetchHandler("/api/userPosts/" + id);
+      if (posts[0]) {
+        setPosts(posts[0]);
+      }
+    };
+    doFetch();
+  }, []);
+
   const handleLogout = async () => {
     logUserOut();
     setCurrentUser(null);
     navigate("/");
+  };
+
+  
+  const handlePostDestroy = async (postId) => {
+    try {
+      await fetchHandler(`/api/posts/${postId}`, deleteOptions);
+      // Refetch all posts after successful deletion
+      const updatedPosts = await fetchHandler('/api/userPosts/' + id);
+      setPosts(updatedPosts);
+    } catch (error) {
+      // Handle error if deletion or refetch fails
+      console.error(error)
+      return null
+    }
   };
 
   if (!userProfile && !errorText) return null;
@@ -80,161 +109,135 @@ export default function UserPage() {
     id,
   };
   return (
-    <>
-        <CssBaseline />
-        <Grid
-          item
-          square
-          sx={{
-            backgroundColor: "#F5F5F5",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            width: "100%",
-            overflowX:"hidden"
-          }}
+    <div
+      style={{
+        width: "100%",
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        height:'100%'
+      }}
+    >
+      <div style={{ display: "flex", width: "95%" }}>
+        <SearchBar />
+        <Avatar />
+      </div>
+      <div className="BackgroundHeader">
+        <div id="backgroundImage"></div>
+        <div
+          id="profileandname"
+          style={{ display: "flex", justifyContent: "space-between" }}
         >
-          <BackgroundHeader props={propObject} />
-          <Grid
-            sx={{
+          <div id="ProfilePicture"></div>
+          <div
+            style={{
               display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              width: { xs: "100%", md: "100%", lg: "85%" },
-              height: "50%",
+              flexDirection: "column",
+              marginLeft: "12em",
+              paddingTop: "10px",
             }}
           >
-            <Box
-              md={3}
-              elevation={6}
-              sx={{
-                backgroundColor: "white",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                justifyContent: "space-between",
-                height: "68%",
-                width: "250px",
-                padding: "43px 0px 49px 24px",
-                borderRadius: "10px",
-                mx:3,
+            <div id="userName">{profileUsername}</div>
+            <div style={{ width: "113px", height: "23px" }}>Fake Bio</div>
+            <div style={{ display: "flex" }}>
+              <p style={{ margin: "0 10px 0 0" }}>{0} Following</p>
+              <p>{0} Followers</p>
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginRight: "8em",
+            }}
+          >
+            {!isCurrentUserProfile ? (
+              <button className="btn btn-success">Follow</button>
+            ) : (
+              <Link to="/settings" className="btn btn-outline-dark">
+                Edit Profile
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+      <div style={{ display: "flex" }}>
+        <div id="aboutSection">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              width: "236px",
+              height: "307px",
+              padding: "40px 0 40px 0",
+            }}
+          >
+            <h4 id="aboutText" style={{ marginBottom: "28px" }}>
+              About
+            </h4>
+            <h6
+              className="ContactText"
+              style={{
+                paddingBottom: "16px",
+                borderBottom: "0.5px solid #030229",
               }}
             >
-              <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                About
-              </Typography>
-              <Box
-                sx={{
-                  height: "90%",
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  justifyContent: "space-between",
-                  mt: 2,
-                  paddingBottom: "40px",
-                }}
-              >
-                <Typography
-                  component="h4"
-                  sx={{
-                    borderBottom: "1px solid rgba(0,0,0, 0.1)",
-                    padding: "12px 0",
-                    display: "flex",
-                    width: "100%",
-                  }}
-                >
-                  <PersonIcon sx={{ mr: 1 }}></PersonIcon>
-                  {userProfile.gender ? userProfile.gender : "Unknown"}
-                </Typography>
-                <Typography
-                  component="h4"
-                  sx={{
-                    borderBottom: "1px solid  rgba(0,0,0, 0.1)",
-                    padding: "12px 0",
-                    display: "flex",
-                    width: "100%",
-                  }}
-                >
-                  <CakeIcon sx={{ mr: 1 }}></CakeIcon>
-                  {userProfile.birthday ? date(userProfile.birthday) : "Unknown"}
-                </Typography>
-                <Typography
-                  component="h4"
-                  sx={{
-                    borderBottom: "1px solid  rgba(0,0,0, 0.1)",
-                    display: "flex",
-                    width: "100%",
-                    padding: "12px 0",
-                  }}
-                >
-                  <LocationOnIcon sx={{ mr: 1 }}></LocationOnIcon>
-                  Location
-                </Typography>
-                <Typography
-                  component="h4"
-                  sx={{
-                    borderBottom: "1px solid  rgba(0,0,0, 0.1)",
-                    padding: "12px 0",
-                    display: "flex",
-                    width: "100%",
-                  }}
-                >
-                  <EmailIcon sx={{ mr: 1 }}></EmailIcon>
-                  {userProfile.email ? userProfile.email : "Unknown"}
-                </Typography>
-                <Typography
-                  component="h4"
-                  sx={{ display: "flex", width: "100%", padding: "12px 0" }}
-                >
-                  <PhoneIcon sx={{ mr: 1 }}></PhoneIcon>
-                  Phone
-                </Typography>
-              </Box>
-            </Box>
-            <PostsProfile></PostsProfile>
-            <Box
-              md={3}
-              sx={{
-                backgroundColor: "white",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                height: "40%",
-                width: "200px",
-                borderRadius: "10px",
-                padding: "10px 0px",
-                textAlign: "center",
-                mt: 6,
-                mx:3
-              }}
+              <Person2Icon />{" "}
+              {currentUser && currentUser.gender ? currentUser.gender : "Undefined"}
+            </h6>
+            <h6
+              className="ContactText"
+              style={{ padding: "16px 0", borderBottom: "0.5px solid #030229" }}
             >
-              <Typography
-                variant="h5"
-                sx={{
-                  width: "100%",
-                  borderBottom: "1px solid black",
-                  paddingBottom: "5px",
-                  fontWeight: "bold",
-                }}
-              >
-                Their Villages
-              </Typography>
-            </Box>
-          </Grid>
-
-          {!!isCurrentUserProfile && (
-            <Button variant="danger" onClick={handleLogout}>Log Out</Button>
-          )}
-
-          {!!isCurrentUserProfile && (
-            <UpdateUsernameForm
-              currentUser={currentUser}
-              setCurrentUser={setCurrentUser}
-            />
-          )}
-        </Grid>
-    </>
+              <CakeIcon />{" "}
+              {currentUser && currentUser.birthday ? date(currentUser.birthday) : "Undefined"}
+            </h6>
+            <h6
+              className="ContactText"
+              style={{ padding: "16px 0", borderBottom: "0.5px solid #030229" }}
+            >
+              <LocationOnIcon /> Location
+            </h6>
+            <h6 className="ContactText" style={{ padding: "16px 0" }}>
+              <EmailIcon />{" "}
+              {currentUser && currentUser.email ? currentUser.email : "Undefined"}
+            </h6>
+          </div>
+        </div>
+        <div id="postSection">
+          <div
+            id="aboutText"
+            style={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "center",
+              marginTop: "3em",
+              paddingBottom: "19px",
+              borderBottom: "0.8px solid #030229",
+            }}
+          >
+            <h3>Posts</h3>
+          </div>
+          <div style={{ display: "flex", width: "100%", padding: "20px 43px", flexDirection:'column' }}>
+            {posts.map((elem) => {
+              return <UserPostCard props={elem} isCurrentUserProfile={isCurrentUserProfile} handlePostDestroy={handlePostDestroy}/>;
+            })}
+          </div>
+        </div>
+        <div id="villageSection">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "15px",
+            }}
+          >
+            <h3>Their Village</h3>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
