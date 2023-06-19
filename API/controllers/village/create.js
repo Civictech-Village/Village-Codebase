@@ -1,5 +1,4 @@
 const { unlinkSync } = require('fs');
-const { url } = require('inspector');
 require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
 

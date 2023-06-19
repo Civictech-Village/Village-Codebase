@@ -60,7 +60,7 @@ export default function App() {
               element={
                 <>
                   <SiteHeadingAndNav />
-                 <OrgLayoutPage></OrgLayoutPage>
+                 <SingleOrg></SingleOrg>
                 </>
               }
             />

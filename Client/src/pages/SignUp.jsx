@@ -118,7 +118,6 @@ export default function SignUpPage() {
     const formData = new FormData(event.target);
     const postObject = Object.fromEntries(formData.entries());
     const totalObject = {...postObject, ...allFormData}
-    console.log(totalObject.date["$d"]);
     if (postObject.username.length < 1) {
       setErrorText("Please enter a username");
       setNameClass("animate__animated animate__headShake");
