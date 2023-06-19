@@ -40,6 +40,7 @@ class Posts {
       posts.issue_id,
       posts.message,
       posts.village_id,
+      posts.post_id,
       issues.name
       FROM posts 
       JOIN issues ON issues.issue_id=posts.issue_id
@@ -62,7 +63,7 @@ class Posts {
     return post ? new Posts(post) : null;
   }
 
-  static async destroy(post_id) {
+  static async destroyPost(post_id) {
     try {
       const query = "DELETE FROM posts WHERE post_id = ? RETURNING *;";
       const { rows } = await knex.raw(query, [post_id]);
@@ -81,6 +82,137 @@ class Posts {
       return new Posts(party);
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  static async like(userId, postId) {
+    try {
+      const countQuery = `SELECT COUNT(*) AS likeCount
+      FROM likes
+      WHERE user_id = ? AND post_id = ?;`;
+      const result = await knex.raw(countQuery, [userId, postId]);
+      if (Number(result.rows[0].likecount) < 1) {
+        const query = `INSERT INTO likes (user_id, post_id) VALUES (?, ?) RETURNING *`;
+        const { rows } = await knex.raw(query, [userId, postId]);
+        return rows;
+      } else {
+        return { result: false };
+      }
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  static async likeCount(postId) {
+    try {
+      const query = `SELECT COUNT(*) AS likecount
+      FROM likes
+      WHERE post_id = ?;`;
+      const { rows } = await knex.raw(query, [postId]);
+      return rows[0].likecount;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  static async hasLiked(userId, postId) {
+    try {
+      const countQuery = `SELECT COUNT(*) AS likeCount
+      FROM likes
+      WHERE user_id = ? AND post_id = ?;`;
+      const {
+        rows: [like],
+      } = await knex.raw(countQuery, [userId, postId]);
+      if (like.likecount > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  static async destroyLike(userId, postId) {
+    try {
+      const countQuery = `DELETE FROM likes
+      WHERE user_id = ? AND post_id = ?
+      RETURNING *;
+      `;
+      const {
+        rows: [like],
+      } = await knex.raw(countQuery, [userId, postId]);
+      return like;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  static async listPopularLiked() {
+    try {
+      const query = `SELECT posts.*, likes.likeCount, issues.name, users.username, users.profile_picture
+      FROM posts
+      LEFT JOIN (
+        SELECT post_id, COUNT(*) AS likeCount
+        FROM likes
+        GROUP BY post_id
+      ) likes ON posts.post_id = likes.post_id
+      LEFT JOIN issues ON posts.issue_id = issues.issue_id
+      LEFT JOIN users ON posts.user_id = users.id
+      ORDER BY likes.likeCount DESC;`;
+      const { rows } = await knex.raw(query);
+      return rows;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  static async listVillagePosts(userId) {
+    try {
+      const query = `SELECT posts.*, likes.likeCount, issues.name, users.username, users.profile_picture
+      FROM posts
+      LEFT JOIN (
+        SELECT post_id, COUNT(*) AS likeCount
+        FROM likes
+        GROUP BY post_id
+      ) likes ON posts.post_id = likes.post_id
+      LEFT JOIN issues ON posts.issue_id = issues.issue_id
+      LEFT JOIN users ON posts.user_id = users.id
+      INNER JOIN users_villages uv ON posts.village_id = uv.village_id
+      WHERE uv.user_id = ?
+      ORDER BY likes.likeCount DESC;`;
+      const {rows} = await knex.raw(query, [userId])
+      return rows
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  static async listUsersPosts(userId) {
+    try {
+      const query = `SELECT posts.*, likes.likeCount, issues.name, users.username, users.profile_picture
+      FROM posts
+      LEFT JOIN (
+        SELECT post_id, COUNT(*) AS likeCount
+        FROM likes
+        GROUP BY post_id
+      ) likes ON posts.post_id = likes.post_id
+      LEFT JOIN issues ON posts.issue_id = issues.issue_id
+      LEFT JOIN users ON posts.user_id = users.id
+      LEFT JOIN villages ON posts.village_id = villages.village_id
+      WHERE users.id = ?
+      ORDER BY likes.likeCount DESC;`;
+      const {rows} = await knex.raw(query, [userId])
+      return rows
+    } catch (err) {
+      console.error(err);
+      return null;
     }
   }
 

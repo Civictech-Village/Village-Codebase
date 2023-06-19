@@ -1,23 +1,121 @@
 import { motion, useTransform, useScroll } from "framer-motion";
+import SearchBar from "../components/NavBar";
+import Avatar from "../components/Avatar";
+import Tabs from "../components/Tabs";
+import HomeCard from "../components/HomeCard";
+import { useContext, useEffect, useState } from "react";
+import CurrentUserContext from "../contexts/current-user-context";
+import { Navigate, useNavigate } from "react-router-dom";
+import { fetchHandler } from "../utils";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
+  const navigate = useNavigate();
+  const [posts, setPosts] = useState([])
+  const [activeTab, setActiveTab] = useState("popular");
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
-  return (
-    <div>
-    <div style={{ backgroundImage: `url("src/images/pexels-miki-czetti-111963.jpg")`, backgroundAttachment: "fixed", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover", height: "100vh" }}>
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
+  useEffect(() => {
+    if (!currentUser) {
+      // Redirect to the landing page after a delay
+      const redirectTimer = setTimeout(() => {
+        navigate('/landingpage');
+      }, 500);
+
+      return () => {
+        // Clear the timer if the component is unmounted
+        clearTimeout(redirectTimer);
+      };
+    }
+  }, [currentUser, navigate]);
+  useEffect(() => {
+    const doFetch = async () => {
+      const posts = await fetchHandler('/api/popularPost')
+      if(posts[0]) {
+      setPosts(posts[0])
+      }
+    } 
+    doFetch()
+  }, [])
+
+  const handleMyVillage = async () => {
+    const posts = await fetchHandler('/api/myVillagePost')
+    if(posts[0]) {
+    setPosts(posts[0])
+    }
+    setActiveTab("myVillage")
+  }
+
+  const handlePopular = async () => {
+    const posts = await fetchHandler('/api/popularPost')
+    if(posts[0]) {
+    setPosts(posts[0])
+    }
+    setActiveTab("popular")
+  }
+
+  return (
+    <div style={{width: "100%", height:'100%'}}>
+      <div style={{width:"100%", display: "flex", height:'fit-content', alignItems:'center', padding:'10px'}}>
+        <SearchBar />
+        <Avatar />
       </div>
-      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-        <h1 style={{ color: "white", fontSize: "100px", textShadow: "5px 5px black" }}>Village</h1>
-    
-      </div>
-      <div style={{ backgroundColor: "whitesmoke", height: "100vh" }}>
-          <h1>We aim to serve local community members who either just wish to stay in the know about what their community is experiencing or those who want to let their fellow community members know what issues they are experiencing.</h1>
+      <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', marginTop:'6em', minHeight:'100vh', height:'100%'}}>
+        <Tabs handlePopular={handlePopular} handleMyVillage={handleMyVillage} activeTab={activeTab}/>
+        {posts.length > 0  ? posts.map(elem => {
+          return <HomeCard props={elem}/>
+        }) : <p style={{margin:"auto"}}>Sorry, There are no posts here for now</p>}
+
+
       </div>
     </div>
   );
 }
+
+//Old code part two
+{
+  /* <div
+style={{
+  backgroundImage: `url("src/images/pexels-miki-czetti-111963.jpg")`,
+  backgroundAttachment: "fixed",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+  height: "100vh",
+}}
+></div>
+<div
+style={{
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+}}
+>
+<h1
+  style={{
+    color: "white",
+    fontSize: "100px",
+    textShadow: "5px 5px black",
+  }}
+>
+  Village
+</h1>
+</div>
+<div style={{ backgroundColor: "whitesmoke", height: "100vh" }}>
+<div style={{ display: "flex", alignItems: "center" }}>
+
+</div>
+<h1>
+  We aim to serve local community members who either just wish to stay
+  in the know about what their community is experiencing or those who
+  want to let their fellow community members know what issues they are
+  experiencing.
+</h1>
+</div> */
+}
+
 //   return (
 //     <div style={{ backgroundColor: '#b2f1d5', padding: '20px' }}>
 //       <h1 style={{textAlign:'center'}}>
