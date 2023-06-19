@@ -29,9 +29,19 @@ class Posts {
   }
 
   static async listByIssue(issue_id) {
-    const query = "SELECT * FROM posts WHERE issue_id = ?";
+    const query = `SELECT posts.*, likes.likeCount, issues.name, users.username, users.profile_picture
+    FROM posts
+    LEFT JOIN (
+      SELECT post_id, COUNT(*) AS likeCount
+      FROM likes
+      GROUP BY post_id
+    ) likes ON posts.post_id = likes.post_id
+    LEFT JOIN issues ON posts.issue_id = issues.issue_id
+    LEFT JOIN users ON posts.user_id = users.id
+    WHERE issues.issue_id = ?
+    ORDER BY likes.likeCount DESC;`;
     const { rows } = await knex.raw(query, [issue_id]);
-    return rows.map((post) => new Posts(post));
+    return rows;
   }
 
   static async listVillages(village_id) {

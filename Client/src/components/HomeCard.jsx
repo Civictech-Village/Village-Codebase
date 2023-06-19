@@ -51,6 +51,9 @@ export default function HomeCard({ props }) {
     return result;
   };
 
+  console.log(props)
+
+
   return (
     <div
       className="card"
@@ -61,14 +64,16 @@ export default function HomeCard({ props }) {
         marginTop: "5em",
         boxShadow: "0px 12px 24px rgba(34, 34, 34, 0.12)",
         padding: "13px",
+        display:'flex'
       }}
     >
       <img
         src={props.image ? props.image : "https://via.placeholder.com/350x150"}
+        style={{width:'100%', height:'50%'}}
         className="card-img-top"
         alt="..."
       />
-      <div className="card-body" style={{ padding: "0", paddingTop: "10px" }}>
+      <div className="card-body" style={{ padding: "0", paddingTop: "10px", height:'100%'}}>
         <div
           style={{
             display: "flex",
@@ -98,7 +103,7 @@ export default function HomeCard({ props }) {
                 textAlign: "center",
               }}
             >
-              {props.name ? props.name : "undefined"}
+              Issue
             </li>
             {/* <li
               style={{
@@ -140,9 +145,9 @@ export default function HomeCard({ props }) {
             </p>
           </div>
         </div>
-        <h5 className="card-title">Leaky Pipe</h5>
+        <h5 className="card-title"> {props.name ? props.name : "undefined"}</h5>
         <p className="card-text">
-          My pipe burst for the third time this month!!!
+        {props.message ? props.message : "undefined"}
         </p>
         <div style={{ display: "flex" }}>
           <div style={{ marginRight: "12px" }}>

@@ -7,11 +7,12 @@ import { useContext, useEffect, useState } from "react";
 import CurrentUserContext from "../contexts/current-user-context";
 import { Navigate, useNavigate } from "react-router-dom";
 import { fetchHandler } from "../utils";
+import Footer from "../components/LandingPage/Footer";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
   const navigate = useNavigate();
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([]);
   const [activeTab, setActiveTab] = useState("popular");
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -20,7 +21,7 @@ export default function HomePage() {
     if (!currentUser) {
       // Redirect to the landing page after a delay
       const redirectTimer = setTimeout(() => {
-        navigate('/landingpage');
+        navigate("/landingpage");
       }, 500);
 
       return () => {
@@ -31,44 +32,73 @@ export default function HomePage() {
   }, [currentUser, navigate]);
   useEffect(() => {
     const doFetch = async () => {
-      const posts = await fetchHandler('/api/popularPost')
-      if(posts[0]) {
-      setPosts(posts[0])
+      const posts = await fetchHandler("/api/popularPost");
+      if (posts[0]) {
+        setPosts(posts[0]);
       }
-    } 
-    doFetch()
-  }, [])
+    };
+    doFetch();
+  }, []);
 
   const handleMyVillage = async () => {
-    const posts = await fetchHandler('/api/myVillagePost')
-    if(posts[0]) {
-    setPosts(posts[0])
+    const posts = await fetchHandler("/api/myVillagePost");
+    if (posts[0]) {
+      setPosts(posts[0]);
     }
-    setActiveTab("myVillage")
-  }
+    console.log(posts)
+    setActiveTab("myVillage");
+  };
 
   const handlePopular = async () => {
-    const posts = await fetchHandler('/api/popularPost')
-    if(posts[0]) {
-    setPosts(posts[0])
+    const posts = await fetchHandler("/api/popularPost");
+    if (posts[0]) {
+      setPosts(posts[0]);
     }
-    setActiveTab("popular")
-  }
+    setActiveTab("popular");
+  };
 
   return (
-    <div style={{width: "100%", height:'100%'}}>
-      <div style={{width:"100%", display: "flex", height:'fit-content', alignItems:'center', padding:'10px'}}>
+    <div style={{ width: "100%", height: "100%" }}>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          height: "fit-content",
+          alignItems: "center",
+          padding: "10px",
+        }}
+      >
         <SearchBar />
         <Avatar />
       </div>
-      <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', marginTop:'6em', minHeight:'100vh', height:'100%'}}>
-        <Tabs handlePopular={handlePopular} handleMyVillage={handleMyVillage} activeTab={activeTab}/>
-        {posts.length > 0  ? posts.map(elem => {
-          return <HomeCard props={elem}/>
-        }) : <p style={{margin:"auto"}}>Sorry, There are no posts here for now</p>}
-
-
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "6em",
+          minHeight: "100vh",
+          height: "100%",
+          marginBottom: "3em",
+        }}
+      >
+        <Tabs
+          handlePopular={handlePopular}
+          handleMyVillage={handleMyVillage}
+          activeTab={activeTab}
+        />
+        {posts.length > 0 ? (
+          posts.map((elem) => {
+            return <HomeCard props={elem} />;
+          })
+        ) : (
+          <p style={{ margin: "auto" }}>
+            Sorry, There are no posts here for now
+          </p>
+        )}
       </div>
+      <Footer />
     </div>
   );
 }

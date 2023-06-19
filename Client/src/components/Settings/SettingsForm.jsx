@@ -18,6 +18,7 @@ export default function SettingsForm({handleFormSubmit}) {
             className="placeHolder"
             placeholder="Please enter your full name"
             name="fullname"
+            type="text"
             style={{
               borderRadius: "8px",
               border: "1px solid #E0E4EC",
@@ -34,6 +35,7 @@ export default function SettingsForm({handleFormSubmit}) {
             className="placeHolder"
             placeholder="Please enter your email"
             name="email"
+            type="email"
             style={{
               borderRadius: "8px",
               border: "1px solid #E0E4EC",
