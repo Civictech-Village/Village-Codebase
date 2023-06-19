@@ -3,28 +3,70 @@ import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
 import Tabs from "../components/Tabs";
 import HomeCard from "../components/HomeCard";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import CurrentUserContext from "../contexts/current-user-context";
 import { Navigate, useNavigate } from "react-router-dom";
+import { fetchHandler } from "../utils";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
   const navigate = useNavigate();
+  const [posts, setPosts] = useState([])
+  const [activeTab, setActiveTab] = useState("popular");
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-  setTimeout(() => {if(!currentUser) {navigate('/landingpage')}},500)
+
+  useEffect(() => {
+    if (!currentUser) {
+      // Redirect to the landing page after a delay
+      const redirectTimer = setTimeout(() => {
+        navigate('/landingpage');
+      }, 500);
+
+      return () => {
+        // Clear the timer if the component is unmounted
+        clearTimeout(redirectTimer);
+      };
+    }
+  }, [currentUser, navigate]);
+  useEffect(() => {
+    const doFetch = async () => {
+      const posts = await fetchHandler('/api/popularPost')
+      if(posts[0]) {
+      setPosts(posts[0])
+      }
+    } 
+    doFetch()
+  }, [])
+
+  const handleMyVillage = async () => {
+    const posts = await fetchHandler('/api/myVillagePost')
+    if(posts[0]) {
+    setPosts(posts[0])
+    }
+    setActiveTab("myVillage")
+  }
+
+  const handlePopular = async () => {
+    const posts = await fetchHandler('/api/popularPost')
+    if(posts[0]) {
+    setPosts(posts[0])
+    }
+    setActiveTab("popular")
+  }
+
   return (
-    <div style={{width: "100%" }}>
+    <div style={{width: "100%", height:'100%'}}>
       <div style={{width:"100%", display: "flex", height:'fit-content', alignItems:'center', padding:'10px'}}>
         <SearchBar />
         <Avatar />
       </div>
-      <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', marginTop:'6em'}}>
-        <Tabs />
-        <HomeCard />
-        <HomeCard />
-        <HomeCard />
-        <HomeCard />
+      <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', marginTop:'6em', minHeight:'100vh', height:'100%'}}>
+        <Tabs handlePopular={handlePopular} handleMyVillage={handleMyVillage} activeTab={activeTab}/>
+        {posts.length > 0  ? posts.map(elem => {
+          return <HomeCard props={elem}/>
+        }) : <p style={{margin:"auto"}}>Sorry, There are no posts here for now</p>}
+
 
       </div>
     </div>

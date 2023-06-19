@@ -7,21 +7,24 @@ import UpdateUsernameForm from "../components/UpdateUsernameForm";
 import React from "react";
 import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
-import Person2Icon from '@mui/icons-material/Person2';
-import CakeIcon from '@mui/icons-material/Cake';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import EmailIcon from '@mui/icons-material/Email';
+import Person2Icon from "@mui/icons-material/Person2";
+import CakeIcon from "@mui/icons-material/Cake";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import EmailIcon from "@mui/icons-material/Email";
 import { Link } from "react-router-dom";
+import UserPostCard from "../components/UserPostCard";
+import { fetchHandler } from "../utils";
+import { deleteOptions } from "../utils";
+
 export default function UserPage() {
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [userProfile, setUserProfile] = useState(null);
+  const [posts, setPosts] = useState([]);
   const [errorText, setErrorText] = useState(null);
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+
 
   const date = (date) => {
     const months = [
@@ -48,14 +51,11 @@ export default function UserPage() {
 
   const { id } = useParams();
   const isCurrentUserProfile = currentUser && currentUser.id === Number(id);
-  console.log(currentUser);
-  if (!currentUser) {
-    navigate("/");
-  }
+
+ 
   useEffect(() => {
     const loadUser = async () => {
       const [user, error] = await getUser(id);
-      console.log(user);
       if (error) return setErrorText(error.statusText);
       setUserProfile(user);
     };
@@ -63,10 +63,34 @@ export default function UserPage() {
     loadUser();
   }, [id]);
 
+  useEffect(() => {
+    const doFetch = async () => {
+      const posts = await fetchHandler("/api/userPosts/" + id);
+      if (posts[0]) {
+        setPosts(posts[0]);
+      }
+    };
+    doFetch();
+  }, []);
+
   const handleLogout = async () => {
     logUserOut();
     setCurrentUser(null);
     navigate("/");
+  };
+
+  
+  const handlePostDestroy = async (postId) => {
+    try {
+      await fetchHandler(`/api/posts/${postId}`, deleteOptions);
+      // Refetch all posts after successful deletion
+      const updatedPosts = await fetchHandler('/api/userPosts/' + id);
+      setPosts(updatedPosts);
+    } catch (error) {
+      // Handle error if deletion or refetch fails
+      console.error(error)
+      return null
+    }
   };
 
   if (!userProfile && !errorText) return null;
@@ -92,6 +116,7 @@ export default function UserPage() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        height:'100%'
       }}
     >
       <div style={{ display: "flex", width: "95%" }}>
@@ -127,27 +152,88 @@ export default function UserPage() {
               marginRight: "8em",
             }}
           >
-           {!isCurrentUserProfile ? <button className="btn btn-success">Follow</button> : <Link to="/settings" className="btn btn-outline-dark">Edit Profile</Link> }
+            {!isCurrentUserProfile ? (
+              <button className="btn btn-success">Follow</button>
+            ) : (
+              <Link to="/settings" className="btn btn-outline-dark">
+                Edit Profile
+              </Link>
+            )}
           </div>
         </div>
       </div>
-      <div style={{display:'flex',}}>
+      <div style={{ display: "flex" }}>
         <div id="aboutSection">
-          <div style={{display:'flex', flexDirection:'column', justifyContent:'flex-start', width:'236px', height:'307px', padding:'40px 0 40px 0'}}>
-            <h4 id="aboutText" style={{marginBottom:'28px'}}>About</h4>
-            <h6 className="ContactText" style={{paddingBottom:'16px', borderBottom: "0.5px solid #030229"}}><Person2Icon/> {currentUser.gender ? currentUser.gender : "Undefined"}</h6>
-            <h6 className="ContactText"  style={{padding:'16px 0', borderBottom: "0.5px solid #030229"}}><CakeIcon/> {currentUser.birthday ? date(currentUser.birthday) : "Undefined"}</h6>
-            <h6 className="ContactText"  style={{padding:'16px 0', borderBottom: "0.5px solid #030229"}}><LocationOnIcon/> Location</h6>
-            <h6 className="ContactText"  style={{padding:'16px 0'}}><EmailIcon/> {currentUser.email ? currentUser.email : "Undefined"}</h6>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              width: "236px",
+              height: "307px",
+              padding: "40px 0 40px 0",
+            }}
+          >
+            <h4 id="aboutText" style={{ marginBottom: "28px" }}>
+              About
+            </h4>
+            <h6
+              className="ContactText"
+              style={{
+                paddingBottom: "16px",
+                borderBottom: "0.5px solid #030229",
+              }}
+            >
+              <Person2Icon />{" "}
+              {currentUser && currentUser.gender ? currentUser.gender : "Undefined"}
+            </h6>
+            <h6
+              className="ContactText"
+              style={{ padding: "16px 0", borderBottom: "0.5px solid #030229" }}
+            >
+              <CakeIcon />{" "}
+              {currentUser && currentUser.birthday ? date(currentUser.birthday) : "Undefined"}
+            </h6>
+            <h6
+              className="ContactText"
+              style={{ padding: "16px 0", borderBottom: "0.5px solid #030229" }}
+            >
+              <LocationOnIcon /> Location
+            </h6>
+            <h6 className="ContactText" style={{ padding: "16px 0" }}>
+              <EmailIcon />{" "}
+              {currentUser && currentUser.email ? currentUser.email : "Undefined"}
+            </h6>
           </div>
         </div>
         <div id="postSection">
-          <div id="aboutText"style={{display:'flex', width:'100%', justifyContent:'center', marginTop:'3em', paddingBottom:'19px', borderBottom:'0.8px solid #030229'}}>
+          <div
+            id="aboutText"
+            style={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "center",
+              marginTop: "3em",
+              paddingBottom: "19px",
+              borderBottom: "0.8px solid #030229",
+            }}
+          >
             <h3>Posts</h3>
+          </div>
+          <div style={{ display: "flex", width: "100%", padding: "20px 43px", flexDirection:'column' }}>
+            {posts.map((elem) => {
+              return <UserPostCard props={elem} isCurrentUserProfile={isCurrentUserProfile} handlePostDestroy={handlePostDestroy}/>;
+            })}
           </div>
         </div>
         <div id="villageSection">
-          <div style={{display:'flex', justifyContent:'center', marginTop:'15px'}}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "15px",
+            }}
+          >
             <h3>Their Village</h3>
           </div>
         </div>

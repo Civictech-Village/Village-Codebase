@@ -19,16 +19,15 @@ const PostCards = ({elem}) => {
       setHasLiked(hasLiked[0])
     }
     fetch()
-  },[])
-  console.log(elem)
+  },[hasliked])
   const handleClick = async () => {
     const result = await fetchHandler('/api/like/' + elem.post_id, getPostOptions())
-    console.log(result)
+    setHasLiked(!hasliked)
     return result
   }
   const handleDelete = async () => {
     const result = await fetchHandler('/api/destroylike/' + elem.post_id, deleteOptions)
-    console.log(result)
+    setHasLiked(!hasliked)
     return result
   }
   return (

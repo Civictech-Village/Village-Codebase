@@ -15,11 +15,14 @@ Router.post('/posts/:id', postController.create);
 Router.get('/posts/:id', postController.listByIssue);
 Router.get('/postsVillage/:id', postController.listAll)
 Router.patch('/posts/:id', postController.update);
-Router.delete('/posts/:id', postController.destroy);
+Router.delete('/posts/:post_id', postController.destroy);
 Router.post('/like/:id', postController.like)
 Router.get('/like/:id', postController.likeCount)
 Router.get('/hasliked/:id', postController.hasLiked)
 Router.delete('/destroylike/:id', postController.destroyLike)
+Router.get('/popularPost', postController.popularLikes)
+Router.get('/myVillagePost', postController.villagePosts)
+Router.get('/userPosts/:id', postController.listUsersPosts)
 
 
 Router.get("/image/:name", (req, res) => {

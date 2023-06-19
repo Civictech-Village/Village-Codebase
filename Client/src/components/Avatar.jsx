@@ -5,7 +5,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Avatar() {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-  console.log(currentUser)
   const navigate = useNavigate();
   const handleLogout = async () => {
     logUserOut();

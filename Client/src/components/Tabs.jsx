@@ -1,15 +1,17 @@
 import StickyBox from "react-sticky-box";
-export default function Tabs() {
+export default function Tabs({ handlePopular, handleMyVillage, activeTab }) {
   return (
-    <StickyBox style={{
+    <StickyBox
+      style={{
         width: "100%",
         display: "flex",
         justifyContent: "center",
         padding: "1px",
-        zIndex:'1000',
-        backgroundColor:'#F5F5F5',
-        opacity:'0.87'
-      }}>
+        zIndex: "1000",
+        backgroundColor: "#F5F5F5",
+        opacity: "0.87",
+      }}
+    >
       <ul
         className="nav nav-tabs"
         style={{
@@ -19,14 +21,24 @@ export default function Tabs() {
         }}
       >
         <li className="nav-item">
-          <a style={{fontSize:'40px'}} className="nav-link active" aria-current="page" href="#">
+          <button
+            style={{ fontSize: "40px" }}
+            className={`nav-link ${activeTab === "popular" ? "active" : ""}`}
+            onClick={handlePopular}
+            aria-current="page"
+          >
             Popular
-          </a>
+          </button>
         </li>
         <li className="nav-item">
-          <a style={{fontSize:'40px'}} className="nav-link" href="#">
+          <button
+            style={{ fontSize: "40px" }}
+            className={`nav-link ${activeTab === "myVillage" ? "active" : ""}`}
+            onClick={handleMyVillage}
+            href="#"
+          >
             My Villages
-          </a>
+          </button>
         </li>
       </ul>
     </StickyBox>

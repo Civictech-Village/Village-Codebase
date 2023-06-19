@@ -7,7 +7,9 @@ const like = require('./like')
 const likeCount = require('./likeCount')
 const hasLiked = require('./hasliked')
 const destroyLike = require('./destroyLikes')
-
+const popularLikes = require('./listPopular')
+const villagePosts = require('./listMyVillage')
+const listUsersPosts = require('./listUserPosts')
 module.exports = {
   create,
   destroy,
@@ -17,5 +19,8 @@ module.exports = {
   like,
   likeCount,
   hasLiked,
-  destroyLike
+  destroyLike,
+  popularLikes,
+  villagePosts,
+  listUsersPosts
 };

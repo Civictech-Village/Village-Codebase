@@ -1,10 +1,10 @@
-export default function SettingsForm() {
+export default function SettingsForm({handleFormSubmit}) {
   const handleReset = (e) => {
     console.log(e.target)
     document.getElementById('settingsForm').reset()
   }
   return (
-    <form id="settingsForm" style={{ border: 0, width: "100%" }}>
+    <form id="settingsForm" style={{ border: 0, width: "100%" }} onSubmit={handleFormSubmit}>
       <div
         style={{
           display: "flex",
@@ -17,6 +17,7 @@ export default function SettingsForm() {
           <input
             className="placeHolder"
             placeholder="Please enter your full name"
+            name="fullname"
             style={{
               borderRadius: "8px",
               border: "1px solid #E0E4EC",
@@ -32,6 +33,7 @@ export default function SettingsForm() {
           <input
             className="placeHolder"
             placeholder="Please enter your email"
+            name="email"
             style={{
               borderRadius: "8px",
               border: "1px solid #E0E4EC",
@@ -49,6 +51,7 @@ export default function SettingsForm() {
           <input
             className="placeHolder"
             placeholder="Please enter your username"
+            name="username"
             style={{
               borderRadius: "8px",
               border: "1px solid #E0E4EC",
@@ -60,10 +63,11 @@ export default function SettingsForm() {
           />
         </div>
         <div>
-          <label style={{ marginBottom: "8px" }}>Phone Number</label>
+          <label style={{ marginBottom: "8px" }}>Gender</label>
           <input
             className="placeHolder"
-            placeholder="Please enter your phone number"
+            placeholder="Please enter your gender"
+            name="gender"
             style={{
               borderRadius: "8px",
               border: "1px solid #E0E4EC",
@@ -91,7 +95,7 @@ export default function SettingsForm() {
       </div>
 
       <div>
-        <button style={{marginRight:'20px', background:'#29B94A', color:'white', padding:'10px 20px'}} type="button" class="btn">
+        <button type="submit" style={{marginRight:'20px', background:'#29B94A', color:'white', padding:'10px 20px'}} class="btn">
           Update Profile
         </button>
         <button type="button" class="btn" onClick={handleReset}>

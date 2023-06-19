@@ -5,6 +5,16 @@ import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
 
 export default function Settings() {
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault()
+    const fullnameUpdated = e.target.fullname.value
+    const emailUpdated = e.target.email.value
+    const genderUpdated = e.target.gender.value
+    const usernameUpdated = e.target.username.value
+
+    console.log(e.target.fullname.value)
+  }
   return (
     <div style={{ display: "flex", flexDirection: "column", width:'100%' }}>
       <div
@@ -45,7 +55,7 @@ export default function Settings() {
             <SettingsProfile />
           </div>
           <div style={{ marginTop: "3em" }}>
-            <SettingsForm />
+            <SettingsForm handleFormSubmit={handleFormSubmit}/>
           </div>
         </div>
       </div>

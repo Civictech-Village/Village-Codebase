@@ -18,9 +18,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width:'400px',
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -95,22 +94,22 @@ export default function HomePage() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <form className="ui form" onSubmit={handleSubmit}>
-              <div className="four fields" widths="equal">
-                <div className="field ui fluid">
-                  <label>Organization Name</label>
-                  <input type="text" name="name" placeholder="Name" />
+            <form className="ui form" onSubmit={handleSubmit} style={{width:'100%', border:'0'}}>
+              <div className="four fields mb-1" widths="equal">
+                <div className="field ui fluid mb-3">
+                  <label className="form-label">Organization Name</label>
+                  <input className="form-control" type="text" name="name" placeholder="Name" />
                 </div>
-                <div className="field ui fluid">
-                  <label>Location</label>
-                  <input type="text" name="location" placeholder="County" />
+                <div className="field ui fluid mb-3">
+                  <label className="form-label">Location</label>
+                  <input className="form-control" type="text" name="location" placeholder="Location (City, ST)" />
                 </div>
-                <div className="field ui fluid">
-                  <label>Image URL</label>
-                  <input type="file" name="image" placeholder="Image" />
+                <div className="field ui fluid mb-3">
+                  <label className="form-label">Image URL</label>
+                  <input className="form-control" type="file" name="image" placeholder="Image" />
                 </div>
               </div>
-              <button className="ui button" type="submit">
+              <button className="btn btn-primary d-flex " type="submit">
                 Submit
               </button>
             </form>

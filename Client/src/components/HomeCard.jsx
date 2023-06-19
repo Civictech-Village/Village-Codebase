@@ -1,6 +1,56 @@
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-export default function HomeCard() {
+import { useEffect, useState } from "react";
+import { fetchHandler } from "../utils";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { deleteOptions } from "../utils";
+import { getPostOptions } from "../utils";
+
+export default function HomeCard({ props }) {
+  const [hasliked, setHasLiked] = useState(false);
+  const [like, setLikes] = useState(0);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const result = await fetchHandler("/api/like/" + props.post_id);
+      const hasLiked = await fetchHandler("/api/hasliked/" + props.post_id);
+      setLikes(result);
+      setHasLiked(hasLiked[0]);
+    };
+    fetch();
+  }, [hasliked]);
+
+  function getTimeDifferenceString(givenTime) {
+    const givenTimestamp = new Date(givenTime).getTime();
+    const currentTimestamp = Date.now();
+    const timeDifference = Math.floor(
+      (currentTimestamp - givenTimestamp) / 1000 / 60
+    ); // Convert to minutes
+    if (timeDifference < 60) {
+      return timeDifference + " minutes ago";
+    } else {
+      const hoursDifference = Math.floor(timeDifference / 60);
+      return hoursDifference + " hours ago";
+    }
+  }
+
+  const handleClick = async () => {
+    const result = await fetchHandler(
+      "/api/like/" + props.post_id,
+      getPostOptions()
+    );
+    setHasLiked(!hasliked);
+    return result;
+  };
+  const handleDelete = async () => {
+    const result = await fetchHandler(
+      "/api/destroylike/" + props.post_id,
+      deleteOptions
+    );
+    setHasLiked(!hasliked);
+    return result;
+  };
+
   return (
     <div
       className="card"
@@ -14,7 +64,7 @@ export default function HomeCard() {
       }}
     >
       <img
-        src="https://via.placeholder.com/350x150"
+        src={props.image ? props.image : "https://via.placeholder.com/350x150"}
         className="card-img-top"
         alt="..."
       />
@@ -48,9 +98,9 @@ export default function HomeCard() {
                 textAlign: "center",
               }}
             >
-              Issues
+              {props.name ? props.name : "undefined"}
             </li>
-            <li
+            {/* <li
               style={{
                 margin: "0 10px",
                 borderRadius: "90px",
@@ -64,7 +114,7 @@ export default function HomeCard() {
               }}
             >
               Infrastructure
-            </li>
+            </li> */}
           </ul>
           <div
             style={{
@@ -75,11 +125,19 @@ export default function HomeCard() {
           >
             <img
               className="profilePic"
-              style={{ width: "40px", height: "40px", marginBottom:'3px' }}
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+              style={{ width: "40px", height: "40px", marginBottom: "3px" }}
+              src={
+                props.profile_pciture
+                  ? props.profile_pciture
+                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+              }
             ></img>
-            <h5>Charles Deo</h5>
-            <p>115 mins ago</p>
+            <h5>{props.username ? props.username : "undefined"}</h5>
+            <p>
+              {props.created_at
+                ? getTimeDifferenceString(props.created_at)
+                : "undefined"}
+            </p>
           </div>
         </div>
         <h5 className="card-title">Leaky Pipe</h5>
@@ -87,12 +145,19 @@ export default function HomeCard() {
           My pipe burst for the third time this month!!!
         </p>
         <div style={{ display: "flex" }}>
-          <div style={{marginRight:'12px'}}>
-            <FavoriteBorderIcon style={{marginRight:'3px'}}/>
-            {0}
+          <div style={{ marginRight: "12px" }}>
+            {hasliked ? (
+              <FavoriteIcon onClick={handleDelete} />
+            ) : (
+              <FavoriteBorderIcon
+                onClick={handleClick}
+                sx={{ marginRight: "5px" }}
+              />
+            )}
+            {like}
           </div>
           <div>
-            <ChatBubbleOutlineIcon style={{marginRight:'3px'}}/>
+            <ChatBubbleOutlineIcon style={{ marginRight: "3px" }} />
             {0}
           </div>
         </div>

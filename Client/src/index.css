@@ -227,7 +227,7 @@ form {
 
 #postSection {
   width: 574px;
-  height: 664px;
+  height: 100%;
 
   background: #ffffff;
   border-radius: 10px;
