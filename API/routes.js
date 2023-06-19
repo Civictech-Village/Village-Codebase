@@ -11,7 +11,7 @@ const upload = require('./utils/multer');
 const Router = express.Router();
 Router.use(addModels);
 
-Router.post('/posts/:id', postController.create);
+Router.post('/posts/:id', upload.single('image'), postController.create);
 Router.get('/posts/:id', postController.listByIssue);
 Router.get('/postsVillage/:id', postController.listAll);
 Router.patch('/posts/:id', postController.update);

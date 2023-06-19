@@ -34,7 +34,7 @@ class Issues {
       const { rows } = await knex.raw(query, [village_id]);
       return rows.map((issue) => new Issues(issue));
     } catch (err) {
-        console.error(err)
+        console.error(err);
         return null;
     }
   }
