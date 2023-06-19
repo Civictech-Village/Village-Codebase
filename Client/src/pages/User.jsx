@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import UserPostCard from "../components/UserPostCard";
 import { fetchHandler } from "../utils";
 import { deleteOptions } from "../utils";
+import Footer from "../components/LandingPage/Footer";
 
 export default function UserPage() {
   const navigate = useNavigate();
@@ -23,8 +24,6 @@ export default function UserPage() {
   const [posts, setPosts] = useState([]);
   const [errorText, setErrorText] = useState(null);
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
-
 
   const date = (date) => {
     const months = [
@@ -52,7 +51,6 @@ export default function UserPage() {
   const { id } = useParams();
   const isCurrentUserProfile = currentUser && currentUser.id === Number(id);
 
- 
   useEffect(() => {
     const loadUser = async () => {
       const [user, error] = await getUser(id);
@@ -79,17 +77,24 @@ export default function UserPage() {
     navigate("/");
   };
 
-  
   const handlePostDestroy = async (postId) => {
     try {
       await fetchHandler(`/api/posts/${postId}`, deleteOptions);
       // Refetch all posts after successful deletion
-      const updatedPosts = await fetchHandler('/api/userPosts/' + id);
-      setPosts(updatedPosts);
+      const updatedPosts = await fetchHandler("/api/userPosts/" + id);
+      const newPosts = posts.filter((elem) => {
+        console.log(elem, updatedPosts);
+        if (elem.post_id !== updatedPosts[0].post_id) {
+          return elem;
+        }
+      });
+      console.log(updatedPosts[0]);
+
+      setPosts(updatedPosts[0]);
     } catch (error) {
       // Handle error if deletion or refetch fails
-      console.error(error)
-      return null
+      console.error(error);
+      return null;
     }
   };
 
@@ -116,7 +121,7 @@ export default function UserPage() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        height:'100%'
+        height: "100%",
       }}
     >
       <div style={{ display: "flex", width: "95%" }}>
@@ -185,14 +190,18 @@ export default function UserPage() {
               }}
             >
               <Person2Icon />{" "}
-              {currentUser && currentUser.gender ? currentUser.gender : "Undefined"}
+              {currentUser && currentUser.gender
+                ? currentUser.gender
+                : "Undefined"}
             </h6>
             <h6
               className="ContactText"
               style={{ padding: "16px 0", borderBottom: "0.5px solid #030229" }}
             >
               <CakeIcon />{" "}
-              {currentUser && currentUser.birthday ? date(currentUser.birthday) : "Undefined"}
+              {currentUser && currentUser.birthday
+                ? date(currentUser.birthday)
+                : "Undefined"}
             </h6>
             <h6
               className="ContactText"
@@ -202,7 +211,9 @@ export default function UserPage() {
             </h6>
             <h6 className="ContactText" style={{ padding: "16px 0" }}>
               <EmailIcon />{" "}
-              {currentUser && currentUser.email ? currentUser.email : "Undefined"}
+              {currentUser && currentUser.email
+                ? currentUser.email
+                : "Undefined"}
             </h6>
           </div>
         </div>
@@ -220,9 +231,23 @@ export default function UserPage() {
           >
             <h3>Posts</h3>
           </div>
-          <div style={{ display: "flex", width: "100%", padding: "20px 43px", flexDirection:'column' }}>
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              padding: "20px 43px",
+              flexDirection: "column",
+            }}
+          >
             {posts.map((elem) => {
-              return <UserPostCard props={elem} isCurrentUserProfile={isCurrentUserProfile} handlePostDestroy={handlePostDestroy}/>;
+              console.log(elem);
+              return (
+                <UserPostCard
+                  props={elem}
+                  isCurrentUserProfile={isCurrentUserProfile}
+                  handlePostDestroy={handlePostDestroy}
+                />
+              );
             })}
           </div>
         </div>
@@ -237,6 +262,9 @@ export default function UserPage() {
             <h3>Their Village</h3>
           </div>
         </div>
+      </div>
+      <div style={{width:'100%', marginTop:'20px'}}>
+        <Footer />
       </div>
     </div>
   );

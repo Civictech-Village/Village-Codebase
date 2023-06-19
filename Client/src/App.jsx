@@ -20,6 +20,7 @@ import SideBar from "./components/SideBar";
 import StickyBox from "react-sticky-box";
 import Settings from "./pages/Settings";
 import CurrentUserContext from "./contexts/current-user-context";
+import Footer from "./components/LandingPage/Footer";
 
 export default function App() {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);

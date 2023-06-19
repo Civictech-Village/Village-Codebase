@@ -5,10 +5,14 @@ import { useEffect, useState } from "react";
 import { fetchHandler } from "../utils";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { deleteOptions, getPostOptions } from "../utils";
-export default function UserPostCard({ props, isCurrentUserProfile, handlePostDestroy }) {
+export default function UserPostCard({
+  props,
+  isCurrentUserProfile,
+  handlePostDestroy,
+}) {
   const [hasliked, setHasLiked] = useState(false);
   const [like, setLikes] = useState(0);
-
+  console.log(props);
   function getTimeDifferenceString(givenTime) {
     const givenTimestamp = new Date(givenTime).getTime();
     const currentTimestamp = Date.now();
@@ -25,10 +29,12 @@ export default function UserPostCard({ props, isCurrentUserProfile, handlePostDe
 
   useEffect(() => {
     const fetch = async () => {
-      const result = await fetchHandler("/api/like/" + props.post_id);
-      const hasLiked = await fetchHandler("/api/hasliked/" + props.post_id);
-      setLikes(result);
-      setHasLiked(hasLiked[0]);
+      if (props) {
+        const result = await fetchHandler("/api/like/" + props.post_id);
+        const hasLiked = await fetchHandler("/api/hasliked/" + props.post_id);
+        setLikes(result);
+        setHasLiked(hasLiked[0]);
+      }
     };
     fetch();
   }, [hasliked]);
@@ -50,8 +56,6 @@ export default function UserPostCard({ props, isCurrentUserProfile, handlePostDe
     return result;
   };
 
-
-
   return (
     <div
       style={{
@@ -60,7 +64,7 @@ export default function UserPostCard({ props, isCurrentUserProfile, handlePostDe
         flexDirection: "column",
         borderBottom: "0.7px solid rgba(3, 2, 41, 0.4)",
         paddingBottom: "18px",
-        marginTop:'100px'
+        marginTop: "10px",
       }}
     >
       <div
@@ -110,9 +114,14 @@ export default function UserPostCard({ props, isCurrentUserProfile, handlePostDe
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" onClick={props && handlePostDestroy(props.post_id)}>
-                  Delete
-                </a>
+                {props && (
+                  <a
+                    className="dropdown-item"
+                    onClick={() => handlePostDestroy(props.post_id)}
+                  >
+                    Delete
+                  </a>
+                )}
               </li>
             </ul>
           </div>
@@ -122,7 +131,9 @@ export default function UserPostCard({ props, isCurrentUserProfile, handlePostDe
         <img
           style={{ width: "100%", borderRadius: "10px" }}
           src={
-            props && props.image ? props.image : "https://via.placeholder.com/350x150"
+            props && props.image
+              ? props.image
+              : "https://via.placeholder.com/350x150"
           }
         />
       </div>

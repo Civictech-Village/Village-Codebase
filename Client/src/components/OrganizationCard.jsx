@@ -6,8 +6,8 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export default function OrganizationCard(village) {
-  console.log(village.village);
+export default function OrganizationCard({village}) {
+  console.log(village);
   return (
     <div style={{ borderBottom: "2px solid #E5E7EB", marginBottom:"2em" }}>
       <div
@@ -19,7 +19,7 @@ export default function OrganizationCard(village) {
         <div className="row g-0">
           <div className="col-md-4">
             <img
-              src={`src/images/${village.village.image}`}
+              src={village.image}
               style={{
                 width: "300px",
                 height: "200px",
@@ -32,14 +32,14 @@ export default function OrganizationCard(village) {
           </div>
           <div className="col-md-8">
             <div className="card-body">
-              <h6 className="card-title"> {village.village.location}</h6>
-              <h5 className="card-title"> {village.village.name}</h5>
+              <h6 className="card-title"> {village.location}</h6>
+              <h5 className="card-title"> {village.name}</h5>
               <p className="card-text">
                 *Possible Village Bio*
               </p>
               <p className="card-text">
                 <Link
-                  to={"/organizations/" + village.village.village_id}
+                  to={"/organizations/" + village.village_id}
                   style={{
                     textDecoration: "none",
                     borderBottom: "2px solid black",

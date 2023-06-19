@@ -11,6 +11,7 @@ export default function Footer() {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-around",
+        borderTop:'1px solid rgba(0,0,0, 0.1)'
       }}
     >
       <div id="Links" style={{ display: "flex", flexDirection: "column", marginTop:'20px' }}>

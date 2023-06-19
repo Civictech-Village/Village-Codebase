@@ -13,12 +13,13 @@ import OrganizationCard from "../components/OrganizationCard";
 import { useEffect, useState } from "react";
 import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
+import Footer from "../components/LandingPage/Footer";
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width:'400px',
+  width: "400px",
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
@@ -73,7 +74,7 @@ export default function HomePage() {
         <SearchBar />
         <Avatar />
       </div>
-      <h1>Organizations</h1>
+      <h1>Villages</h1>
       <div
         style={{
           width: "100%",
@@ -85,7 +86,7 @@ export default function HomePage() {
         }}
       >
         <Button variant="contained" onClick={handleOpen}>
-          Create Oraganization
+          Create Villages
         </Button>
         <Modal
           open={!open}
@@ -94,19 +95,38 @@ export default function HomePage() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <form className="ui form" onSubmit={handleSubmit} style={{width:'100%', border:'0'}}>
+            <form
+              className="ui form"
+              onSubmit={handleSubmit}
+              style={{ width: "100%", border: "0" }}
+            >
               <div className="four fields mb-1" widths="equal">
                 <div className="field ui fluid mb-3">
                   <label className="form-label">Organization Name</label>
-                  <input className="form-control" type="text" name="name" placeholder="Name" />
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                  />
                 </div>
                 <div className="field ui fluid mb-3">
                   <label className="form-label">Location</label>
-                  <input className="form-control" type="text" name="location" placeholder="Location (City, ST)" />
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="location"
+                    placeholder="Location (City, ST)"
+                  />
                 </div>
                 <div className="field ui fluid mb-3">
                   <label className="form-label">Image URL</label>
-                  <input className="form-control" type="file" name="image" placeholder="Image" />
+                  <input
+                    className="form-control"
+                    type="file"
+                    name="image"
+                    placeholder="Image"
+                  />
                 </div>
               </div>
               <button className="btn btn-primary d-flex " type="submit">
@@ -121,8 +141,9 @@ export default function HomePage() {
           ))}
         </div>
       </div>
+      <div style={{width:'100%'}}>
+        <Footer />
+      </div>
     </div>
   );
 }
-
-

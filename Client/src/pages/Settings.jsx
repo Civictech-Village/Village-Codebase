@@ -3,20 +3,20 @@ import SettingsProfile from "../components/Settings/SettingsPicture";
 import SettingsForm from "../components/Settings/SettingsForm";
 import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
+import Footer from "../components/LandingPage/Footer";
 
 export default function Settings() {
-
   const handleFormSubmit = async (e) => {
-    e.preventDefault()
-    const fullnameUpdated = e.target.fullname.value
-    const emailUpdated = e.target.email.value
-    const genderUpdated = e.target.gender.value
-    const usernameUpdated = e.target.username.value
+    e.preventDefault();
+    const fullnameUpdated = e.target.fullname.value;
+    const emailUpdated = e.target.email.value;
+    const genderUpdated = e.target.gender.value;
+    const usernameUpdated = e.target.username.value;
 
-    console.log(e.target.fullname.value)
-  }
+    console.log(e.target.fullname.value);
+  };
   return (
-    <div style={{ display: "flex", flexDirection: "column", width:'100%' }}>
+    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
       <div
         style={{
           width: "100%",
@@ -33,8 +33,8 @@ export default function Settings() {
         style={{
           height: "100%",
           width: "100%",
-          flexDirection:'row-reverse',
-          display:'flex'
+          flexDirection: "row-reverse",
+          display: "flex",
         }}
       >
         <div
@@ -55,9 +55,12 @@ export default function Settings() {
             <SettingsProfile />
           </div>
           <div style={{ marginTop: "3em" }}>
-            <SettingsForm handleFormSubmit={handleFormSubmit}/>
+            <SettingsForm handleFormSubmit={handleFormSubmit} />
           </div>
         </div>
+      </div>
+      <div style={{ width: "100%", marginTop: "20px" }}>
+        <Footer />
       </div>
     </div>
   );
