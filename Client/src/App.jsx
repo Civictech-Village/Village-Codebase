@@ -14,7 +14,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Organizations from "./pages/Organizations";
 import OrgLayoutPage from "./pages/OrgLayout";
-import LandingPage from "./pages/landingpage";
+import LandingPage from "./pages/LandingPage";
+import SingleOrg from "./pages/SingleOrg";
 import SideBar from "./components/SideBar";
 import StickyBox from "react-sticky-box";
 import Settings from "./pages/Settings";
@@ -63,7 +64,7 @@ export default function App() {
               element={
                 <>
                   <SideBar />
-                  <OrgLayoutPage />
+                 <SingleOrg></SingleOrg>
                 </>
               }
             />

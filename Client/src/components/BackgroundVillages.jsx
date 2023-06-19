@@ -38,16 +38,15 @@ function BackgroundVillage({
       }}
     >
       <div style={{}}>
-        {image ? (
-          <CardMedia
-            component="img"
-            sx={{ width: "400px", objectFit: "cover", height: "265px" }}
-            image={`/src/images/${image}`}
-            alt="placeHolder"
-          />
-        ) : (
-          <p>Loading...</p>
-        )}
+      {image ? (<CardMedia
+          component="img"
+          sx={{width:"400px", objectFit:"cover",height:"265px"}}
+          image={image}
+          alt="placeHolder"
+        />
+      ) : (
+        <p>Loading...</p>
+      )}
       </div>
       <CardContent
         sx={{

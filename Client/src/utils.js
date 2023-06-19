@@ -28,7 +28,7 @@ export const getPatchOptions = (body) => ({
   body: JSON.stringify(body),
 });
 
-export const serializeFormData = function (form) {
+export const serializeFormData = (form) => {
   const obj = {};
   const formData = new FormData(form);
   // eslint-disable-next-line no-restricted-syntax
