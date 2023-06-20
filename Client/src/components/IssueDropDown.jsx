@@ -7,13 +7,13 @@ import { fetchHandler } from "../utils";
 
 export default function IssueDropDown({
   issue,
-  id,
   handleOpen,
   handleClose,
   selected,
   toggle,
   i,
   open,
+  id,
 }) {
   const [posts, setPosts] = useState([]);
   const style = {
@@ -85,7 +85,7 @@ export default function IssueDropDown({
             </Modal>
           </div>
           <h1
-            className="switch"
+            className=""
             style={{ fontSize: "4rem", marginLeft:'1rem' }}
             onClick={() => toggle(i)}
           >
@@ -94,8 +94,8 @@ export default function IssueDropDown({
         </div>
       </div>
       <div className={selected === i ? "contentshow" : "content"}>
-        {posts.map((elem) => (
-          <RemadePosts elem={elem}></RemadePosts>
+        {posts.map((elem, ii) => (
+          <RemadePosts key={ii} elem={elem}></RemadePosts>
         ))}
       </div>
     </div>

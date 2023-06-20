@@ -54,7 +54,7 @@ export default function VillageBody() {
     >
       <div id="Issue" style={{}}>
         {issues.map((issue, i) => {
-          return <IssueDropDown open={open} issue={issue} id={issue.issue_id} handleOpen={handleOpen} handleClose={handleClose} selected={selected} toggle={toggle} i={i}></IssueDropDown>
+          return <IssueDropDown key={i} open={open} issue={issue} id={issue.issue_id} handleOpen={handleOpen} handleClose={handleClose} selected={selected} toggle={toggle} i={i}></IssueDropDown>
         })}
       </div>
     </div>

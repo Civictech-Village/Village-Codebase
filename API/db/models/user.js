@@ -25,13 +25,13 @@ class User {
   }
 
   static async list() {
-    try{
+    try {
       const query = "SELECT * FROM users";
       const { rows } = await knex.raw(query);
       return rows.map((user) => new User(user));
     } catch(err) {
-      console.error(err)
-      return null
+      console.error(err);
+      return null;
     }
   }
 
@@ -95,11 +95,24 @@ class User {
     return knex.raw("TRUNCATE users;");
   }
 
-  update = async (username) => {
+  update = async (
+    username,
+    profile_picture,
+    email,
+    gender,
+    birthday,
+    background_image,
+  ) => {
     // dynamic queries are easier if you add more properties
     const [updatedUser] = await knex("users")
       .where({ id: this.id })
-      .update({ username })
+      .update({
+        username,
+        profile_picture,
+        email,
+        gender,
+        birthday,
+        background_image })
       .returning("*");
     return updatedUser ? new User(updatedUser) : null;
   };

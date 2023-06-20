@@ -1,20 +1,32 @@
+const { unlinkSync } = require('fs');
+require('dotenv').config();
+const cloudinary = require('cloudinary').v2;
 const { isAuthorized } = require('../../utils/auth-utils');
 
 const updateUser = async (req, res) => {
+  console.log("made it here")
   const {
     session,
     db: { User },
     params: { id },
-    body: { username },
+    body: { username, email, gender, birthday, background_image },
+    file,
+    body,
   } = req;
+  console.log(body)
+  const main = async () => {
+    if (!isAuthorized(id, session)) return res.sendStatus(403);
+    let user = await User.find(id);
+    if (!user) return res.sendStatus(404);
 
-  if (!isAuthorized(id, session)) return res.sendStatus(403);
-
-  const user = await User.find(id);
-  if (!user) return res.sendStatus(404);
-
-  const updatedUser = await user.update(username);
-  res.send(updatedUser);
+    const result = await cloudinary.uploader.upload(path);
+    const profile_picture = result.url;
+    unlinkSync(path);
+    console.log(username, profile_picture, email, gender, birthday, background_image);
+    if (!user) return res.status(409).send('There is something wrong with the form you submitted.');
+    res.send(user);
+  };
+  // main();
 };
 
 module.exports = updateUser;

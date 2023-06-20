@@ -87,7 +87,7 @@ export default function RemadePosts({ elem }) {
         <div style={{ margin: "1rem 0px" }}>
           <img
             style={{ width: "100%" }}
-            src="https://res.cloudinary.com/ddj0t5srx/image/upload/v1686773178/samples/landscapes/architecture-signs.jpg"
+            src={elem.image}
             alt=""
           />
         </div>
