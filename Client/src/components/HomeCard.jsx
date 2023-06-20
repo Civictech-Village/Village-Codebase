@@ -51,7 +51,6 @@ export default function HomeCard({ props }) {
     return result;
   };
 
-  console.log(props)
 
 
   return (

@@ -10,7 +10,6 @@ import { getPostOptions } from "../utils";
 import { useEffect, useState } from "react";
 import { deleteOptions } from "../utils";
 export default function RemadePosts({ elem }) {
-  console.log(elem);
   const [like, setLikes] = useState(0);
   const [hasliked, setHasLiked] = useState(false);
   useEffect(() => {

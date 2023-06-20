@@ -8,11 +8,13 @@ import CurrentUserContext from "../contexts/current-user-context";
 import { Navigate, useNavigate } from "react-router-dom";
 import { fetchHandler } from "../utils";
 import Footer from "../components/LandingPage/Footer";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
   const [activeTab, setActiveTab] = useState("popular");
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -30,27 +32,39 @@ export default function HomePage() {
       };
     }
   }, [currentUser, navigate]);
+
   useEffect(() => {
     const doFetch = async () => {
-      const posts = await fetchHandler("/api/popularPost");
+      const posts = await fetchHandler(`/api/popularPost?page=${page}&limit=5`);
       if (posts[0]) {
         setPosts(posts[0]);
+        setPage(page + 1);
       }
     };
     doFetch();
   }, []);
+
+  const fetchMoreData = async () => {
+    const updated = await fetchHandler(`/api/popularPost?page=${page}&limit=5`);
+    if (updated[0]) {
+      const arr = [...posts]
+      arr.push(...updated[0])
+      setPosts(arr[0]);
+      setPage(page + 1);
+    }
+  };
 
   const handleMyVillage = async () => {
     const posts = await fetchHandler("/api/myVillagePost");
     if (posts[0]) {
       setPosts(posts[0]);
     }
-    console.log(posts)
+    console.log(posts);
     setActiveTab("myVillage");
   };
 
   const handlePopular = async () => {
-    const posts = await fetchHandler("/api/popularPost");
+    const posts = await fetchHandler(`/api/popularPost?page=${page}&limit=5`);
     if (posts[0]) {
       setPosts(posts[0]);
     }
@@ -82,6 +96,7 @@ export default function HomePage() {
           height: "100%",
           marginBottom: "3em",
         }}
+        id="posts"
       >
         <Tabs
           handlePopular={handlePopular}
@@ -89,9 +104,16 @@ export default function HomePage() {
           activeTab={activeTab}
         />
         {posts.length > 0 ? (
-          posts.map((elem) => {
-            return <HomeCard props={elem} />;
-          })
+          <InfiniteScroll
+            dataLength={posts.length}
+            next={fetchMoreData}
+            hasMore={true}
+            loader={<h4>Loading...</h4>}
+          >
+            {posts.map((elem) => {
+              return <HomeCard props={elem} />;
+            })}
+          </InfiniteScroll>
         ) : (
           <p style={{ margin: "auto" }}>
             Sorry, There are no posts here for now

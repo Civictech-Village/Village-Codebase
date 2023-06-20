@@ -19,6 +19,7 @@ export default function SingleOrg() {
   const [village, setVillage] = useState({});
   const [members, setMembers] = useState([]);
   const [userJoined, setUserJoined] = useState(false);
+  const [userType, setUserType] = useState(null)
 
   const { id } = useParams();
 
@@ -83,6 +84,7 @@ export default function SingleOrg() {
         handler={handleJoin}
         leaveHandle={handleLeave}
         userJoined={userJoined}
+        userType={userType}
       ></VillageHead>
       <div style={{ padding: "20px", display: "flex" }}>
         <VillageLocation></VillageLocation>

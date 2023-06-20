@@ -16,6 +16,8 @@ export default function IssueDropDown({
   open,
 }) {
   const [posts, setPosts] = useState([]);
+  const [issueID, setIssue] = useState(id)
+  console.log(issue, id, issue.issue_id);
   const style = {
     position: "absolute",
     top: "50%",
@@ -29,12 +31,22 @@ export default function IssueDropDown({
   };
   useEffect(() => {
     const fetchPostByissue = async () => {
-      const result = await fetchHandler(`/api/posts/` + id);
+      const result = await fetchHandler(`/api/posts/` + issue.issue_id);
       setPosts(result[0]);
+      console.log(issue.issue_id)
       return result;
     };
     fetchPostByissue();
-  }, []);
+  }, [open]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    console.log(issue.issue_id, id)
+    createPost(data, issue.issue_id, Number(id));
+    handleClose();
+  }
+
   return (
     <div
       className="item"
@@ -42,10 +54,15 @@ export default function IssueDropDown({
       key={i}
     >
       <div className="title">
-        <h2 style={{maxWidth:'300px'}}>{issue.name}</h2>
-        <div style={{display:'flex', alignItems:'center'}}>
+        <h2 style={{ maxWidth: "300px" }}>{issue.name}</h2>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <div>
-            <button className="buttn" onClick={handleOpen}>
+            <button
+              className="buttn"
+              onClick={(e) => {
+                handleOpen();
+              }}
+            >
               Create Post
             </button>
             <Modal
@@ -57,12 +74,7 @@ export default function IssueDropDown({
               <Box sx={style}>
                 <form
                   className="ui form"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    const data = new FormData(e.target);
-                    createPost(data, issue.issue_id, id);
-                    handleClose();
-                  }}
+                  onSubmit={handleSubmit}
                 >
                   <div className="" widths="equal">
                     <div className="field ui fluid">
@@ -86,7 +98,7 @@ export default function IssueDropDown({
           </div>
           <h1
             className="switch"
-            style={{ fontSize: "4rem", marginLeft:'1rem' }}
+            style={{ fontSize: "4rem", marginLeft: "1rem" }}
             onClick={() => toggle(i)}
           >
             {selected === i ? "-" : "+"}

@@ -92,6 +92,22 @@ class Village {
       return null;
     }
   }
+
+  static async findUsersVillage (user_id) {
+    try {
+      const query = `SELECT villages.*
+      FROM villages
+      JOIN users_villages ON villages.village_id = users_villages.village_id
+      JOIN users ON users.id = users_villages.user_id
+      WHERE users.id = ?;
+       `
+       const {rows} = await knex.raw(query, [user_id])
+      return rows
+    } catch(err) {
+      console.error(err)
+      return null
+    }
+  }
 }
 
 module.exports = Village;

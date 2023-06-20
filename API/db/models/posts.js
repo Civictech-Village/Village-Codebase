@@ -162,7 +162,7 @@ class Posts {
     }
   }
 
-  static async listPopularLiked() {
+  static async listPopularLiked(page, limit) {
     try {
       const query = `SELECT posts.*, likes.likeCount, issues.name, users.username, users.profile_picture
       FROM posts
@@ -173,8 +173,10 @@ class Posts {
       ) likes ON posts.post_id = likes.post_id
       LEFT JOIN issues ON posts.issue_id = issues.issue_id
       LEFT JOIN users ON posts.user_id = users.id
-      ORDER BY likes.likeCount DESC;`;
-      const { rows } = await knex.raw(query);
+      ORDER BY likes.likeCount DESC
+      OFFSET ?
+      LIMIT ?`;
+      const { rows } = await knex.raw(query, [page, limit]);
       return rows;
     } catch (err) {
       console.error(err);

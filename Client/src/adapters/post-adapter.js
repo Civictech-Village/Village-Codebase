@@ -2,7 +2,7 @@ import { fetchHandler, getPostOptions, getPatchOptions, formDataPostOptions } fr
 
 const baseUrl = '/api/posts/';
 
-export const createPost = async (formData, issue_id, village_id) => {
+export const createPost = async (formData, village_id,issue_id) => {
   formData.append("issue_id", issue_id);
   fetchHandler(baseUrl + village_id, formDataPostOptions(formData));
 };

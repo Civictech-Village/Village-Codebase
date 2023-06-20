@@ -12,7 +12,6 @@ export default function UserPostCard({
 }) {
   const [hasliked, setHasLiked] = useState(false);
   const [like, setLikes] = useState(0);
-  console.log(props);
   function getTimeDifferenceString(givenTime) {
     const givenTimestamp = new Date(givenTime).getTime();
     const currentTimestamp = Date.now();
