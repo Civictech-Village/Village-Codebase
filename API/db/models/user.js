@@ -12,7 +12,6 @@ class User {
     email,
     gender,
     birthday,
-    phone,
     background_image,
   }) {
     this.id = id;
@@ -22,7 +21,6 @@ class User {
     this.gender = gender;
     this.birthday = birthday ? new Date(birthday) : null;
     this.email = email;
-    this.phone = phone;
     this.backgroundImage = background_image;
   }
 

@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const userController = require('./controllers/user');
 const postController = require('./controllers/posts');
-const issueController = require('./controllers/issues')
+const issueController = require('./controllers/issues');
 const villageController = require('./controllers/village');
 const addModels = require('./middleware/add-models');
 const checkAuthentication = require('./middleware/check-authentication');
@@ -11,10 +11,19 @@ const upload = require('./utils/multer');
 const Router = express.Router();
 Router.use(addModels);
 
-Router.post('/posts', postController.create);
-Router.get('/posts/:id', postController.listByIssue);
+Router.post('/posts/:id', upload.single('image'), postController.create);
+Router.get('/posts/:issue_id', postController.listByIssue);
+Router.get('/postsVillage/:id', postController.listAll);
 Router.patch('/posts/:id', postController.update);
-Router.delete('/posts/:id', postController.destroy);
+Router.delete('/posts/:post_id', postController.destroy);
+Router.post('/like/:id', postController.like)
+Router.get('/like/:id', postController.likeCount)
+Router.get('/hasliked/:id', postController.hasLiked)
+Router.delete('/destroylike/:id', postController.destroyLike)
+Router.get('/popularPost', postController.popularLikes)
+Router.get('/myVillagePost', postController.villagePosts)
+Router.get('/userPosts/:id', postController.listUsersPosts)
+
 
 Router.get("/image/:name", (req, res) => {
   const { params: { name } } = req;
@@ -22,9 +31,9 @@ Router.get("/image/:name", (req, res) => {
   res.sendFile(path.join(__dirname, "./images", name));
 });
 
-Router.get('/issues/:id', issueController.list)
-Router.post('/issues/:id', issueController.create)
-Router.delete('/issues/:issue_id', issueController.destroy)
+Router.get('/issues/:id', issueController.list);
+Router.post('/issues/:id', issueController.create);
+Router.delete('/issues/:issue_id', issueController.destroy);
 
 Router.post('/villages', upload.single('image'), villageController.create);
 Router.get('/villages', villageController.list);

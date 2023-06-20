@@ -20,13 +20,13 @@ class Village {
   }
 
   static async findUser(userId, villageId) {
-    try{
+    try {
       const query = `SELECT * FROM users_villages WHERE village_id = ? AND user_id = ?`
-      const {rows:[row]} = await knex.raw(query,[villageId, userId])
+      const {rows:[row]} = await knex.raw(query,[villageId, userId]); 
       return row;
-    }catch(err) {
-      console.error(err)
-      return null
+    } catch (err) {
+      console.error(err);
+      return null;
     }
   }
 
