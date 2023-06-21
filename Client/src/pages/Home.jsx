@@ -49,6 +49,7 @@ export default function HomePage() {
     if (updated[0]) {
       const arr = [...posts]
       arr.push(...updated[0])
+      console.log(arr)
       setPosts(arr[0]);
       setPage(page + 1);
     }
