@@ -347,3 +347,15 @@ form {
     opacity: 1;
   }
 }
+
+.commentsModal {
+  display: flex !important;
+  flex-direction: row !important;
+  min-height: 600px;
+  max-height: 700px;
+  overflow: hidden;
+}
+
+#scrollablediv::-webkit-scrollbar {
+  display: none;
+}
