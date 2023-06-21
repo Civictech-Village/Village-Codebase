@@ -164,7 +164,7 @@ class Posts {
 
   static async listPopularLiked(page, limit) {
     try {
-      const query = `SELECT posts.*, likes.likeCount, issues.name, users.username, users.profile_picture
+      const query = `SELECT posts.*, likes.likeCount, issues.name, users.username, users.profile_picture, villages.name AS village_name
       FROM posts
       LEFT JOIN (
         SELECT post_id, COUNT(*) AS likeCount
@@ -173,7 +173,8 @@ class Posts {
       ) likes ON posts.post_id = likes.post_id
       LEFT JOIN issues ON posts.issue_id = issues.issue_id
       LEFT JOIN users ON posts.user_id = users.id
-      ORDER BY likes.likeCount DESC
+      LEFT JOIN villages ON posts.village_id = villages.village_id
+      ORDER BY likes.likeCount ASC
       OFFSET ?
       LIMIT ?`;
       const { rows } = await knex.raw(query, [page, limit]);

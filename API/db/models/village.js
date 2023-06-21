@@ -56,7 +56,7 @@ class Village {
       return await knex.transaction(async (trx) => {
         try {
           const { rows: [village] } = await trx.raw(createQuery, createParams);
-          console.log(village);
+          console.log(911);
           joinParams[2] = village.village_id;
           const { rows: [join] } = await trx.raw(joinQuery, joinParams);
           return { village };

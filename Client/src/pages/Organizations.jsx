@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import CurrentUserContext from "../contexts/current-user-context";
-import { serializeFormData } from "../utils";
+import { fetchHandler, serializeFormData } from "../utils";
 import {
   createVillage,
   getAllVillages,
@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
 import Footer from "../components/LandingPage/Footer";
+import config from "../../config";
 const style = {
   position: "absolute",
   top: "50%",
@@ -44,6 +45,8 @@ export default function HomePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const location = await fetchHandler('http://api.positionstack.com/v1/forward?access_key=' + config.API_KEY)
+    console.log(location)
     const data = new FormData(e.target);
     data.append("user_id", String(currentUser.id));
     createVillage(data);

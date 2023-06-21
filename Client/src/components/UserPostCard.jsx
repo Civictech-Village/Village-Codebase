@@ -128,7 +128,7 @@ export default function UserPostCard({
       </div>
       <div style={{ width: "100%" }}>
         <img
-          style={{ width: "100%", borderRadius: "10px" }}
+          style={{ width: "100%", borderRadius: "10px", maxHeight:'400px' }}
           src={
             props && props.image
               ? props.image

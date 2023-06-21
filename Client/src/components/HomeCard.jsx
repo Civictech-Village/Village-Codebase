@@ -6,6 +6,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { deleteOptions } from "../utils";
 import { getPostOptions } from "../utils";
 import CommentModal from "./CommentModal/CommentModal";
+import { Link } from "react-router-dom";
 export default function HomeCard({ props, openModal }) {
   const [hasliked, setHasLiked] = useState(false);
   const [like, setLikes] = useState(0);
@@ -24,7 +25,7 @@ export default function HomeCard({ props, openModal }) {
   }, [hasliked]);
 
 
-
+  console.log(props)
   function getTimeDifferenceString(givenTime) {
     const givenTimestamp = new Date(givenTime).getTime();
     const currentTimestamp = Date.now();
@@ -99,7 +100,6 @@ export default function HomeCard({ props, openModal }) {
               style={{
                 margin: "0 10px",
                 borderRadius: "90px",
-                backgroundColor: "#D11036",
                 width: "fit-content",
                 display: "flex",
                 justifyContent: "center",
@@ -108,7 +108,7 @@ export default function HomeCard({ props, openModal }) {
                 textAlign: "center",
               }}
             >
-              Issue
+              <Link style={{textDecoration:'none', color:'white'}} to={'/organizations/' + props.village_id}><button className="btn btn-outline-dark">{props.village_name}</button></Link>
             </li>
             {/* <li
               style={{

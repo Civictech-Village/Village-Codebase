@@ -18,7 +18,17 @@ export default function HomePage() {
   const [page, setPage] = useState(0);
   const [hasMore, sethasMore] = useState(true);
   const [activeTab, setActiveTab] = useState("popular");
+  const [show, setShow] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
 
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = (post) => {
+    setSelectedPost(post);
+
+    setShow(true);
+  };
 
   const [loading, setLoading] = useState(false);
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
@@ -83,6 +93,12 @@ export default function HomePage() {
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
+      <CommentModal
+        isOpen={show}
+        closeModal={handleClose}
+        post={selectedPost}
+      />
+
       <div
         style={{
           width: "100%",
