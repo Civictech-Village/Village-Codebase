@@ -1,5 +1,5 @@
 import { fetchHandler, getPostOptions, getPatchOptions, formDataPostOptions } from "../utils";
-
+import {formDataPatchOptions} from "../utils";
 const baseUrl = '/api/users';
 
 export const createUser = async ({ username, password, email, gender }, birthday) => (
@@ -19,5 +19,5 @@ export const updateUsername = async ({ id, username }) => (
 );
 
 export const updateUser = async (id, formData) => (
-  fetchHandler(`${baseUrl}/${id}`, getPatchOptions(formData))
+  fetchHandler(`${baseUrl}/${id}`, formDataPatchOptions(formData))
 );

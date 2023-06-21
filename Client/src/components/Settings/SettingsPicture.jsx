@@ -15,10 +15,11 @@ export default function SettingsProfile() {
     e.preventDefault();
     // const currentUserData = new FormData(currentUser);
     var form_data = new FormData(e.target);
-      // for ( var key in currentUser ) {
-      //   form_data.append(key, currentUser[key]);
-      // }
-      // console.log("log")
+      for ( var key in currentUser ) {
+        form_data.append(key, currentUser[key]);
+        // console.log(key, currentUser[key])
+      }
+
     updateUser(currentUser.id, form_data);
     handleClose;
   };

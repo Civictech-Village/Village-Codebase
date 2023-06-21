@@ -4,16 +4,13 @@ const cloudinary = require('cloudinary').v2;
 const { isAuthorized } = require('../../utils/auth-utils');
 
 const updateUser = async (req, res) => {
-  console.log("made it here")
   const {
     session,
     db: { User },
     params: { id },
     body: { username, email, gender, birthday, background_image },
-    file,
-    body,
+    file: { path }
   } = req;
-  console.log(body)
   const main = async () => {
     if (!isAuthorized(id, session)) return res.sendStatus(403);
     let user = await User.find(id);
@@ -22,11 +19,12 @@ const updateUser = async (req, res) => {
     const result = await cloudinary.uploader.upload(path);
     const profile_picture = result.url;
     unlinkSync(path);
-    console.log(username, profile_picture, email, gender, birthday, background_image);
+    background_image = null
+    user = User.update(username, profile_picture, email, gender, birthday, background_image)
     if (!user) return res.status(409).send('There is something wrong with the form you submitted.');
     res.send(user);
   };
-  // main();
+  main();
 };
 
 module.exports = updateUser;
