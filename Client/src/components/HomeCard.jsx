@@ -2,11 +2,11 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { useEffect, useState } from "react";
 import { fetchHandler } from "../utils";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { deleteOptions } from "../utils";
 import { getPostOptions } from "../utils";
-
-export default function HomeCard({ props }) {
+import CommentModal from "./CommentModal/CommentModal";
+export default function HomeCard({ props, openModal }) {
   const [hasliked, setHasLiked] = useState(false);
   const [like, setLikes] = useState(0);
 
@@ -51,8 +51,6 @@ export default function HomeCard({ props }) {
     return result;
   };
 
-
-
   return (
     <div
       className="card"
@@ -63,16 +61,19 @@ export default function HomeCard({ props }) {
         marginTop: "5em",
         boxShadow: "0px 12px 24px rgba(34, 34, 34, 0.12)",
         padding: "13px",
-        display:'flex'
+        display: "flex",
       }}
     >
       <img
         src={props.image ? props.image : "https://via.placeholder.com/350x150"}
-        style={{width:'100%', height:'50%'}}
+        style={{ width: "100%", height: "50%" }}
         className="card-img-top"
         alt="..."
       />
-      <div className="card-body" style={{ padding: "0", paddingTop: "10px", height:'100%'}}>
+      <div
+        className="card-body"
+        style={{ padding: "0", paddingTop: "10px", height: "100%" }}
+      >
         <div
           style={{
             display: "flex",
@@ -146,7 +147,7 @@ export default function HomeCard({ props }) {
         </div>
         <h5 className="card-title"> {props.name ? props.name : "undefined"}</h5>
         <p className="card-text">
-        {props.message ? props.message : "undefined"}
+          {props.message ? props.message : "undefined"}
         </p>
         <div style={{ display: "flex" }}>
           <div style={{ marginRight: "12px" }}>
@@ -161,7 +162,11 @@ export default function HomeCard({ props }) {
             {like}
           </div>
           <div>
-            <ChatBubbleOutlineIcon style={{ marginRight: "3px" }} />
+            <ChatBubbleOutlineIcon
+              type="button"
+              onClick={openModal}
+              style={{ marginRight: "3px" }}
+            />
             {0}
           </div>
         </div>
