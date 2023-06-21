@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
 import Footer from "../components/LandingPage/Footer";
-import config from "../../config";
 const style = {
   position: "absolute",
   top: "50%",
@@ -39,16 +38,21 @@ export default function HomePage() {
     const fetchOrganizations = async () => {
       const result = await getAllVillages();
       setOrganizations(result);
+      
     };
     fetchOrganizations();
   }, [open]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const location = await fetchHandler('http://api.positionstack.com/v1/forward?access_key=' + config.API_KEY)
-    console.log(location)
+    const location = await fetch(`https://geocode.maps.co/search?q=${e.target.location.value}`)
+    const response = await location.json()
+    let lat = response[0].lat
+    let lon = response[0].lon
     const data = new FormData(e.target);
     data.append("user_id", String(currentUser.id));
+    data.append('lat', lat)
+    data.append('lon', lon)
     createVillage(data);
     handleClose();
   };

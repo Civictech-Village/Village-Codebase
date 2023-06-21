@@ -41,16 +41,16 @@ class Village {
     }
   }
 
-  static async create(name, image, location, user_id) {
+  static async create(name, image, location, user_id, lon, lat) {
     try {
       const createQuery = `
-      INSERT INTO villages (name, image, location) VALUES (?,?,?) RETURNING *;
+      INSERT INTO villages (name, image, location, latitude, longitude) VALUES (?,?,?, ?, ?) RETURNING *;
     `;
       const joinQuery = `
       INSERT INTO users_villages (user_id, user_type, village_id) VALUES (?,?,?) RETURNING *;
     `;
 
-      const createParams = [name, image, location];
+      const createParams = [name, image, location, lat, lon];
       const joinParams = [user_id, "owner", null];
 
       return await knex.transaction(async (trx) => {
