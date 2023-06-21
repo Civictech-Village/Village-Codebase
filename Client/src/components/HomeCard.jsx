@@ -9,16 +9,21 @@ import CommentModal from "./CommentModal/CommentModal";
 export default function HomeCard({ props, openModal }) {
   const [hasliked, setHasLiked] = useState(false);
   const [like, setLikes] = useState(0);
+  const [comments, setComments] = useState(0)
 
   useEffect(() => {
     const fetch = async () => {
       const result = await fetchHandler("/api/like/" + props.post_id);
       const hasLiked = await fetchHandler("/api/hasliked/" + props.post_id);
+      const commentCount = await fetchHandler("/api/commentCount/" + props.post_id)
       setLikes(result);
       setHasLiked(hasLiked[0]);
+      setComments(commentCount[0].comment_count)
     };
     fetch();
   }, [hasliked]);
+
+
 
   function getTimeDifferenceString(givenTime) {
     const givenTimestamp = new Date(givenTime).getTime();
@@ -56,7 +61,7 @@ export default function HomeCard({ props, openModal }) {
       className="card"
       style={{
         borderRadius: "8px",
-        height: "480px",
+        height: "520px",
         width: "500px",
         marginTop: "5em",
         boxShadow: "0px 12px 24px rgba(34, 34, 34, 0.12)",
@@ -167,7 +172,7 @@ export default function HomeCard({ props, openModal }) {
               onClick={openModal}
               style={{ marginRight: "3px" }}
             />
-            {0}
+            {comments}
           </div>
         </div>
       </div>

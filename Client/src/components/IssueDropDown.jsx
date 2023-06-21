@@ -4,6 +4,7 @@ import RemadePosts from "./RemadePosts";
 import { createPost } from "../adapters/post-adapter";
 import { useEffect, useState } from "react";
 import { fetchHandler } from "../utils";
+import CommentModal from "./CommentModal/CommentModal";
 
 export default function IssueDropDown({
   issue,
@@ -14,9 +15,12 @@ export default function IssueDropDown({
   toggle,
   i,
   open,
+  handleShow
 }) {
   const [posts, setPosts] = useState([]);
-  const [issueID, setIssue] = useState(id)
+  const [issueID, setIssue] = useState(id);
+
+
   console.log(issue, id, issue.issue_id);
   const style = {
     position: "absolute",
@@ -33,7 +37,7 @@ export default function IssueDropDown({
     const fetchPostByissue = async () => {
       const result = await fetchHandler(`/api/posts/` + issue.issue_id);
       setPosts(result[0]);
-      console.log(issue.issue_id)
+      console.log(issue.issue_id);
       return result;
     };
     fetchPostByissue();
@@ -42,10 +46,10 @@ export default function IssueDropDown({
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    console.log(issue.issue_id, id)
+    console.log(issue.issue_id, id);
     createPost(data, issue.issue_id, Number(id));
     handleClose();
-  }
+  };
 
   return (
     <div
@@ -72,10 +76,7 @@ export default function IssueDropDown({
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <form
-                  className="ui form"
-                  onSubmit={handleSubmit}
-                >
+                <form className="ui form" onSubmit={handleSubmit}>
                   <div className="" widths="equal">
                     <div className="field ui fluid">
                       <label></label>
@@ -107,7 +108,7 @@ export default function IssueDropDown({
       </div>
       <div className={selected === i ? "contentshow" : "content"}>
         {posts.map((elem) => (
-          <RemadePosts elem={elem}></RemadePosts>
+          <RemadePosts elem={elem} openModal={() => handleShow(elem)}></RemadePosts>
         ))}
       </div>
     </div>

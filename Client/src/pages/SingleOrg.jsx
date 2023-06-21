@@ -3,13 +3,18 @@
 /* eslint-disable no-trailing-spaces */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { deleteOptions, fetchHandler, getPostOptions, serializeFormData } from "../utils";
+import {
+  deleteOptions,
+  fetchHandler,
+  getPostOptions,
+  serializeFormData,
+} from "../utils";
 import VillageHead from "../components/VillageHead";
 import { Accordion, Icon, toggleButtonClasses } from "@mui/material";
 import RemadePosts from "../components/RemadePosts";
 import "../accordian.css";
 import * as React from "react";
-
+import CommentModal from "../components/CommentModal/CommentModal";
 import VillageBody from "../components/VillageBody";
 import VillageLocation from "../components/VillageLocation";
 import VillageMembers from "../components/VillageMembers";
@@ -19,7 +24,18 @@ export default function SingleOrg() {
   const [village, setVillage] = useState({});
   const [members, setMembers] = useState([]);
   const [userJoined, setUserJoined] = useState(false);
-  const [userType, setUserType] = useState(null)
+  const [userType, setUserType] = useState(null);
+  const [show, setShow] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
+
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = (post) => {
+    setSelectedPost(post);
+    console.log('sup')
+    setShow(true);
+  };
 
   const { id } = useParams();
 
@@ -78,6 +94,11 @@ export default function SingleOrg() {
 
   return (
     <div style={{ backgroundColor: "#f7f7f8", width: "100%" }}>
+      <CommentModal
+        isOpen={show}
+        closeModal={handleClose}
+        post={selectedPost}
+      />
       <VillageHead
         village={village}
         members={members.length}
@@ -88,10 +109,10 @@ export default function SingleOrg() {
       ></VillageHead>
       <div style={{ padding: "20px", display: "flex" }}>
         <VillageLocation></VillageLocation>
-        <VillageBody></VillageBody>
+        <VillageBody handleShow={handleShow}></VillageBody>
         <VillageMembers></VillageMembers>
       </div>
-      <div style={{width:'100%', marginTop:'20px'}}>
+      <div style={{ width: "100%", marginTop: "20px" }}>
         <Footer />
       </div>
     </div>
