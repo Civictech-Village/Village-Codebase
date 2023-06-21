@@ -4,9 +4,9 @@ Village is an application for local community members who wish to stay engaged i
 
 ## Team
 
-  - __Product Owner__: Vinny Antoinne-Fils
+  - __Product Owner__: Christian Knox-Phillips 
   - __Scrum Master__: Gabriel Inniss
-  - __Development Team Members__: Vincent Lamanno, Christian Knox-Phillips 
+  - __Development Team Members__: Vincent Lamanno, Vinny Antoinne-Fils
 
 ## Table of Contents
 
