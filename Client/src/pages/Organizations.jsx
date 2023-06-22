@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
 import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
 import Footer from "../components/LandingPage/Footer";
+import ReactPaginate from "react-paginate";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -38,24 +40,75 @@ export default function HomePage() {
     const fetchOrganizations = async () => {
       const result = await getAllVillages();
       setOrganizations(result);
-      
     };
     fetchOrganizations();
   }, [open]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const location = await fetch(`https://geocode.maps.co/search?q=${e.target.location.value}`)
-    const response = await location.json()
-    let lat = response[0].lat
-    let lon = response[0].lon
+    const location = await fetch(
+      `https://geocode.maps.co/search?q=${e.target.location.value}`
+    );
+    const response = await location.json();
+    let lat = response[0].lat;
+    let lon = response[0].lon;
     const data = new FormData(e.target);
     data.append("user_id", String(currentUser.id));
-    data.append('lat', lat)
-    data.append('lon', lon)
+    data.append("lat", lat);
+    data.append("lon", lon);
     createVillage(data);
     handleClose();
   };
+
+  function Items({ currentItems }) {
+    return (
+      <>
+        {currentItems &&
+          currentItems.map((organization, index) => (
+            <OrganizationCard key={index} village={organization} />
+          ))}
+      </>
+    );
+  }
+
+  function PaginatedItems({ itemsPerPage }) {
+    // Here we use item offsets; we could also use page offsets
+    // following the API or data you're working with.
+    const [itemOffset, setItemOffset] = useState(0);
+
+    // Simulate fetching items from another resources.
+    // (This could be items from props; or items loaded in a local state
+    // from an API endpoint with useEffect and useState)
+    const endOffset = itemOffset + itemsPerPage;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    const currentItems = Organizations.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(Organizations.length / itemsPerPage);
+
+    // Invoke when user click to request another page.
+    const handlePageClick = (event) => {
+      const newOffset = (event.selected * itemsPerPage) % Organizations.length;
+      console.log(
+        `User requested page number ${event.selected}, which is offset ${newOffset}`
+      );
+      setItemOffset(newOffset);
+    };
+
+    return (
+      <>
+        <Items currentItems={currentItems} />
+        <ReactPaginate
+          className="react-paginate"
+          breakLabel="..."
+          nextLabel=">"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="<"
+          renderOnZeroPageCount={null}
+        />
+      </>
+    );
+  }
 
   return (
     <div
@@ -143,12 +196,10 @@ export default function HomePage() {
           </Box>
         </Modal>
         <div id="org-gallery" style={{ height: "100%", padding: "100px" }}>
-          {Organizations.map((organization, index) => (
-            <OrganizationCard key={index} village={organization} />
-          ))}
+          <PaginatedItems itemsPerPage={4} />,
         </div>
       </div>
-      <div style={{width:'100%'}}>
+      <div style={{ width: "100%" }}>
         <Footer />
       </div>
     </div>

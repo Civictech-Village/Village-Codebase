@@ -22,7 +22,6 @@ export default function SideBar() {
         <ul class="menu" style={{ marginTop: "2.5em", borderTop: "1px solid" }}>
           <li className="sideBarItem">
             <HomeIcon />
-            <h6>
               <NavLink
                 to="/"
                 style={{
@@ -33,7 +32,6 @@ export default function SideBar() {
               >
                 Home
               </NavLink>
-            </h6>
           </li>
           <li className="sideBarItem">
             <img style={{ width: "24px", height: "24px" }} src={Houses}></img>

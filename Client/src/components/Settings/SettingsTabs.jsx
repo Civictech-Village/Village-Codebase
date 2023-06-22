@@ -5,34 +5,19 @@ export default function SettingsTabs() {
       style={{
         width: "75%",
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         paddingBottom:'2px',
         borderBottom:'2px solid #E0E4EC'
       }}
     >
       <li className="nav-item">
         <a
-          style={{ fontSize: "20px" }}
+          style={{ fontSize: "20px", paddingLeft:'5px' }}
           className="nav-link active"
           aria-current="page"
           href="#"
         >
-          Account Setting
-        </a>
-      </li>
-      <li className="nav-item">
-        <a style={{ fontSize: "20px" }} className="nav-link" href="#">
-          Login & Security
-        </a>
-      </li>
-      <li className="nav-item">
-        <a style={{ fontSize: "20px" }} className="nav-link" href="#">
-          Notifications
-        </a>
-      </li>
-      <li className="nav-item">
-        <a style={{ fontSize: "20px" }} className="nav-link" href="#">
-          Interface
+          Account Information
         </a>
       </li>
     </ul>
