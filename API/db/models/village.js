@@ -41,22 +41,22 @@ class Village {
     }
   }
 
-  static async create(name, image, location, user_id) {
+  static async create(name, image, location, user_id, lon, lat) {
     try {
       const createQuery = `
-      INSERT INTO villages (name, image, location) VALUES (?,?,?) RETURNING *;
+      INSERT INTO villages (name, image, location, latitude, longitude) VALUES (?,?,?, ?, ?) RETURNING *;
     `;
       const joinQuery = `
       INSERT INTO users_villages (user_id, user_type, village_id) VALUES (?,?,?) RETURNING *;
     `;
 
-      const createParams = [name, image, location];
+      const createParams = [name, image, location, lat, lon];
       const joinParams = [user_id, "owner", null];
 
       return await knex.transaction(async (trx) => {
         try {
           const { rows: [village] } = await trx.raw(createQuery, createParams);
-          console.log(village);
+          console.log(911);
           joinParams[2] = village.village_id;
           const { rows: [join] } = await trx.raw(joinQuery, joinParams);
           return { village };
@@ -90,6 +90,22 @@ class Village {
     } catch (err) {
       console.error(err);
       return null;
+    }
+  }
+
+  static async findUsersVillage (user_id) {
+    try {
+      const query = `SELECT villages.*
+      FROM villages
+      JOIN users_villages ON villages.village_id = users_villages.village_id
+      JOIN users ON users.id = users_villages.user_id
+      WHERE users.id = ?;
+       `
+       const {rows} = await knex.raw(query, [user_id])
+      return rows
+    } catch(err) {
+      console.error(err)
+      return null
     }
   }
 }

@@ -2,24 +2,30 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { useEffect, useState } from "react";
 import { fetchHandler } from "../utils";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { deleteOptions } from "../utils";
 import { getPostOptions } from "../utils";
-
-export default function HomeCard({ props }) {
+import CommentModal from "./CommentModal/CommentModal";
+import { Link } from "react-router-dom";
+export default function HomeCard({ props, openModal }) {
   const [hasliked, setHasLiked] = useState(false);
   const [like, setLikes] = useState(0);
+  const [comments, setComments] = useState(0)
 
   useEffect(() => {
     const fetch = async () => {
       const result = await fetchHandler("/api/like/" + props.post_id);
       const hasLiked = await fetchHandler("/api/hasliked/" + props.post_id);
+      const commentCount = await fetchHandler("/api/commentCount/" + props.post_id)
       setLikes(result);
       setHasLiked(hasLiked[0]);
+      setComments(commentCount[0].comment_count)
     };
     fetch();
   }, [hasliked]);
 
+
+  console.log(props)
   function getTimeDifferenceString(givenTime) {
     const givenTimestamp = new Date(givenTime).getTime();
     const currentTimestamp = Date.now();
@@ -51,29 +57,29 @@ export default function HomeCard({ props }) {
     return result;
   };
 
-  console.log(props)
-
-
   return (
     <div
       className="card"
       style={{
         borderRadius: "8px",
-        height: "480px",
+        height: "520px",
         width: "500px",
         marginTop: "5em",
         boxShadow: "0px 12px 24px rgba(34, 34, 34, 0.12)",
         padding: "13px",
-        display:'flex'
+        display: "flex",
       }}
     >
       <img
         src={props.image ? props.image : "https://via.placeholder.com/350x150"}
-        style={{width:'100%', height:'50%'}}
+        style={{ width: "100%", height: "50%" }}
         className="card-img-top"
         alt="..."
       />
-      <div className="card-body" style={{ padding: "0", paddingTop: "10px", height:'100%'}}>
+      <div
+        className="card-body"
+        style={{ padding: "0", paddingTop: "10px", height: "100%" }}
+      >
         <div
           style={{
             display: "flex",
@@ -94,7 +100,6 @@ export default function HomeCard({ props }) {
               style={{
                 margin: "0 10px",
                 borderRadius: "90px",
-                backgroundColor: "#D11036",
                 width: "fit-content",
                 display: "flex",
                 justifyContent: "center",
@@ -103,7 +108,7 @@ export default function HomeCard({ props }) {
                 textAlign: "center",
               }}
             >
-              Issue
+              <Link style={{textDecoration:'none', color:'white'}} to={'/organizations/' + props.village_id}><button className="btn btn-outline-dark">{props.village_name}</button></Link>
             </li>
             {/* <li
               style={{
@@ -147,7 +152,7 @@ export default function HomeCard({ props }) {
         </div>
         <h5 className="card-title"> {props.name ? props.name : "undefined"}</h5>
         <p className="card-text">
-        {props.message ? props.message : "undefined"}
+          {props.message ? props.message : "undefined"}
         </p>
         <div style={{ display: "flex" }}>
           <div style={{ marginRight: "12px" }}>
@@ -162,8 +167,12 @@ export default function HomeCard({ props }) {
             {like}
           </div>
           <div>
-            <ChatBubbleOutlineIcon style={{ marginRight: "3px" }} />
-            {0}
+            <ChatBubbleOutlineIcon
+              type="button"
+              onClick={openModal}
+              style={{ marginRight: "3px" }}
+            />
+            {comments}
           </div>
         </div>
       </div>

@@ -7,10 +7,12 @@ import RemadePosts from "./RemadePosts";
 import { createPost } from "../adapters/post-adapter";
 import IssueDropDown from "./IssueDropDown";
 
-export default function VillageBody() {
+export default function VillageBody({handleShow}) {
   const [issues, setIssues] = useState([]);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => {setOpen(true)};
+  const handleOpen = () => {
+    setOpen(true);
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -25,8 +27,6 @@ export default function VillageBody() {
   useEffect(() => {
     fetchIssues();
   }, []);
-
-
 
   const toggle = (i) => {
     if (selected === i) {
@@ -54,7 +54,22 @@ export default function VillageBody() {
     >
       <div id="Issue" style={{}}>
         {issues.map((issue, i) => {
-          return <IssueDropDown key={i} open={open} issue={issue} id={issue.issue_id} handleOpen={handleOpen} handleClose={handleClose} selected={selected} toggle={toggle} i={i}></IssueDropDown>
+          console.log(issue.issue_id)
+
+          return (
+            <IssueDropDown
+              key={i}
+              open={open}
+              issue={issue}
+              id={id}
+              handleOpen={handleOpen}
+              handleClose={handleClose}
+              selected={selected}
+              toggle={toggle}
+              i={i}
+              handleShow={handleShow}
+            ></IssueDropDown>
+          );
         })}
       </div>
     </div>

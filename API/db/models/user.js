@@ -96,7 +96,7 @@ class User {
   }
 
   static async deleteAll() {
-    return knex.raw("TRUNCATE users;");
+    return knex.raw("TRUNCATE users RESTART IDENTITY");
   }
 
   // static async update (

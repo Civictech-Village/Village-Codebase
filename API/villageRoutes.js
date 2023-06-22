@@ -14,4 +14,6 @@ villageRouter.delete('/villages/:id', villageController.destroy)
 
 villageRouter.post('/villages/:id', villageController.join);
 
+villageRouter.get('/villageUser/:id', villageController.listUserVillage)
+
 module.exports = villageRouter;
