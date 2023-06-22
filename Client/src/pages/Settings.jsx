@@ -1,9 +1,11 @@
+import { useContext } from "react";
+import CurrentUserContext from "../contexts/current-user-context";
+import Footer from "../components/LandingPage/Footer";
 import SettingsTabs from "../components/Settings/SettingsTabs";
 import SettingsProfile from "../components/Settings/SettingsPicture";
 import SettingsForm from "../components/Settings/SettingsForm";
 import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
-import Footer from "../components/LandingPage/Footer";
 
 export default function Settings() {
   const handleFormSubmit = async (e) => {
@@ -12,9 +14,9 @@ export default function Settings() {
     const emailUpdated = e.target.email.value;
     const genderUpdated = e.target.gender.value;
     const usernameUpdated = e.target.username.value;
-
-    console.log(e.target.fullname.value);
   };
+  const { currentUser } = useContext(CurrentUserContext);
+  console.log(currentUser);
   return (
     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
       <div

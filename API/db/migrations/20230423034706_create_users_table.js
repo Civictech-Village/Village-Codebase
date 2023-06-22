@@ -14,6 +14,7 @@ exports.up = (knex) => knex.schema.createTable('users', (table) => {
   table.string('full_name')
   table.string('background_image');
   table.integer('village_id');
+  table.string('bio');
   table.timestamps(true, true);
 });
 

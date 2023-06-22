@@ -8,7 +8,6 @@ import CommentModal from "./CommentModal/CommentModal";
 
 export default function IssueDropDown({
   issue,
-  id,
   handleOpen,
   handleClose,
   selected,
@@ -99,7 +98,7 @@ export default function IssueDropDown({
           </div>
           <h1
             className="switch"
-            style={{ fontSize: "4rem", marginLeft: "1rem" }}
+            style={{ fontSize: "4rem", marginLeft:'1rem' }}
             onClick={() => toggle(i)}
           >
             {selected === i ? "-" : "+"}
@@ -108,7 +107,7 @@ export default function IssueDropDown({
       </div>
       <div className={selected === i ? "contentshow" : "content"}>
         {posts.map((elem) => (
-          <RemadePosts elem={elem} openModal={() => handleShow(elem)}></RemadePosts>
+          <RemadePosts elem={elem}></RemadePosts>
         ))}
       </div>
     </div>
