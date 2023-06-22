@@ -21,8 +21,6 @@ import StickyBox from "react-sticky-box";
 import Settings from "./pages/Settings";
 import CurrentUserContext from "./contexts/current-user-context";
 import Footer from "./components/LandingPage/Footer";
-
-import LandingPage from "./pages/LandingPage";
 export default function App() {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   useEffect(() => {

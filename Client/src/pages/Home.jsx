@@ -8,7 +8,7 @@ import OrganizationCard from '../components/OrganizationCard';
 import { createVillage, getAllVillages } from '../adapters/organizations-adapter';
 
 
-function HomePage() {
+export default function HomePage() {
 const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 const [Organizations, setOrganizations] = React.useState([]);
 const [open, setOpen] = React.useState(true);
@@ -19,13 +19,13 @@ useEffect(() => {
   } 
   fetchOrganizations()
 }, [open, setOpen])
-console.log(Organizations)
+console.log(Organizations.splice(3))
 
   return (
     <div style={{ display: 'flex', padding: '2% 2%' }}>
       <div style={{ flex: '1', marginRight: '10px' }}>
-        <h1 style={{ textAlign: 'left', color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}>Welcome {currentUser.username}</h1>
-        <h2 style={{ marginTop: '10%', color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}>Potiential Villages for you:</h2>
+        <h1 style={{ textAlign: 'left', color: 'Black'}}>Welcome {currentUser && currentUser.username}</h1>
+        <h2 style={{ marginTop: '10%', color: 'Black'}}>Recently Viewed:</h2>
         {Organizations.map((organization, index) => <OrganizationCard key={index} village={organization}/>)}
         <Bio />
       </div>
