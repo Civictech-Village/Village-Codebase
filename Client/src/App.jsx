@@ -22,6 +22,8 @@ import Settings from "./pages/Settings";
 import CurrentUserContext from "./contexts/current-user-context";
 import Footer from "./components/LandingPage/Footer";
 import Feed from "./pages/Feed";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsAndConditions from "./pages/TermsAndConditions";
 
 export default function App() {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -111,6 +113,22 @@ export default function App() {
                 <>
                   <SideBar />
                   <Feed />
+                </>
+              }
+            />
+            <Route
+              path="/privacypolicy"
+              element={
+                <>
+                  <PrivacyPolicy />
+                </>
+              }
+            />
+            <Route
+              path="/termsandconditions"
+              element={
+                <>
+                  <TermsAndConditions />
                 </>
               }
             />
