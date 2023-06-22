@@ -13,6 +13,8 @@ class User {
     gender,
     birthday,
     background_image,
+    bio,
+    full_name
   }) {
     this.id = id;
     this.username = username;
@@ -22,6 +24,8 @@ class User {
     this.birthday = birthday ? new Date(birthday) : null;
     this.email = email;
     this.backgroundImage = background_image;
+    this.bio = bio
+    this.full_name = full_name
   }
 
   static async list() {
@@ -95,30 +99,50 @@ class User {
     return knex.raw("TRUNCATE users;");
   }
 
-  update = async (
-    username,
-    profile_picture,
-    email,
-    gender,
-    birthday,
-    background_image,
-  ) => {
-    // dynamic queries are easier if you add more properties
-    const [updatedUser] = await knex("users")
-      .where({ id: this.id })
-      .update({
-        username,
-        profile_picture,
-        email,
-        gender,
-        birthday,
-        background_image })
-      .returning("*");
-    return updatedUser ? new User(updatedUser) : null;
-  };
+  // static async update (
+  //   username,
+  //   profile_picture,
+  //   email,
+  //   gender,
+  //   birthday,
+  //   background_image,
+  // ) {
+  //   // dynamic queries are easier if you add more properties
+  //   const [updatedUser] = await knex("users")
+  //     .where({ id: this.id })
+  //     .update({
+  //       username,
+  //       profile_picture,
+  //       email,
+  //       gender,
+  //       birthday,
+  //       background_image })
+  //     .returning("*");
+  //   return updatedUser ? new User(updatedUser) : null;
+  // };
 
-  isValidPassword = async (password) =>
-    isValidPassword(password, this.#passwordHash);
+  static async update(id, username, email, gender, bio, fullName) {
+    try {
+      const query = `UPDATE users SET username = ?, email = ?, gender = ?, bio = ?, full_name = ? WHERE id = ${id} RETURNING *;`;
+      const {
+        rows: [party],
+      } = await knex.raw(query, [username, email, gender, bio, fullName]);
+      return new User(party);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  static async updateProfilePicture (profilePicture, id) {
+    try {
+      const query = `UPDATE users set profile_picture = ? where id = ? RETURNING *;`
+      const user = await knex.raw(query, [profilePicture, id])
+      return user;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  isValidPassword = async (password) => isValidPassword(password, this.#passwordHash);
 }
 
 module.exports = User;
