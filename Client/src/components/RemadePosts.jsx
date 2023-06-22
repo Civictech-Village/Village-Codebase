@@ -68,7 +68,7 @@ export default function RemadePosts({ elem, openModal }) {
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div id="userinfo" style={{ display: "flex" }}>
           <img
-            src={elem.profile_picture ? elem.profile_picture : "https://res.cloudinary.com/ddj0t5srx/image/upload/v1687093019/Screenshot_2023-04-24_205656_qojx4t.png"}
+            src={elem.profile_picture ? elem.profile_picture : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"}
             alt="Pfp"
             style={{ width: "8rem", height: "8rem", borderRadius: "50%" }}
           />

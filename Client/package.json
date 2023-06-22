@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@egjs/react-flicking": "^4.10.10",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource-variable/nunito": "^5.0.4",
@@ -27,7 +28,8 @@
     "react-modal": "^3.16.1",
     "react-paginate": "^8.2.0",
     "react-router-dom": "^6.11.2",
-    "react-sticky-box": "^2.0.4"
+    "react-sticky-box": "^2.0.4",
+    "swiper": "^9.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
