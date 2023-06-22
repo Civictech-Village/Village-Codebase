@@ -8,12 +8,29 @@ import CurrentUserContext from "../contexts/current-user-context";
 import { Navigate, useNavigate } from "react-router-dom";
 import { fetchHandler } from "../utils";
 import Footer from "../components/LandingPage/Footer";
+import InfiniteScroll from "react-infinite-scroll-component";
+import CommentModal from "../components/CommentModal/CommentModal";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(0);
+  const [hasMore, sethasMore] = useState(true);
   const [activeTab, setActiveTab] = useState("popular");
+  const [show, setShow] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
+
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = (post) => {
+    setSelectedPost(post);
+
+    setShow(true);
+  };
+
+  const [loading, setLoading] = useState(false);
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
@@ -30,27 +47,44 @@ export default function HomePage() {
       };
     }
   }, [currentUser, navigate]);
+
   useEffect(() => {
     const doFetch = async () => {
-      const posts = await fetchHandler("/api/popularPost");
+      const posts = await fetchHandler(`/api/popularPost?page=${page}&limit=5`);
       if (posts[0]) {
         setPosts(posts[0]);
+        setPage(page + 5);
       }
     };
     doFetch();
   }, []);
+
+  const fetchMoreData = async () => {
+    setLoading(true);
+    const updated = await fetchHandler(`/api/popularPost?page=${page}&limit=5`);
+    if (updated[0]) {
+      if (updated[0].length === 0) {
+        sethasMore(false);
+        setLoading(false);
+        return;
+      }
+      setPosts((prevPosts) => [...prevPosts, ...updated[0]]);
+      setPage((prevPage) => prevPage + 5);
+      setLoading(false);
+    }
+  };
 
   const handleMyVillage = async () => {
     const posts = await fetchHandler("/api/myVillagePost");
     if (posts[0]) {
       setPosts(posts[0]);
     }
-    console.log(posts)
+    console.log(posts);
     setActiveTab("myVillage");
   };
 
   const handlePopular = async () => {
-    const posts = await fetchHandler("/api/popularPost");
+    const posts = await fetchHandler(`/api/popularPost?page=${0}&limit=5`);
     if (posts[0]) {
       setPosts(posts[0]);
     }
@@ -59,6 +93,12 @@ export default function HomePage() {
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
+      <CommentModal
+        isOpen={show}
+        closeModal={handleClose}
+        post={selectedPost}
+      />
+
       <div
         style={{
           width: "100%",
@@ -82,16 +122,32 @@ export default function HomePage() {
           height: "100%",
           marginBottom: "3em",
         }}
+        id="posts"
       >
         <Tabs
           handlePopular={handlePopular}
           handleMyVillage={handleMyVillage}
           activeTab={activeTab}
         />
+
         {posts.length > 0 ? (
-          posts.map((elem) => {
-            return <HomeCard props={elem} />;
-          })
+          <InfiniteScroll
+            dataLength={posts.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            loading={loading}
+          >
+            {posts.map((elem, i) => {
+              return (
+                <HomeCard
+                  key={i}
+                  props={elem}
+                  openModal={() => handleShow(elem)}
+                />
+              );
+            })}
+          </InfiniteScroll>
         ) : (
           <p style={{ margin: "auto" }}>
             Sorry, There are no posts here for now

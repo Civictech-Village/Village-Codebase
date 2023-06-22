@@ -9,14 +9,17 @@ import { fetchHandler } from "../utils";
 import { getPostOptions } from "../utils";
 import { useEffect, useState } from "react";
 import { deleteOptions } from "../utils";
-export default function RemadePosts({ elem }) {
-  console.log(elem);
+export default function RemadePosts({ elem, openModal }) {
+
   const [like, setLikes] = useState(0);
   const [hasliked, setHasLiked] = useState(false);
+  const [comments, setComments] = useState(0)
   useEffect(() => {
     const fetch = async () => {
       const result = await fetchHandler("/api/like/" + elem.post_id);
       const hasLiked = await fetchHandler("/api/hasliked/" + elem.post_id);
+      const commentCount = await fetchHandler("/api/commentCount/" + elem.post_id)
+      setComments(commentCount[0].comment_count)
       setLikes(result);
       setHasLiked(hasLiked[0]);
     };
@@ -65,7 +68,7 @@ export default function RemadePosts({ elem }) {
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div id="userinfo" style={{ display: "flex" }}>
           <img
-            src="https://res.cloudinary.com/ddj0t5srx/image/upload/v1687093019/Screenshot_2023-04-24_205656_qojx4t.png"
+            src={elem.profile_picture ? elem.profile_picture : "https://res.cloudinary.com/ddj0t5srx/image/upload/v1687093019/Screenshot_2023-04-24_205656_qojx4t.png"}
             alt="Pfp"
             style={{ width: "8rem", height: "8rem", borderRadius: "50%" }}
           />
@@ -87,7 +90,7 @@ export default function RemadePosts({ elem }) {
         <div style={{ margin: "1rem 0px" }}>
           <img
             style={{ width: "100%" }}
-            src="https://res.cloudinary.com/ddj0t5srx/image/upload/v1686773178/samples/landscapes/architecture-signs.jpg"
+            src={elem.image}
             alt=""
           />
         </div>
@@ -106,7 +109,7 @@ export default function RemadePosts({ elem }) {
             />
           )}
           <p style={{ marginRight: "1rem" }}>{like}</p>
-          <i className="material-icons">add_comment</i>
+        <i onClick={openModal} className="material-icons" type="button">add_comment</i>
           <p style={{ marginRight: "1rem" }}>{0}</p>
         </div>
       </div>

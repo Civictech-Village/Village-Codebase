@@ -12,7 +12,6 @@ export default function UserPostCard({
 }) {
   const [hasliked, setHasLiked] = useState(false);
   const [like, setLikes] = useState(0);
-  console.log(props);
   function getTimeDifferenceString(givenTime) {
     const givenTimestamp = new Date(givenTime).getTime();
     const currentTimestamp = Date.now();
@@ -129,7 +128,7 @@ export default function UserPostCard({
       </div>
       <div style={{ width: "100%" }}>
         <img
-          style={{ width: "100%", borderRadius: "10px" }}
+          style={{ width: "100%", borderRadius: "10px", maxHeight:'400px' }}
           src={
             props && props.image
               ? props.image
