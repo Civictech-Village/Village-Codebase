@@ -14,7 +14,8 @@ export default function IssueDropDown({
   toggle,
   i,
   open,
-  handleShow
+  handleShow,
+  id,
 }) {
   const [posts, setPosts] = useState([]);
   const [issueID, setIssue] = useState(id);

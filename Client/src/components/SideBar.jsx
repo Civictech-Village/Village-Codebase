@@ -85,6 +85,19 @@ export default function SideBar() {
               Settings
             </NavLink>
           </li>
+          <li className="sideBarItem">
+            <SettingsIcon />
+            <NavLink
+              to="/Map"
+              style={{
+                marginLeft: "7px",
+                textAlign: "center",
+                fontSize: "larger",
+              }}
+            >
+              Map
+            </NavLink>
+          </li>
         </ul>
       </StickyBox>
     </div>
