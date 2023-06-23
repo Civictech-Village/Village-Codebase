@@ -22,8 +22,11 @@ export default function UserPage() {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [userProfile, setUserProfile] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [villages, setVillages] = useState([]);
   const [errorText, setErrorText] = useState(null);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [brightness, setBrightness] = useState("100%");
+  const [className, setClassname] = useState("NotActive");
 
   const date = (date) => {
     const months = [
@@ -71,6 +74,17 @@ export default function UserPage() {
     doFetch();
   }, []);
 
+  useEffect(() => {
+    const doFetch = async () => {
+      const villages = await fetchHandler("/api/villageUser/" + id);
+      console.log(villages);
+      if (villages[0]) {
+        setVillages(villages[0]);
+      }
+    };
+    doFetch();
+  }, []);
+
   const handleLogout = async () => {
     logUserOut();
     setCurrentUser(null);
@@ -113,6 +127,8 @@ export default function UserPage() {
     isCurrentUserProfile,
     id,
   };
+
+  console.log(userProfile);
   return (
     <div
       style={{
@@ -134,7 +150,16 @@ export default function UserPage() {
           id="profileandname"
           style={{ display: "flex", justifyContent: "space-between" }}
         >
-          <div id="ProfilePicture"></div>
+          <div
+            id="ProfilePicture"
+            style={{
+              backgroundImage: `url(${
+                userProfile && userProfile.profilePicture
+                  ? userProfile.profilePicture
+                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+              })`,
+            }}
+          ></div>
           <div
             style={{
               display: "flex",
@@ -257,13 +282,87 @@ export default function UserPage() {
               display: "flex",
               justifyContent: "center",
               marginTop: "15px",
+              flexDirection: "column",
+              padding: "10px",
+              textAlign: "center",
             }}
           >
-            <h3>Their Village</h3>
+            <h3 style={{ borderBottom: "1px solid black" }}>
+              {!isCurrentUserProfile ? "Their" : "Your"} Village's
+            </h3>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+                justifyContent: "center",
+              }}
+            >
+              {villages.map((elem) => {
+                console.log(elem);
+                return (
+                  <Link to={`/organizations/` + elem.village_id} style={{
+                    width: "100%",
+                    height: "100%",
+                    textDecoration:'none'
+                  }}>
+                    <div
+                      onMouseEnter={(e) => {
+                        setClassname("slide-in-blurred-top");
+                        setBrightness("50%");
+                      }}
+                      onMouseLeave={(e) => {
+                        setClassname("NotActive");
+                        setBrightness("100%");
+                      }}
+                      style={{
+                        position: "relative",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    >
+                      <div
+                        className="villageProfileImage"
+                        style={{
+                          position: "absolute",
+                          backgroundImage: `url(${elem.image})`,
+                          filter: `brightness(${brightness})`,
+                        }}
+                      >
+                        {" "}
+                      </div>
+                      <div
+                        className={className}
+                        style={{
+                          color: "white",
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <p>{elem.name}</p>
+                        <p
+                          style={{
+                            borderBottom: "10px solid white",
+                            width: "fit-content",
+                            textAlign: "center",
+                          }}
+                        >
+                          {elem.location}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
-      <div style={{width:'100%', marginTop:'20px'}}>
+      <div style={{ width: "100%", marginTop: "20px" }}>
         <Footer />
       </div>
     </div>

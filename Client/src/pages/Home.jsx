@@ -3,6 +3,11 @@ import { useContext, useState, useEffect } from 'react';
 import Home from '../assets/Home.jpg'
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import CurrentUserContext from "../contexts/current-user-context";
+import { Navigate, useNavigate } from "react-router-dom";
+import { fetchHandler } from "../utils";
+import Footer from "../components/LandingPage/Footer";
+import InfiniteScroll from "react-infinite-scroll-component";
+import CommentModal from "../components/CommentModal/CommentModal";
 import background from "/home/vinny/Development/Village-Codebase/Client/src/assets/tribeca-best-neighborhoods-manhattan.jpg";
 import OrganizationCard from '../components/OrganizationCard';
 import { createVillage, getAllVillages } from '../adapters/organizations-adapter';
@@ -71,7 +76,22 @@ function Bio() {
 function App() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(0);
+  const [hasMore, sethasMore] = useState(true);
   const [activeTab, setActiveTab] = useState("popular");
+  const [show, setShow] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
+
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = (post) => {
+    setSelectedPost(post);
+
+    setShow(true);
+  };
+
+  const [loading, setLoading] = useState(false);
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
@@ -88,27 +108,44 @@ function App() {
       };
     }
   }, [currentUser, navigate]);
+
   useEffect(() => {
     const doFetch = async () => {
-      const posts = await fetchHandler("/api/popularPost");
+      const posts = await fetchHandler(`/api/popularPost?page=${page}&limit=5`);
       if (posts[0]) {
         setPosts(posts[0]);
+        setPage(page + 5);
       }
     };
     doFetch();
   }, []);
+
+  const fetchMoreData = async () => {
+    setLoading(true);
+    const updated = await fetchHandler(`/api/popularPost?page=${page}&limit=5`);
+    if (updated[0]) {
+      if (updated[0].length === 0) {
+        sethasMore(false);
+        setLoading(false);
+        return;
+      }
+      setPosts((prevPosts) => [...prevPosts, ...updated[0]]);
+      setPage((prevPage) => prevPage + 5);
+      setLoading(false);
+    }
+  };
 
   const handleMyVillage = async () => {
     const posts = await fetchHandler("/api/myVillagePost");
     if (posts[0]) {
       setPosts(posts[0]);
     }
-    console.log(posts)
+    console.log(posts);
     setActiveTab("myVillage");
   };
 
   const handlePopular = async () => {
-    const posts = await fetchHandler("/api/popularPost");
+    const posts = await fetchHandler(`/api/popularPost?page=${0}&limit=5`);
     if (posts[0]) {
       setPosts(posts[0]);
     }

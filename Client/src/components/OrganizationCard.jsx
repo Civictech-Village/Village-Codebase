@@ -7,7 +7,6 @@ import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function OrganizationCard({village}) {
-  console.log(village);
   return (
     <div style={{ borderBottom: "2px solid #E5E7EB", marginBottom:"2em" }}>
       <div

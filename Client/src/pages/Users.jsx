@@ -12,9 +12,9 @@ export default function UsersPage() {
 
   return <>
     <h1>Users</h1>
-    <ul>
+    <ul style={{width:"100%", display:"flex"}}>
       {
-        users.map((user) => <li key={user.id}><UserLink user={user} /></li>)
+        users.map((user) => <li style={{listStyle:"none", margin:"0 20px"}} key={user.id}><UserLink user={user} /></li>)
       }
     </ul>
   </>;

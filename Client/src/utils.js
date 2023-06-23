@@ -20,6 +20,12 @@ export const formDataPostOptions = (formData) => ({
   credentials: 'include',
   body: formData,
 });
+export const formDataPatchOptions = (formData) => ({
+  method: 'PATCH',
+  credentials: 'include',
+  body: formData,
+});
+
 
 export const getPatchOptions = (body) => ({
   method: 'PATCH',

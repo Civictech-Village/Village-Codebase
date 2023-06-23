@@ -21,6 +21,8 @@ import StickyBox from "react-sticky-box";
 import Settings from "./pages/Settings";
 import CurrentUserContext from "./contexts/current-user-context";
 import Footer from "./components/LandingPage/Footer";
+import Feed from "./pages/Feed";
+
 export default function App() {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   useEffect(() => {
@@ -33,7 +35,7 @@ export default function App() {
         <main>
           <Routes>
             <Route
-              path="/"
+              path="/Feed"
               element={
                 <>
                   <SideBar />
@@ -64,7 +66,7 @@ export default function App() {
               element={
                 <>
                   <SideBar />
-                 <SingleOrg></SingleOrg>
+                  <SingleOrg></SingleOrg>
                 </>
               }
             />
@@ -100,6 +102,15 @@ export default function App() {
                 <>
                   <SideBar />
                   <Settings />
+                </>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <>
+                  <SideBar />
+                  <Feed />
                 </>
               }
             />
