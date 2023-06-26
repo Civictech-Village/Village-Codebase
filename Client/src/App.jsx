@@ -110,7 +110,7 @@ export default function App() {
               path="/Feed"
               element={
                 <>
-                  {/* <SideBar /> */}
+                  <SideBar />
                   <Feed />
                 </>
               }
@@ -119,7 +119,7 @@ export default function App() {
               path="/Map"
               element={
                 <>
-                  {/* <SideBar /> */}
+                  <SideBar />
                   <Map />
                 </>
               }
