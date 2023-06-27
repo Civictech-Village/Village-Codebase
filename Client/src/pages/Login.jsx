@@ -115,7 +115,7 @@ export default function LoginPage() {
           sm={4}
           md={6}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random?professional)",
+            backgroundImage: "url(https://source.unsplash.com/random?neighborhood)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"

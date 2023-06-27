@@ -262,7 +262,7 @@ export default function SignUpPage() {
           sm={4}
           md={6}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random?person)",
+            backgroundImage: "url(https://source.unsplash.com/random?neighborhood)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
