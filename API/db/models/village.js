@@ -20,13 +20,13 @@ class Village {
   }
 
   static async findUser(userId, villageId) {
-    try{
+    try {
       const query = `SELECT * FROM users_villages WHERE village_id = ? AND user_id = ?`
-      const {rows:[row]} = await knex.raw(query,[villageId, userId])
+      const {rows:[row]} = await knex.raw(query,[villageId, userId]); 
       return row;
-    }catch(err) {
-      console.error(err)
-      return null
+    } catch (err) {
+      console.error(err);
+      return null;
     }
   }
 
@@ -41,22 +41,37 @@ class Village {
     }
   }
 
-  static async create(name, image, location, user_id) {
+  static async memberList(village_id) {
+    try {
+      const query = `SELECT users.id, users.username, users.profile_picture
+      FROM Users
+      JOIN users_villages ON users.id = users_villages.user_id
+      JOIN villages ON users_villages.village_id = villages.village_id
+      WHERE villages.village_id = ?`;
+      const { rows } = await knex.raw(query, [village_id]);
+      return rows
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  static async create(name, image, location, user_id, lon, lat) {
     try {
       const createQuery = `
-      INSERT INTO villages (name, image, location) VALUES (?,?,?) RETURNING *;
+      INSERT INTO villages (name, image, location, latitude, longitude) VALUES (?,?,?, ?, ?) RETURNING *;
     `;
       const joinQuery = `
       INSERT INTO users_villages (user_id, user_type, village_id) VALUES (?,?,?) RETURNING *;
     `;
 
-      const createParams = [name, image, location];
+      const createParams = [name, image, location, lat, lon];
       const joinParams = [user_id, "owner", null];
 
       return await knex.transaction(async (trx) => {
         try {
           const { rows: [village] } = await trx.raw(createQuery, createParams);
-          console.log(village);
+          console.log(911);
           joinParams[2] = village.village_id;
           const { rows: [join] } = await trx.raw(joinQuery, joinParams);
           return { village };
@@ -85,11 +100,27 @@ class Village {
   static async destroy(user_id, village_id) {
     try {
       const query = `DELETE FROM users_villages WHERE village_id = ? AND user_id = ?`;
-      const { rows: [village] } = await knex.raw(query, [user_id, village_id]);
+      const { rows: [village] } = await knex.raw(query, [village_id, user_id ]);
       return village;
     } catch (err) {
       console.error(err);
       return null;
+    }
+  }
+
+  static async findUsersVillage (user_id) {
+    try {
+      const query = `SELECT villages.*
+      FROM villages
+      JOIN users_villages ON villages.village_id = users_villages.village_id
+      JOIN users ON users.id = users_villages.user_id
+      WHERE users.id = ?;
+       `
+       const {rows} = await knex.raw(query, [user_id])
+      return rows
+    } catch(err) {
+      console.error(err)
+      return null
     }
   }
 }

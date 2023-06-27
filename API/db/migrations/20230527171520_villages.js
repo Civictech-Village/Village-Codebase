@@ -7,6 +7,8 @@ exports.up = (knex) => knex.schema.createTable('villages', (table) => {
   table.string('name').notNullable().unique();
   table.string('image').notNullable();
   table.string('location').notNullable();
+  table.string('latitude')
+  table.string('longitude')
 });
 
 /**

@@ -3,21 +3,21 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
-export default function Example({ handleClose, show, tab, fetch, issues }) {
+export default function Example({ fetchPosts, handleClose, show, tab, fetch, issues }) {
   return (
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Create A Issue</Modal.Title>
+          {tab === "Posts" ? <Modal.Title>Create A Post</Modal.Title> :<Modal.Title>Create A Issue</Modal.Title> }
         </Modal.Header>
         <Modal.Body>
           {" "}
           {tab === "Posts" ? (
-            <Form>
-              <Form.Label htmlFor="Input">Issue</Form.Label>
-              <Form.Select>
+            <Form onSubmit={fetchPosts}>
+              <Form.Label htmlFor="Input">Posts</Form.Label>
+              <Form.Select name="issue" onChange={(e) => {console.log(e.target.value)}}>
                 {issues.map(elem => {
-                  return <option>{elem.name}</option>
+                  return <option key={elem.issue_id} value={elem.issue_id}>{elem.name}</option>
                 })}
               </Form.Select>
               <Form.Label htmlFor="Input">Description</Form.Label>

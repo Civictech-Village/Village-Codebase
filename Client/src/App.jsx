@@ -15,11 +15,28 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Organizations from "./pages/Organizations";
 import OrgLayoutPage from "./pages/OrgLayout";
 import LandingPage from "./pages/LandingPage";
+<<<<<<< HEAD
+=======
+import SingleOrg from "./pages/SingleOrg";
+import SideBar from "./components/SideBar";
+import StickyBox from "react-sticky-box";
+import Settings from "./pages/Settings";
+import CurrentUserContext from "./contexts/current-user-context";
+import Footer from "./components/LandingPage/Footer";
+import Feed from "./pages/Feed";
+import Map from "./pages/Map";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import Messages from "./pages/Messages";
+>>>>>>> main
 export default function App() {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser, setLoggedIn } =
+    useContext(CurrentUserContext);
   useEffect(() => {
     checkForLoggedInUser().then(setCurrentUser);
+    setLoggedIn(true)
   }, [setCurrentUser]);
+
 
   return (
     <>
@@ -27,10 +44,10 @@ export default function App() {
         <main>
           <Routes>
             <Route
-              path="/"
+              path="/Feed"
               element={
                 <>
-                  <SiteHeadingAndNav />
+                  <SideBar />
                   <Home />
                 </>
               }
@@ -48,7 +65,7 @@ export default function App() {
               path="/organizations"
               element={
                 <>
-                  <SiteHeadingAndNav />
+                  <SideBar />
                   <Organizations />
                 </>
               }
@@ -57,8 +74,8 @@ export default function App() {
               path="/organizations/:id"
               element={
                 <>
-                  <SiteHeadingAndNav />
-                  <OrgLayoutPage />
+                  <SideBar />
+                  <SingleOrg></SingleOrg>
                 </>
               }
             />
@@ -74,7 +91,7 @@ export default function App() {
               path="/users"
               element={
                 <>
-                  <SiteHeadingAndNav />
+                  <SideBar />
                   <UsersPage />
                 </>
               }
@@ -83,8 +100,44 @@ export default function App() {
               path="/users/:id"
               element={
                 <>
-                  <SiteHeadingAndNav />
+                  <SideBar />
                   <UserPage />
+                </>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <>
+                  <SideBar />
+                  <Settings />
+                </>
+              }
+            />
+            <Route
+              path="/Map"
+              element={
+                <>
+                  <SideBar />
+                  <Map />
+                </>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <>
+                  <SideBar />
+                  <Feed />
+                </>
+              }
+            />
+            <Route
+              path="/Messages"
+              element={
+                <>
+                  <SideBar />
+                  <Messages />
                 </>
               }
             />
