@@ -129,6 +129,15 @@ export default function App() {
                 </>
               }
             />
+            <Route
+              path="/Messages"
+              element={
+                <>
+                  <SideBar />
+                  <Messages />
+                </>
+              }
+            />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

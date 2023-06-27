@@ -62,33 +62,7 @@ export default function SideBar() {
             </NavLink>
           </li>
           <li className="sideBarItem">
-            <MapIcon />
-            <NavLink
-              to="/Map"
-              style={{
-                marginLeft: "7px",
-                textAlign: "center",
-                fontSize: "larger",
-              }}
-            >
-              Map
-            </NavLink>
-          </li>
-          <li className="sideBarItem">
             <FeedIcon />
-            <NavLink
-              to="/Messages"
-              style={{
-                marginLeft: "7px",
-                textAlign: "center",
-                fontSize: "larger",
-              }}
-            >
-              Messages
-            </NavLink>
-          </li>
-          <li className="sideBarItem">
-            <ChatIcon />
             <NavLink
               to="/Messages"
               style={{
