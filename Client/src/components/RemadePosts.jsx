@@ -9,7 +9,7 @@ import { fetchHandler } from "../utils";
 import { getPostOptions } from "../utils";
 import { useEffect, useState } from "react";
 import { deleteOptions } from "../utils";
-export default function RemadePosts({ elem, openModal }) {
+export default function RemadePosts({ elem, handleShow }) {
 
   const [like, setLikes] = useState(0);
   const [hasliked, setHasLiked] = useState(false);
@@ -109,7 +109,7 @@ export default function RemadePosts({ elem, openModal }) {
             />
           )}
           <p style={{ marginRight: "1rem" }}>{like}</p>
-        <i onClick={openModal} className="material-icons" type="button">add_comment</i>
+        <i onClick={() => handleShow(elem)} className="material-icons" type="button">add_comment</i>
           <p style={{ marginRight: "1rem" }}>{0}</p>
         </div>
       </div>

@@ -24,12 +24,15 @@ import Footer from "./components/LandingPage/Footer";
 import Feed from "./pages/Feed";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
-
+import Messages from "./pages/Messages";
 export default function App() {
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser, setLoggedIn } =
+    useContext(CurrentUserContext);
   useEffect(() => {
     checkForLoggedInUser().then(setCurrentUser);
+    setLoggedIn(true)
   }, [setCurrentUser]);
+
 
   return (
     <>
@@ -129,6 +132,15 @@ export default function App() {
               element={
                 <>
                   <TermsAndConditions />
+                </>
+              }
+            />
+            <Route
+              path="/Messages"
+              element={
+                <>
+                  <SideBar />
+                  <Messages />
                 </>
               }
             />

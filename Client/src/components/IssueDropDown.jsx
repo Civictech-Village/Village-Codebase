@@ -15,11 +15,11 @@ export default function IssueDropDown({
   i,
   open,
   handleShow,
-  id
+  id,
+  userJoined,
 }) {
   const [posts, setPosts] = useState([]);
   const [issueID, setIssue] = useState(id);
-
 
   console.log(issue, id, issue.issue_id);
   const style = {
@@ -61,14 +61,16 @@ export default function IssueDropDown({
         <h2 style={{ maxWidth: "300px" }}>{issue.name}</h2>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div>
-            <button
-              className="buttn"
-              onClick={(e) => {
-                handleOpen();
-              }}
-            >
-              Create Post
-            </button>
+            {userJoined && (
+              <button
+                className="btn btn-success"
+                onClick={(e) => {
+                  handleOpen();
+                }}
+              >
+                Create Post
+              </button>
+            )}
             <Modal
               open={open}
               onClose={handleClose}
@@ -99,7 +101,7 @@ export default function IssueDropDown({
           </div>
           <h1
             className="switch"
-            style={{ fontSize: "4rem", marginLeft:'1rem' }}
+            style={{ fontSize: "4rem", marginLeft: "1rem" }}
             onClick={() => toggle(i)}
           >
             {selected === i ? "-" : "+"}
@@ -108,7 +110,7 @@ export default function IssueDropDown({
       </div>
       <div className={selected === i ? "contentshow" : "content"}>
         {posts.map((elem) => (
-          <RemadePosts elem={elem}></RemadePosts>
+          <RemadePosts elem={elem} handleShow={handleShow}></RemadePosts>
         ))}
       </div>
     </div>

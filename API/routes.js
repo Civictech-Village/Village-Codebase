@@ -8,6 +8,8 @@ const addModels = require("./middleware/add-models");
 const checkAuthentication = require("./middleware/check-authentication");
 const upload = require("./utils/multer");
 const commentController = require('./controllers/comments')
+const chatroomController = require('./controllers/chatrooms')
+const messageController = require('./controllers/messages')
 
 const Router = express.Router();
 Router.use(addModels);
@@ -38,6 +40,9 @@ Router.get('/commentCount/:id', commentController.commentCount)
 
 Router.post('/comments/:id', commentController.create)
 
+Router.post('/Chatroom', chatroomController.create)
+Router.get('/Chatroom', chatroomController.listUser)
+Router.get('/MessageHistory/:room_id', messageController.listMessage)
 
 Router.get("/issues/:id", issueController.list);
 Router.post("/issues/:id", issueController.create);
@@ -45,6 +50,7 @@ Router.delete("/issues/:issue_id", issueController.destroy);
 
 Router.post("/villages", upload.single("image"), villageController.create);
 Router.get("/villages", villageController.list);
+Router.get("/villagemembers/:id", villageController.findMembers)
 
 Router.get("/users", userController.list);
 Router.post("/users", userController.create);
@@ -59,5 +65,6 @@ Router.get('/me', userController.showMe);
 Router.get("/logged-in-secret", checkAuthentication, (req, res) => {
   res.send({ msg: "The secret is: there is no secret." });
 });
+
 
 module.exports = Router;
