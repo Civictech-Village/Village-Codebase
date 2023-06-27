@@ -15,8 +15,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Organizations from "./pages/Organizations";
 import OrgLayoutPage from "./pages/OrgLayout";
 import LandingPage from "./pages/LandingPage";
-<<<<<<< HEAD
-=======
 import SingleOrg from "./pages/SingleOrg";
 import SideBar from "./components/SideBar";
 import StickyBox from "react-sticky-box";
@@ -28,7 +26,6 @@ import Map from "./pages/Map";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import Messages from "./pages/Messages";
->>>>>>> main
 export default function App() {
   const { currentUser, setCurrentUser, setLoggedIn } =
     useContext(CurrentUserContext);

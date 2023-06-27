@@ -32,8 +32,6 @@ console.log(Organizations.splice(3))
         <h1 style={{ textAlign: 'left', color: 'Black'}}>Welcome {currentUser && currentUser.username}</h1>
         <h2 style={{ marginTop: '10%', color: 'Black'}}>Recently Viewed:</h2>
         {Organizations.map((organization, index) => <OrganizationCard key={index} village={organization}/>)}
-        <Bio />
-        <RecVillages />
       </div>
     </div>
   );
