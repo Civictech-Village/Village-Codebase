@@ -7,6 +7,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import ChatIcon from "@mui/icons-material/Chat";
 import Person2Icon from "@mui/icons-material/Person2";
 import CurrentUserContext from "../contexts/current-user-context";
+import MapIcon from '@mui/icons-material/Map';
 import { NavLink } from "react-router-dom";
 import FeedIcon from '@mui/icons-material/Feed';
 export default function SideBar() {
@@ -48,20 +49,20 @@ export default function SideBar() {
             </NavLink>
           </li>
           <li className="sideBarItem">
-            <FeedIcon />
+            <MapIcon />
             <NavLink
-              to="/Feed"
+              to="/Map"
               style={{
                 marginLeft: "7px",
                 textAlign: "center",
                 fontSize: "larger",
               }}
             >
-              Feed
+              Map
             </NavLink>
           </li>
           <li className="sideBarItem">
-            <ChatIcon />
+            <FeedIcon />
             <NavLink
               to="/Messages"
               style={{
@@ -100,6 +101,7 @@ export default function SideBar() {
               Settings
             </NavLink>
           </li>
+          
         </ul>
       </StickyBox>
     </div>
