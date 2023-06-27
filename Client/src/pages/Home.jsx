@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext, useState, useEffect } from 'react';
 import Home from '../assets/Home.jpg'
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CurrentUserContext from "../contexts/current-user-context";
 import { Navigate, useNavigate } from "react-router-dom";
 import { fetchHandler } from "../utils";
