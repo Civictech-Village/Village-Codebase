@@ -41,6 +41,21 @@ class Village {
     }
   }
 
+  static async memberList(village_id) {
+    try {
+      const query = `SELECT users.id, users.username, users.profile_picture
+      FROM Users
+      JOIN users_villages ON users.id = users_villages.user_id
+      JOIN villages ON users_villages.village_id = villages.village_id
+      WHERE villages.village_id = ?`;
+      const { rows } = await knex.raw(query, [village_id]);
+      return rows
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
   static async create(name, image, location, user_id, lon, lat) {
     try {
       const createQuery = `
@@ -85,7 +100,7 @@ class Village {
   static async destroy(user_id, village_id) {
     try {
       const query = `DELETE FROM users_villages WHERE village_id = ? AND user_id = ?`;
-      const { rows: [village] } = await knex.raw(query, [user_id, village_id]);
+      const { rows: [village] } = await knex.raw(query, [village_id, user_id ]);
       return village;
     } catch (err) {
       console.error(err);

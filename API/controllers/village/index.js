@@ -5,6 +5,7 @@ const join = require('./join');
 const findUser = require('./findUser')
 const destroy = require('./destroy')
 const listUserVillage = require('./listUsersVillages')
+const findMembers = require('./findMembers')
 
 module.exports = {
   list,
@@ -13,5 +14,6 @@ module.exports = {
   join,
   findUser,
   destroy,
-  listUserVillage
+  listUserVillage,
+  findMembers
 };

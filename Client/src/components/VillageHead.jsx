@@ -69,15 +69,15 @@ export default function VillageHead({
           <h5>{village.location}</h5>
         </div>
         <div style={{ padding: "30px" }}>
-          <button
-            className="buttn"
+          {userJoined && <button
+            className="btn btn-success"
             onClick={handleOpen}
             style={{ marginRight: "1rem" }}
           >
             New Issue
-          </button>
+          </button>}
           {!userJoined ? (
-            <button className="buttn" style={{}} onClick={handler}>
+            <button className="btn btn-success" style={{}} onClick={handler}>
               Follow
             </button>
           ) : (

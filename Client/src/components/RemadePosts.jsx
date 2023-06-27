@@ -9,7 +9,7 @@ import { fetchHandler } from "../utils";
 import { getPostOptions } from "../utils";
 import { useEffect, useState } from "react";
 import { deleteOptions } from "../utils";
-export default function RemadePosts({ elem, openModal }) {
+export default function RemadePosts({ elem, handleShow }) {
 
   const [like, setLikes] = useState(0);
   const [hasliked, setHasLiked] = useState(false);
@@ -68,7 +68,7 @@ export default function RemadePosts({ elem, openModal }) {
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div id="userinfo" style={{ display: "flex" }}>
           <img
-            src={elem.profile_picture ? elem.profile_picture : "https://res.cloudinary.com/ddj0t5srx/image/upload/v1687093019/Screenshot_2023-04-24_205656_qojx4t.png"}
+            src={elem.profile_picture ? elem.profile_picture : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"}
             alt="Pfp"
             style={{ width: "8rem", height: "8rem", borderRadius: "50%" }}
           />
@@ -109,7 +109,7 @@ export default function RemadePosts({ elem, openModal }) {
             />
           )}
           <p style={{ marginRight: "1rem" }}>{like}</p>
-        <i onClick={openModal} className="material-icons" type="button">add_comment</i>
+        <i onClick={() => handleShow(elem)} className="material-icons" type="button">add_comment</i>
           <p style={{ marginRight: "1rem" }}>{0}</p>
         </div>
       </div>

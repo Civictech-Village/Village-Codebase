@@ -4,6 +4,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import Logo from "../../assets/transparent 3 (1).png";
+import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <div
@@ -17,8 +18,8 @@ export default function Footer() {
       <div id="Links" style={{ display: "flex", flexDirection: "column", marginTop:'20px' }}>
         <h4>Links</h4>
         <a>About Us</a>
-        <a>Terms of Service</a>
-        <a>Privacy Policy</a>
+        <Link to='/termsandconditions'>Terms of Service</Link>
+        <Link to='/privacypolicy'>Privacy Policy</Link>
       </div>
       <div id="Media" style={{ display: "flex", flexDirection: "column" }}>
         <div>

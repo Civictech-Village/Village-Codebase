@@ -7,7 +7,7 @@ import RemadePosts from "./RemadePosts";
 import { createPost } from "../adapters/post-adapter";
 import IssueDropDown from "./IssueDropDown";
 
-export default function VillageBody({handleShow}) {
+export default function VillageBody({handleShow, userJoined}) {
   const [issues, setIssues] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -68,6 +68,7 @@ export default function VillageBody({handleShow}) {
               toggle={toggle}
               i={i}
               handleShow={handleShow}
+              userJoined={userJoined}
             ></IssueDropDown>
           );
         })}

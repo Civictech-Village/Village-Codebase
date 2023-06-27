@@ -19,7 +19,7 @@ import VillageBody from "../components/VillageBody";
 import VillageLocation from "../components/VillageLocation";
 import VillageMembers from "../components/VillageMembers";
 import Footer from "../components/LandingPage/Footer";
-
+import { getUser } from "../adapters/user-adapter"
 export default function SingleOrg() {
   const [village, setVillage] = useState({});
   const [members, setMembers] = useState([]);
@@ -33,7 +33,7 @@ export default function SingleOrg() {
   };
   const handleShow = (post) => {
     setSelectedPost(post);
-    console.log('sup')
+    console.log("sup");
     setShow(true);
   };
 
@@ -84,6 +84,15 @@ export default function SingleOrg() {
   }, []);
 
   useEffect(() => {
+    const membersFetch = async () => {
+      const result = await fetchHandler('/api/villagemembers/' + id)
+      console.log(result)
+      setMembers(result[0])
+    }
+    membersFetch()
+  },[])
+
+  useEffect(() => {
     const fetchVillage = async () => {
       const result = await fetch("/api/villages/" + id);
       const data = await result.json();
@@ -109,8 +118,11 @@ export default function SingleOrg() {
       ></VillageHead>
       <div style={{ padding: "20px", display: "flex" }}>
         <VillageLocation></VillageLocation>
-        <VillageBody handleShow={handleShow}></VillageBody>
-        <VillageMembers></VillageMembers>
+        <VillageBody
+          userJoined={userJoined}
+          handleShow={handleShow}
+        ></VillageBody>
+        <VillageMembers members={members}></VillageMembers>
       </div>
       <div style={{ width: "100%", marginTop: "20px" }}>
         <Footer />
