@@ -11,7 +11,6 @@ export default function Avatar() {
     setCurrentUser(null);
     navigate("/");
   };
-  console.log(currentUser)
   return (
     <Link to={`/users/${currentUser && currentUser.user_id ? currentUser.user_id : 'notFound'}`} style={{ margin: "0 20px",textDecoration:'none' }}>
       <div style={{ display: "flex" }}>

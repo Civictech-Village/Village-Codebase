@@ -84,6 +84,12 @@ form {
   z-index: -100;
 }
 
+.videos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .searchBar {
   background-color: blue;
   border-radius: 5px;
@@ -400,4 +406,8 @@ ul.react-paginate li.disabled a {
 .carousel-item-next, .carousel-item-prev, .carousel-item.active {
   display: flex !important;
   justify-content: center;
+}
+
+.sentText {
+  justify-content: end;
 }
