@@ -13,10 +13,10 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmailIcon from "@mui/icons-material/Email";
 import { Link } from "react-router-dom";
 import UserPostCard from "../components/UserPostCard";
-import { fetchHandler } from "../utils";
+import { fetchHandler, getPostOptions } from "../utils";
 import { deleteOptions } from "../utils";
 import Footer from "../components/LandingPage/Footer";
-
+import ChatIcon from '@mui/icons-material/Chat';
 export default function UserPage() {
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -128,6 +128,17 @@ export default function UserPage() {
     id,
   };
 
+  const handleChatRoomCreate = async() => {
+    const chatRoomObj = {
+      name:profileUsername,
+      user_id:currentUser.id,
+      recipient_id:id
+    }
+    const result = await fetchHandler('/api/Chatroom', getPostOptions(chatRoomObj))
+    console.log(result[0])
+    navigate('/Messages?roomId=' + result[0].id)
+  }
+
   console.log(userProfile);
   return (
     <div
@@ -183,7 +194,10 @@ export default function UserPage() {
             }}
           >
             {!isCurrentUserProfile ? (
-              <button className="btn btn-success">Follow</button>
+              <>
+                <button className="btn btn-success mx-4" onClick={handleChatRoomCreate}><ChatIcon/></button>
+                <button className="btn btn-success">Follow</button>
+              </>
             ) : (
               <Link to="/settings" className="btn btn-outline-dark">
                 Edit Profile
@@ -301,11 +315,14 @@ export default function UserPage() {
               {villages.map((elem) => {
                 console.log(elem);
                 return (
-                  <Link to={`/organizations/` + elem.village_id} style={{
-                    width: "100%",
-                    height: "100%",
-                    textDecoration:'none'
-                  }}>
+                  <Link
+                    to={`/organizations/` + elem.village_id}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      textDecoration: "none",
+                    }}
+                  >
                     <div
                       onMouseEnter={(e) => {
                         setClassname("slide-in-blurred-top");

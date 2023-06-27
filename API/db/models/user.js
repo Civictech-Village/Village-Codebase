@@ -45,7 +45,6 @@ class User {
       const {
         rows: [user],
       } = await knex.raw(query, [id]);
-      console.log(user);
       return user ? new User(user) : null;
     } catch(err) {
       console.error(err)

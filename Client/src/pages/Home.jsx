@@ -33,12 +33,19 @@ console.log(Organizations.splice(3))
         <h2 style={{ marginTop: '10%', color: 'Black'}}>Recently Viewed:</h2>
         {Organizations.map((organization, index) => <OrganizationCard key={index} village={organization}/>)}
         <Bio />
+        <RecVillages />
       </div>
     </div>
   );
 }
 
-
+function RecVillages() {
+  return (
+    <>
+    <h1>Recently Viewed Villages</h1>
+    </>
+  )
+}
 
 function Bio() {
   return (

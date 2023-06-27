@@ -21,7 +21,7 @@ export default function SettingsProfile() {
       })
     }
     changepfp();
-    handleClose;
+    handleClose();
   };
 
   return (

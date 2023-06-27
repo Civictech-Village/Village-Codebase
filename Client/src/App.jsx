@@ -22,12 +22,18 @@ import Settings from "./pages/Settings";
 import CurrentUserContext from "./contexts/current-user-context";
 import Footer from "./components/LandingPage/Footer";
 import Feed from "./pages/Feed";
-
+import Map from "./pages/Map";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import Messages from "./pages/Messages";
 export default function App() {
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser, setLoggedIn } =
+    useContext(CurrentUserContext);
   useEffect(() => {
     checkForLoggedInUser().then(setCurrentUser);
+    setLoggedIn(true)
   }, [setCurrentUser]);
+
 
   return (
     <>
@@ -106,11 +112,29 @@ export default function App() {
               }
             />
             <Route
+              path="/Map"
+              element={
+                <>
+                  <SideBar />
+                  <Map />
+                </>
+              }
+            />
+            <Route
               path="/"
               element={
                 <>
                   <SideBar />
                   <Feed />
+                </>
+              }
+            />
+            <Route
+              path="/Messages"
+              element={
+                <>
+                  <SideBar />
+                  <Messages />
                 </>
               }
             />
