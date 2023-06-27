@@ -1,4 +1,3 @@
-
 import { useContext, useEffect } from "react";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
@@ -151,5 +150,4 @@ export default function App() {
       </LocalizationProvider>
     </>
   );
->>>>>>> main
 }
