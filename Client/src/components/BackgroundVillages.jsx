@@ -18,9 +18,11 @@ function BackgroundVillage({
   handler,
   userJoined,
   leaveHandle,
-  image
+  image,
+  members,
+  userType,
 }) {
-  console.log(image)
+  console.log(image);
   return (
     <Card
       sx={{
@@ -29,7 +31,7 @@ function BackgroundVillage({
         width: { xs: "100%", md: "90%", lg: "70%" },
         flexDirection: "row",
         justifyContent: "center",
-        alignItems:"center",
+        alignItems: "center",
         borderRadius: "10px",
         mb: 7,
         position: "relative",
@@ -38,8 +40,8 @@ function BackgroundVillage({
       <div style={{}}>
       {image ? (<CardMedia
           component="img"
-          sx={{width:"100%", objectFit:"cover",height:"100%"}}
-          image={`/src/images/${image}`}
+          sx={{width:"400px", objectFit:"cover",height:"265px"}}
+          image={image}
           alt="placeHolder"
         />
       ) : (
@@ -65,7 +67,7 @@ function BackgroundVillage({
           </Typography>
           <Box sx={{ display: "flex" }}>
             <Typography variant="h6" gutterBottom sx={{ mr: 4 }}>
-              {0} Members
+              {members} Members
             </Typography>
           </Box>
         </Box>
@@ -78,6 +80,14 @@ function BackgroundVillage({
                 onClick={handler}
               >
                 Join
+              </Button>
+            ) : userType == "owner" ? (
+              <Button
+                variant="contained"
+                sx={{ height: "fit-content", backgroundColor: "red" }}
+                onClick={leaveHandle}
+              >
+                Disband
               </Button>
             ) : (
               <Button

@@ -1,13 +1,14 @@
 const createIssue = async (req, res) => {
   console.log("reached the create function for issues");
+  console.log(req.body);
   const {
     session,
     db: { Issues },
-    body: {name,},
-    params: { id }
+    body: { name, issue_desc, user_id },
+    params: { id },
   } = req;
-  //Replace user_id with session.userId if you end up connecting front end
-  const issue = await Issues.create(name, session.userId , id);
+  console.log(session.userId, name, id, issue_desc);
+  const issue = await Issues.create(session.userId, name, id, issue_desc);
   res.send(issue);
 };
 

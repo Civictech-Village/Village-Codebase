@@ -7,7 +7,6 @@ exports.up = (knex) => knex.schema.createTable('issues', (table) => {
   table.integer('user_id').notNullable();
   table.string('name').notNullable();
   table.integer('village_id').notNullable();
-  table.string('issue_name');
   table.string('issue_desc');
   table.timestamps(true, true);
 });

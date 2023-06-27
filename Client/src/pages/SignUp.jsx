@@ -33,16 +33,21 @@ export default function SignUpPage() {
   const [PasswordClass, setPasswordClass] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
   const [allFormData, setFormData] = useState({});
-  const [formValidation, setFormValidation] = useState(false)
+  const [formValidation, setFormValidation] = useState(false);
 
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+
+  const handleTermsAcceptance = () => {
+    setAcceptedTerms(!acceptedTerms);
+  };
 
   const handleNext = (e) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     setCurrentStep(currentStep + 1);
   };
 
   const handlePrevious = (e) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
 
     setCurrentStep(currentStep - 1);
   };
@@ -76,18 +81,23 @@ export default function SignUpPage() {
   };
 
   const formChecker = () => {
-    console.log(allFormData.date, allFormData.email, allFormData.gender)
-    if(!allFormData.email ||  !/\S+@\S+\.\S+/.test(allFormData.email) || !allFormData.date || !allFormData.gender) {
-      setFormValidation(false)
-      return false
+    console.log(allFormData.date, allFormData.email, allFormData.gender);
+    if (
+      !allFormData.email ||
+      !/\S+@\S+\.\S+/.test(allFormData.email) ||
+      !allFormData.date ||
+      !allFormData.gender
+    ) {
+      setFormValidation(false);
+      return false;
     }
-    setFormValidation(true)
-    return true
-  }
+    setFormValidation(true);
+    return true;
+  };
 
   useEffect(() => {
-      formChecker()
-  }, [allFormData])
+    formChecker();
+  }, [allFormData]);
 
   function Copyright(props) {
     return (
@@ -117,8 +127,7 @@ export default function SignUpPage() {
     setErrorText("");
     const formData = new FormData(event.target);
     const postObject = Object.fromEntries(formData.entries());
-    const totalObject = {...postObject, ...allFormData}
-    console.log(totalObject.date["$d"]);
+    const totalObject = { ...postObject, ...allFormData };
     if (postObject.username.length < 1) {
       setErrorText("Please enter a username");
       setNameClass("animate__animated animate__headShake");
@@ -220,11 +229,24 @@ export default function SignUpPage() {
               />
             </Tooltip>
 
+            <label style={{ display: "flex" }}>
+              <input
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={handleTermsAcceptance}
+                style={{ margin: "5px", padding: "5px" }}
+              />
+         <span>
+            I accept the {' '}
+            <RouterLink to="/termsandconditions">terms and conditions</RouterLink>.
+          </span>
+            </label>
+
             {/* {!!errorText && <p>{errorText}</p>} */}
           </>
         );
       case 1:
-        return <SignUpPageTwo setFormData ={setFormData}></SignUpPageTwo>;
+        return <SignUpPageTwo setFormData={setFormData}></SignUpPageTwo>;
       default:
         return null;
     }
@@ -324,7 +346,13 @@ export default function SignUpPage() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                  disabled={(password!=='' && password == confirmPassword) ? false : true}
+                  disabled={
+                    password !== "" &&
+                    password == confirmPassword &&
+                    acceptedTerms
+                      ? false
+                      : true
+                  }
                 >
                   Sign Up
                 </Button>
