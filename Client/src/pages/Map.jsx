@@ -36,7 +36,7 @@ const MapContainer = () => {
                     return(
                     <Marker key={village.village_id} latitude={village.latitude} longitude={village.longitude}>
                         <Link to={`../organizations/${village.village_id}`}>
-                            <img style={{width:"30px"}}src="https://res.cloudinary.com/ddj0t5srx/image/upload/v1687789695/map-marker-svgrepo-com_mwrsul.svg"></img>  
+                            <img style={{width:"30px"}} src="https://res.cloudinary.com/ddj0t5srx/image/upload/v1687789695/map-marker-svgrepo-com_mwrsul.svg"></img>  
                         </Link>
                     </Marker>
                   )

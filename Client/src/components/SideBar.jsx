@@ -7,6 +7,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import ChatIcon from "@mui/icons-material/Chat";
 import Person2Icon from "@mui/icons-material/Person2";
 import CurrentUserContext from "../contexts/current-user-context";
+import MapIcon from '@mui/icons-material/Map';
 import { NavLink } from "react-router-dom";
 export default function SideBar() {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -19,7 +20,7 @@ export default function SideBar() {
         <div style={{ marginTop: "20px" }}>
           <h1 style={{ textAlign: "center",}}>Village</h1>
         </div>
-        <ul class="menu" style={{ marginTop: "2.5em", borderTop: "1px solid" }}>
+        <ul className="menu" style={{ marginTop: "2.5em", borderTop: "1px solid" }}>
           <li className="sideBarItem">
             <HomeIcon />
               <NavLink
@@ -44,6 +45,19 @@ export default function SideBar() {
               }}
             >
               Villages
+            </NavLink>
+          </li>
+          <li className="sideBarItem">
+            <MapIcon />
+            <NavLink
+              to="/Map"
+              style={{
+                marginLeft: "7px",
+                textAlign: "center",
+                fontSize: "larger",
+              }}
+            >
+              Map
             </NavLink>
           </li>
           <li className="sideBarItem">
@@ -85,19 +99,7 @@ export default function SideBar() {
               Settings
             </NavLink>
           </li>
-          <li className="sideBarItem">
-            <SettingsIcon />
-            <NavLink
-              to="/Map"
-              style={{
-                marginLeft: "7px",
-                textAlign: "center",
-                fontSize: "larger",
-              }}
-            >
-              Map
-            </NavLink>
-          </li>
+          
         </ul>
       </StickyBox>
     </div>
