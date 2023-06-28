@@ -36,10 +36,10 @@ io.on("connection", (socket) => {
     io.to(id).emit("chat message", msg);
     // io.emit("chat message", msg)
 
-    if (msg.userId) {
+    if (msg.id) {
       const result = await sendMessage(
         msg.message,
-        msg.userId,
+        msg.id,
         id,
         msg.profilePic,
         msg.username
