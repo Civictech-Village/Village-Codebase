@@ -16,7 +16,7 @@ import UserPostCard from "../components/UserPostCard";
 import { fetchHandler, getPostOptions } from "../utils";
 import { deleteOptions } from "../utils";
 import Footer from "../components/LandingPage/Footer";
-import ChatIcon from '@mui/icons-material/Chat';
+import ChatIcon from "@mui/icons-material/Chat";
 export default function UserPage() {
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -27,6 +27,9 @@ export default function UserPage() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [brightness, setBrightness] = useState("100%");
   const [className, setClassname] = useState("NotActive");
+  const [followers,setFollowers] = useState(0)
+  const [following, setFollowing] = useState(0)
+  const [isFollowing, setIsFollowing] = useState(false)
 
   const date = (date) => {
     const months = [
@@ -72,7 +75,7 @@ export default function UserPage() {
       }
     };
     doFetch();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     const doFetch = async () => {
@@ -83,7 +86,45 @@ export default function UserPage() {
       }
     };
     doFetch();
-  }, []);
+  }, [id]);
+
+  useEffect(() => {
+    const doFetch = async () => {
+      const followers = await fetchHandler('/api/Followers/' + id)
+      const following = await fetchHandler('/api/Following/' + id)
+      setFollowers(Number(followers[0].follower_count))
+      setFollowing(Number(following[0].following_count))
+    }
+    doFetch()
+  },[id])
+
+  useEffect(() => {
+    const doFetch = async () => {
+      const isFollowing = await fetchHandler('/api/isFollowing/' + id)
+      if(Number(isFollowing[0].isfollowing) > 0) {
+        setIsFollowing(true)
+      } else {
+        setIsFollowing(false)
+      }
+    }
+    doFetch()
+  },[id])
+
+  const handleFollow = async () => {
+    const result = await fetchHandler('/api/Follow/' + id, getPostOptions())
+    if(result[0]) {
+      setFollowers(followers+1)
+      setIsFollowing(true)
+    }
+  }
+
+  const handleUnFollow = async () => {
+    const result = await fetchHandler('/api/Unfollow/' + id, deleteOptions)
+    if(result[0]) {
+      setFollowers(followers-1)
+      setIsFollowing(false)
+    }
+  }
 
   const handleLogout = async () => {
     logUserOut();
@@ -128,16 +169,19 @@ export default function UserPage() {
     id,
   };
 
-  const handleChatRoomCreate = async() => {
+  const handleChatRoomCreate = async () => {
     const chatRoomObj = {
-      name:profileUsername,
-      user_id:currentUser.id,
-      recipient_id:id
-    }
-    const result = await fetchHandler('/api/Chatroom', getPostOptions(chatRoomObj))
-    console.log(result[0])
-    navigate('/Messages?roomId=' + result[0].id)
-  }
+      name: profileUsername,
+      user_id: currentUser.id,
+      recipient_id: id,
+    };
+    const result = await fetchHandler(
+      "/api/Chatroom",
+      getPostOptions(chatRoomObj)
+    );
+    console.log(result[0]);
+    navigate("/Messages?roomId=" + result[0].id);
+  };
 
   console.log(userProfile);
   return (
@@ -164,6 +208,9 @@ export default function UserPage() {
           <div
             id="ProfilePicture"
             style={{
+              backgroundColor:'grey',
+              backgroundSize:'cover',
+              backgroundRepeat:'none',
               backgroundImage: `url(${
                 userProfile && userProfile.profilePicture
                   ? userProfile.profilePicture
@@ -182,8 +229,8 @@ export default function UserPage() {
             <div id="userName">{profileUsername}</div>
             <div style={{ width: "113px", height: "23px" }}>Fake Bio</div>
             <div style={{ display: "flex" }}>
-              <p style={{ margin: "0 10px 0 0" }}>{0} Following</p>
-              <p>{0} Followers</p>
+              <p style={{ margin: "0 10px 0 0" }}>{following} Following</p>
+              <p>{followers} Followers</p>
             </div>
           </div>
           <div
@@ -195,8 +242,13 @@ export default function UserPage() {
           >
             {!isCurrentUserProfile ? (
               <>
-                <button className="btn btn-success mx-4" onClick={handleChatRoomCreate}><ChatIcon/></button>
-                <button className="btn btn-success">Follow</button>
+                <button
+                  className="btn btn-success mx-4"
+                  onClick={handleChatRoomCreate}
+                >
+                  <ChatIcon />
+                </button>
+                {!isFollowing ? <button className="btn btn-success" onClick={handleFollow}>Follow</button> : <button className="btn btn-danger" onClick={handleUnFollow}>Unfollow</button>}
               </>
             ) : (
               <Link to="/settings" className="btn btn-outline-dark">
@@ -229,8 +281,8 @@ export default function UserPage() {
               }}
             >
               <Person2Icon />{" "}
-              {currentUser && currentUser.gender
-                ? currentUser.gender
+              {userProfile && userProfile.gender
+                ? userProfile.gender
                 : "Undefined"}
             </h6>
             <h6
@@ -238,20 +290,14 @@ export default function UserPage() {
               style={{ padding: "16px 0", borderBottom: "0.5px solid #030229" }}
             >
               <CakeIcon />{" "}
-              {currentUser && currentUser.birthday
-                ? date(currentUser.birthday)
+              {userProfile && userProfile.birthday
+                ? date(userProfile.birthday)
                 : "Undefined"}
-            </h6>
-            <h6
-              className="ContactText"
-              style={{ padding: "16px 0", borderBottom: "0.5px solid #030229" }}
-            >
-              <LocationOnIcon /> Location
             </h6>
             <h6 className="ContactText" style={{ padding: "16px 0" }}>
               <EmailIcon />{" "}
-              {currentUser && currentUser.email
-                ? currentUser.email
+              {userProfile && userProfile.email
+                ? userProfile.email
                 : "Undefined"}
             </h6>
           </div>
@@ -276,18 +322,27 @@ export default function UserPage() {
               width: "100%",
               padding: "20px 43px",
               flexDirection: "column",
+              minHeight: "20em",
+              maxHeight:'600px',
+              overflowY:"auto"
             }}
           >
-            {posts.map((elem) => {
-              console.log(elem);
-              return (
-                <UserPostCard
-                  props={elem}
-                  isCurrentUserProfile={isCurrentUserProfile}
-                  handlePostDestroy={handlePostDestroy}
-                />
-              );
-            })}
+            {posts.length > 0 ? (
+              posts.map((elem) => {
+                console.log(elem);
+                return (
+                  <UserPostCard
+                    props={elem}
+                    isCurrentUserProfile={isCurrentUserProfile}
+                    handlePostDestroy={handlePostDestroy}
+                  />
+                );
+              })
+            ) : (
+              <div style={{width:'100%',height:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}>
+              <h5>{!isCurrentUserProfile ? "This user has no posts yet" : "You have no posts yet"}</h5>
+              </div>
+            )}
           </div>
         </div>
         <div id="villageSection">
@@ -308,6 +363,7 @@ export default function UserPage() {
               style={{
                 display: "flex",
                 alignItems: "center",
+                flexDirection: "column",
                 width: "100%",
                 justifyContent: "center",
               }}
@@ -321,6 +377,7 @@ export default function UserPage() {
                       width: "100%",
                       height: "100%",
                       textDecoration: "none",
+                      marginBottom: "20px",
                     }}
                   >
                     <div

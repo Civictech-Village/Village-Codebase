@@ -10,6 +10,7 @@ import CurrentUserContext from "../contexts/current-user-context";
 import MapIcon from '@mui/icons-material/Map';
 import { NavLink } from "react-router-dom";
 import FeedIcon from '@mui/icons-material/Feed';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 export default function SideBar() {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   return (
@@ -49,6 +50,19 @@ export default function SideBar() {
             </NavLink>
           </li>
           <li className="sideBarItem">
+            <FeedIcon />
+            <NavLink
+              to="/feed"
+              style={{
+                marginLeft: "7px",
+                textAlign: "center",
+                fontSize: "larger",
+              }}
+            >
+              Feed
+            </NavLink>
+          </li>
+          <li className="sideBarItem">
             <MapIcon />
             <NavLink
               to="/Map"
@@ -62,7 +76,7 @@ export default function SideBar() {
             </NavLink>
           </li>
           <li className="sideBarItem">
-            <FeedIcon />
+            <ChatBubbleIcon />
             <NavLink
               to="/Messages"
               style={{

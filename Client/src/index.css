@@ -136,7 +136,6 @@ form {
 
 .content {
   margin-left: 200px; /* Adjust this value to match the width of the sidebar */
-  padding: 20px;
 }
 
 .sideBarItem {
@@ -224,7 +223,7 @@ form {
 
 #aboutSection {
   width: 260px;
-  height: 399px;
+  height: 100%;
 
   background: #ffffff;
   border-radius: 10px;
@@ -243,8 +242,10 @@ form {
 
 #villageSection {
   width: 260px;
-  height: 234px;
-
+  height:100%;
+  min-height: 234px;
+  max-height:500px;
+  overflow: auto;
   background: #ffffff;
   border-radius: 10px;
 }
@@ -411,3 +412,5 @@ ul.react-paginate li.disabled a {
 .sentText {
   justify-content: end;
 }
+
+

@@ -46,7 +46,7 @@ export default function Message() {
               ? chatRoom.recipient_id
               : chatRoom.user_id;
           const userProfile = await fetchHandler("/api/users/" + participantId);
-          console.log(userProfile);
+
           return {
             ...chatRoom,
             profilePicture: userProfile[0].profilePicture,
@@ -146,12 +146,9 @@ export default function Message() {
           <h5 style={{ color: "#E9E9E9", fontSize: "16px", fontWeight: "700" }}>
             {username}
           </h5>
-          <p style={{ color: "#358C60", fontSize: "14px" }}>Typing...</p>
         </div>
         <div style={{ width: "51px", height: "40px" }}>
-          <p style={{ color: "#A9ABAD", fontSize: "13px", fontWeight: "500" }}>
-            4:30 PM
-          </p>
+
         </div>
       </div>
     );

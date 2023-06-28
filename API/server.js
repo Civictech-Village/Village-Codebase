@@ -51,9 +51,9 @@ io.on('connection', (socket) => {
     // io.emit("chat message", msg); // send the message only to clients in the same chat room
     io.to(id).emit("chat message", msg)
     // io.emit("chat message", msg)
-
-    if(msg.userId){
-      const result = await sendMessage(msg.message, msg.userId, id, msg.profilePic, msg.username);
+    console.log(msg)
+    if(msg.id){
+      const result = await sendMessage(msg.message, msg.id, id, msg.profilePic, msg.username);
     }
   });
 });

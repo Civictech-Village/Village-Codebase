@@ -109,9 +109,16 @@ export default function IssueDropDown({
         </div>
       </div>
       <div className={selected === i ? "contentshow" : "content"}>
-        {posts.map((elem) => (
-          <RemadePosts elem={elem} handleShow={handleShow}></RemadePosts>
-        ))}
+        {posts.length > 0 ? (
+          posts.map((elem) => (
+            <RemadePosts elem={elem} handleShow={handleShow}></RemadePosts>
+          ))
+        ) : (
+          <div style={{width:'100%', textAlign:'center'}}>
+            <h5>Sorry, there are no posts underneath this issue</h5>
+            <h5>Be the first to post!</h5>
+          </div>
+        )}
       </div>
     </div>
   );

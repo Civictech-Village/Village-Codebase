@@ -19,7 +19,9 @@ import VillageBody from "../components/VillageBody";
 import VillageLocation from "../components/VillageLocation";
 import VillageMembers from "../components/VillageMembers";
 import Footer from "../components/LandingPage/Footer";
-import { getUser } from "../adapters/user-adapter"
+import { getUser } from "../adapters/user-adapter";
+import SearchBar from "../components/NavBar";
+import Avatar from "../components/Avatar";
 export default function SingleOrg() {
   const [village, setVillage] = useState({});
   const [members, setMembers] = useState([]);
@@ -85,12 +87,12 @@ export default function SingleOrg() {
 
   useEffect(() => {
     const membersFetch = async () => {
-      const result = await fetchHandler('/api/villagemembers/' + id)
-      console.log(result)
-      setMembers(result[0])
-    }
-    membersFetch()
-  },[])
+      const result = await fetchHandler("/api/villagemembers/" + id);
+      console.log(result);
+      setMembers(result[0]);
+    };
+    membersFetch();
+  }, []);
 
   useEffect(() => {
     const fetchVillage = async () => {
@@ -103,6 +105,18 @@ export default function SingleOrg() {
 
   return (
     <div style={{ backgroundColor: "#f7f7f8", width: "100%" }}>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          height: "fit-content",
+          alignItems: "center",
+          padding: "10px",
+        }}
+      >
+        <SearchBar />
+        <Avatar />
+      </div>
       <CommentModal
         isOpen={show}
         closeModal={handleClose}
@@ -117,7 +131,6 @@ export default function SingleOrg() {
         userType={userType}
       ></VillageHead>
       <div style={{ padding: "20px", display: "flex" }}>
-        <VillageLocation></VillageLocation>
         <VillageBody
           userJoined={userJoined}
           handleShow={handleShow}
