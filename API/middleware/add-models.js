@@ -5,6 +5,7 @@ const Issues = require('../db/models/issues')
 const Comments = require('../db/models/comments')
 const Message = require('../db/models/message')
 const Chatrooms = require('../db/models/chatroom')
+const Followers = require('../db/models/followers')
 
 const addModels = (req, res, next) => {
   req.db = {
@@ -14,7 +15,8 @@ const addModels = (req, res, next) => {
     Issues,
     Comments,
     Message,
-    Chatrooms
+    Chatrooms,
+    Followers
   };
   next();
 };

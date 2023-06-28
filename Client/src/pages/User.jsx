@@ -27,6 +27,9 @@ export default function UserPage() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [brightness, setBrightness] = useState("100%");
   const [className, setClassname] = useState("NotActive");
+  const [followers,setFollowers] = useState(0)
+  const [following, setFollowing] = useState(0)
+  const [isFollowing, setIsFollowing] = useState(false)
 
   const date = (date) => {
     const months = [
@@ -84,6 +87,44 @@ export default function UserPage() {
     };
     doFetch();
   }, [id]);
+
+  useEffect(() => {
+    const doFetch = async () => {
+      const followers = await fetchHandler('/api/Followers/' + id)
+      const following = await fetchHandler('/api/Following/' + id)
+      setFollowers(Number(followers[0].follower_count))
+      setFollowing(Number(following[0].following_count))
+    }
+    doFetch()
+  },[id])
+
+  useEffect(() => {
+    const doFetch = async () => {
+      const isFollowing = await fetchHandler('/api/isFollowing/' + id)
+      if(Number(isFollowing[0].isfollowing) > 0) {
+        setIsFollowing(true)
+      } else {
+        setIsFollowing(false)
+      }
+    }
+    doFetch()
+  },[id])
+
+  const handleFollow = async () => {
+    const result = await fetchHandler('/api/Follow/' + id, getPostOptions())
+    if(result[0]) {
+      setFollowers(followers+1)
+      setIsFollowing(true)
+    }
+  }
+
+  const handleUnFollow = async () => {
+    const result = await fetchHandler('/api/Unfollow/' + id, deleteOptions)
+    if(result[0]) {
+      setFollowers(followers-1)
+      setIsFollowing(false)
+    }
+  }
 
   const handleLogout = async () => {
     logUserOut();
@@ -188,8 +229,8 @@ export default function UserPage() {
             <div id="userName">{profileUsername}</div>
             <div style={{ width: "113px", height: "23px" }}>Fake Bio</div>
             <div style={{ display: "flex" }}>
-              <p style={{ margin: "0 10px 0 0" }}>{0} Following</p>
-              <p>{0} Followers</p>
+              <p style={{ margin: "0 10px 0 0" }}>{following} Following</p>
+              <p>{followers} Followers</p>
             </div>
           </div>
           <div
@@ -207,7 +248,7 @@ export default function UserPage() {
                 >
                   <ChatIcon />
                 </button>
-                <button className="btn btn-success">Follow</button>
+                {!isFollowing ? <button className="btn btn-success" onClick={handleFollow}>Follow</button> : <button className="btn btn-danger" onClick={handleUnFollow}>Unfollow</button>}
               </>
             ) : (
               <Link to="/settings" className="btn btn-outline-dark">

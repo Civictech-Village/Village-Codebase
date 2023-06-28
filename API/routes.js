@@ -10,6 +10,7 @@ const upload = require("./utils/multer");
 const commentController = require('./controllers/comments')
 const chatroomController = require('./controllers/chatrooms')
 const messageController = require('./controllers/messages')
+const followerController = require('./controllers/follower')
 
 const Router = express.Router();
 Router.use(addModels);
@@ -34,6 +35,15 @@ Router.get("/image/:name", (req, res) => {
   res.type("jpg");
   res.sendFile(path.join(__dirname, "./images", name));
 });
+
+
+Router.get('/Followers/:id', followerController.listFollowers)
+Router.get('/Following/:id', followerController.listFollowing)
+Router.post('/Follow/:id', followerController.create)
+Router.delete('/Unfollow/:id', followerController.unFollow)
+Router.get('/isFollowing/:id', followerController.isFollowing)
+
+
 
 Router.get('/comments/:id', commentController.list)
 Router.get('/commentCount/:id', commentController.commentCount)

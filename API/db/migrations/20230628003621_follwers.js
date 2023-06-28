@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.up = (knex) => knex.schema.createTable('followers', (table) => {
-    table.integer('id')
+    table.increments('id')
     table.integer('follower_id')
     table.integer('following_id')
 })
