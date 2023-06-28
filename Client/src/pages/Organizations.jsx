@@ -15,7 +15,8 @@ import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
 import Footer from "../components/LandingPage/Footer";
 import ReactPaginate from "react-paginate";
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useRef } from "react";
 const style = {
   position: "absolute",
   top: "50%",
@@ -32,9 +33,29 @@ export default function HomePage() {
   const handleOpen = () => setOpen(false);
   const handleClose = () => setOpen(true);
   const [Organizations, setOrganizations] = React.useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isHovered, selectIsHovered] = useState(false);
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedImage(URL.createObjectURL(file));
+  };
+  const inputPhotos = useRef()
+
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+    inputPhotos.current.value = ""
+  };
 
   const { currentUser } = React.useContext(CurrentUserContext);
   console.log(currentUser);
+
+  const handleImgEnter = () => {
+    selectIsHovered(true);
+  };
+
+  const handleImgLeave = () => {
+    selectIsHovered(false);
+  };
 
   useEffect(() => {
     const fetchOrganizations = async () => {
@@ -43,6 +64,7 @@ export default function HomePage() {
     };
     fetchOrganizations();
   }, [open]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -180,13 +202,47 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="field ui fluid mb-3">
-                  <label className="form-label">Image URL</label>
-                  <input
-                    className="form-control"
-                    type="file"
-                    name="image"
-                    placeholder="Image"
-                  />
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <label className="form-label">Image URL</label>
+                    {selectedImage ? (
+                      <div style={{ height: "100%", maxheight:'304px' }}>
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "150px",
+                            position: "relative",
+                            display: "flex",
+                          }}
+                        >
+                          <img
+                            src={selectedImage}
+                            alt="Preview"
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <img src="https://uploader-assets.s3.ap-south-1.amazonaws.com/codepen-default-placeholder.png" />
+                    )}
+                  </div>
+                  <div style={{display:'flex', width:'100%'}}>
+                    <input
+                      className="form-control"
+                      type="file"
+                      name="image"
+                      placeholder="Image"
+                      onChange={handleImageChange}
+                      style={{marginRight:'5px'}}
+                      ref={inputPhotos}
+                    />
+                    <button className="btn btn-danger d-flex" type="button">
+                      <DeleteIcon onClick={handleRemoveImage}/>
+                    </button>
+                  </div>
                 </div>
               </div>
               <button className="btn btn-primary d-flex " type="submit">
