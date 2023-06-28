@@ -1,6 +1,7 @@
 require("dotenv").config();
 const server = require("./server");
 const httpserver = require("http").createServer(server);
+const { sendMessage } = require('./controllers/messages/');
 const io = require("socket.io")(httpserver, {
   cors: {
     origin: "*",

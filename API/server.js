@@ -7,7 +7,6 @@ const villageRoutes = require('./villageRoutes');
 const http = require('http')
 const {Server} = require("socket.io")
 const cors = require('cors')
-const { sendMessage } = require('./controllers/messages/');
 
 
 
