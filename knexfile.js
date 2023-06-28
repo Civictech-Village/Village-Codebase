@@ -1,9 +1,9 @@
 require('dotenv').config();
 const path = require('path');
 
-const migrationsDirectory = path.join(__dirname, 'src', 'db', 'migrations');
+const migrationsDirectory = path.join(__dirname, 'API', 'db', 'migrations');
 const migrationsStub = path.join(__dirname, 'migration-stub.js');
-const seedsDirectory = path.join(__dirname, 'src', 'db', 'seeds');
+const seedsDirectory = path.join(__dirname, 'API', 'db', 'seeds');
 
 module.exports = {
   development: {
