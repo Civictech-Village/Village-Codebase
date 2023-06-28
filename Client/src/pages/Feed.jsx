@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import * as React from 'react';
+import OrganizationCard from '../components/OrganizationCard';
+
 import {
   createVillage,
   getAllVillages,
@@ -122,7 +125,7 @@ export default function Feed() {
         display: "flex",
         flexDirection: "column",
         height: "100%",
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "white",
         width: "100%",
         minHeight: "100vh",
         justifyContent: "space-between",
@@ -152,7 +155,7 @@ export default function Feed() {
         }}
       >
         <div className="d-flex justify-content-start w-100 px-5 mb-5">
-          <h3>Welcome {currentUser && currentUser.username}</h3>
+          <h1>Welcome {currentUser && currentUser.username}</h1>
         </div>
         <div>
           <h3>Recommended Villages</h3>
@@ -253,7 +256,166 @@ export default function Feed() {
           </div>
         )}
       </div>
+      <HomePage />
+
       <Footer style={{ marginTop: "100px" }} />
     </div>
   );
 }
+
+
+function HomePage() {
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const [Organizations, setOrganizations] = React.useState([]);
+  const [open, setOpen] = React.useState(true);
+  useEffect(() => {
+    const fetchOrganizations = async() => {
+     const result =  await getAllVillages()
+     setOrganizations(result)
+    } 
+    fetchOrganizations()
+  }, [open, setOpen])
+  console.log(Organizations.splice(3))
+  
+  return (
+    <div style={{ display: 'flex', padding: '2% 1%' }}>
+      <div style={{ flex: '1', marginRight: '10px', marginLeft: '20px' }}>
+        <h2 style={{ marginTop: '10%', color: 'black' }}>Most Popular Villages:</h2>
+        {Organizations.map((organization, index) => (
+          <OrganizationCard
+            key={index}
+            village={organization}
+            style={{ width: '50px' }} // Adjust the width as needed
+          />
+        ))}
+      </div>
+      <Bio />
+    </div>
+  );
+}     
+ 
+  
+  function Bio() {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative' }}>
+        <div style={{ backgroundColor: '#f7f7f8', borderRadius: '15%', marginLeft: '10%', marginRight: '10%', padding: '200px 20px 2px 40px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)', marginTop: '150px', marginBottom: '80px'}}>
+          <p style={{ marginBottom: '20%' }}>
+            We aim to serve local community members who either just wish to stay in the know about what their community is experiencing or those who want to let their fellow community members know what issues they are experiencing.
+          </p>
+          <p>Come together as a community, develop a Village</p>
+          <Link to={'/organizations'}>
+            <button style={{ marginTop: '10px', backgroundColor: '#b2f1d5', marginLeft: '30%', padding: '10px 30px', borderRadius: '25px', color: 'white', border: 'none' }}>
+              Start a Village
+            </button>
+            <p style={{ textAlign: 'center', marginTop: '5%' }}>OR</p>
+            <button style={{ marginTop: '10px', backgroundColor: '#b2f1d5', marginLeft: '30%', padding: '10px 30px', borderRadius: '25px', color: 'white', border: 'none' }}>
+              Join a Village
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+  
+  
+  
+  // function NYC() {
+  //   return ( 
+  //     <div style={}>
+  //       <img src="" alt="" />
+  //     </div>
+  //   )
+  // }
+  
+  
+  
+  
+  
+  
+  function App() {
+    const navigate = useNavigate();
+    const [posts, setPosts] = useState([]);
+    const [page, setPage] = useState(0);
+    const [hasMore, sethasMore] = useState(true);
+    const [activeTab, setActiveTab] = useState("popular");
+    const [show, setShow] = useState(false);
+    const [selectedPost, setSelectedPost] = useState(null);
+  
+    const handleClose = () => {
+      setShow(false);
+    };
+    const handleShow = (post) => {
+      setSelectedPost(post);
+  
+      setShow(true);
+    };
+  
+    const [loading, setLoading] = useState(false);
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  
+    useEffect(() => {
+      if (!currentUser) {
+        // Redirect to the landing page after a delay
+        const redirectTimer = setTimeout(() => {
+          navigate("/landingpage");
+        }, 500);
+  
+        return () => {
+          // Clear the timer if the component is unmounted
+          clearTimeout(redirectTimer);
+        };
+      }
+    }, [currentUser, navigate]);
+  
+    useEffect(() => {
+      const doFetch = async () => {
+        const posts = await fetchHandler(`/api/popularPost?page=${page}&limit=5`);
+        if (posts[0]) {
+          setPosts(posts[0]);
+          setPage(page + 5);
+        }
+      };
+      doFetch();
+    }, []);
+  
+    const fetchMoreData = async () => {
+      setLoading(true);
+      const updated = await fetchHandler(`/api/popularPost?page=${page}&limit=5`);
+      if (updated[0]) {
+        if (updated[0].length === 0) {
+          sethasMore(false);
+          setLoading(false);
+          return;
+        }
+        setPosts((prevPosts) => [...prevPosts, ...updated[0]]);
+        setPage((prevPage) => prevPage + 5);
+        setLoading(false);
+      }
+    };
+  
+    const handleMyVillage = async () => {
+      const posts = await fetchHandler("/api/myVillagePost");
+      if (posts[0]) {
+        setPosts(posts[0]);
+      }
+      console.log(posts);
+      setActiveTab("myVillage");
+    };
+  
+    const handlePopular = async () => {
+      const posts = await fetchHandler(`/api/popularPost?page=${0}&limit=5`);
+      if (posts[0]) {
+        setPosts(posts[0]);
+      }
+      setActiveTab("popular");
+    };
+  
+    return (
+      <div style={{backgroundColor:'#b2f1d5', backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", objectFit: 'fill', backdropFilter: 'blur(10px)', height:"", display:'flex', alignItems:'center', flexDirection:'column',justifyContent:'center'}}>
+        <HomePage />
+        {/* <Bio /> */}
+      </div>
+    );
+  }
+  

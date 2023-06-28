@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
+import ReactMapGL, { Marker } from "react-map-gl";
 import { getAllVillages } from "../adapters/organizations-adapter";
 import config from "../../config";
 import { Link } from "react-router-dom";
@@ -18,16 +19,6 @@ const MapContainer = () => {
     };
     fetchOrganizations();
   }, []);
-
-  const [viewport, setViewport] = useState({
-    latitude: 40.7128,
-    longitude: -74.006,
-    width: "100%",
-    height: "100%",
-    zoom: 10,
-  });                // <Popover title={village.name}>
-                    //     <img style={{ width: "10rem", Margin:'3rem'}}src={village.image}/>
-                    // </Popover>
   
   return (
     <div style={{ width: "90vw", height: "100vh" }}>

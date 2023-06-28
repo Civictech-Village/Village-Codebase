@@ -63,6 +63,7 @@ export default function RemadePosts({ elem, handleShow }) {
         padding: "2rem",
         border: "0.1rem solid black",
         borderRadius: "1rem",
+        marginTop:'15px'
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between" }}>
