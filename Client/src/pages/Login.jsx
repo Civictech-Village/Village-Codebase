@@ -22,7 +22,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-
+import loginBackground from '../assets/loginBackground.jpg'
 export default function LoginPage() {
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState("");
@@ -109,17 +109,28 @@ console.log(currentUser)
     <>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={6}
+          sx={{
+            backgroundImage: `url(${loginBackground})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
         <Grid
           item
           xs={12}
-          sm={12}
-          md={12}
+          sm={8}
+          md={6}
           component={Paper}
           elevation={6}
           square
           sx={{
-            backgroundColor: "#5DBB63",
+            backgroundColor: "#b2f1d5",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -145,7 +156,8 @@ console.log(currentUser)
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{ mt: 1, width: "90%" }}
+              sx={{ mt: 1, width: "90%", backgroundColor:'white', borderRadius:'20px' }}
+              
             >
               <Tooltip
                 PopperProps={{
@@ -157,6 +169,7 @@ console.log(currentUser)
                 disableTouchListener
                 arrow
                 title={errorText}
+
               >
                 <TextField
                   margin="normal"
@@ -234,3 +247,5 @@ console.log(currentUser)
     </>
   );
 }
+
+

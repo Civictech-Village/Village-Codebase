@@ -23,18 +23,18 @@ export default function SideBar() {
           <h1 style={{ textAlign: "center",}}>Village</h1>
         </div>
         <ul className="menu" style={{ marginTop: "2.5em", borderTop: "1px solid" }}>
-          <li className="sideBarItem">
-            <HomeIcon />
-              <NavLink
-                to="/"
-                style={{
-                  marginLeft: "7px",
-                  textAlign: "center",
-                  fontSize: "larger",
-                }}
-              >
-                Home
-              </NavLink>
+        <li className="sideBarItem">
+          <HomeIcon />
+            <NavLink
+              to="/"
+              style={{
+                marginLeft: "7px",
+                textAlign: "center",
+                fontSize: "larger",
+              }}
+            >
+              Home
+            </NavLink>
           </li>
           <li className="sideBarItem">
             <img style={{ width: "24px", height: "24px" }} src={Houses}></img>
@@ -49,19 +49,7 @@ export default function SideBar() {
               Villages
             </NavLink>
           </li>
-          <li className="sideBarItem">
-            <FeedIcon />
-            <NavLink
-              to="/feed"
-              style={{
-                marginLeft: "7px",
-                textAlign: "center",
-                fontSize: "larger",
-              }}
-            >
-              Feed
-            </NavLink>
-          </li>
+
           <li className="sideBarItem">
             <MapIcon />
             <NavLink

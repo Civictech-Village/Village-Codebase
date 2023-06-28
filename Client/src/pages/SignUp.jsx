@@ -19,6 +19,8 @@ import Tooltip from "@mui/material/Tooltip";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import SignUpPageTwo from "../components/SignUpPage2";
+import loginBackground from '../assets/loginBackground.jpg'
+
 // Controlling the signup form is a good idea because we want to adde (eventually)
 // more validation and provide real time feedback to the user about usernames and passwords
 export default function SignUpPage() {
@@ -256,17 +258,16 @@ export default function SignUpPage() {
     <>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-
         <Grid
           item
-          xs={12}
-          sm={12}
-          md={12}
+          xs={false}
+          sm={8}
+          md={6}
           component={Paper}
           elevation={6}
           square
           sx={{
-            backgroundColor: "#5DBB63",
+            backgroundColor: "#b2f1d5",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -353,6 +354,18 @@ export default function SignUpPage() {
             </>
           </Box>
         </Grid>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={6}
+          sx={{
+            backgroundImage: `url(${loginBackground})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
       </Grid>
     </>
   );

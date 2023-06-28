@@ -19,7 +19,6 @@ export default function IssueDropDown({
   userJoined,
 }) {
   const [posts, setPosts] = useState([]);
-  const [issueID, setIssue] = useState(id);
 
   console.log(issue, id, issue.issue_id);
   const style = {
@@ -43,13 +42,7 @@ export default function IssueDropDown({
     fetchPostByissue();
   }, [open]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    console.log(issue.issue_id, id);
-    createPost(data, issue.issue_id, Number(id));
-    handleClose();
-  };
+
 
   return (
     <div
@@ -65,39 +58,13 @@ export default function IssueDropDown({
               <button
                 className="btn btn-success"
                 onClick={(e) => {
-                  handleOpen();
+                  handleOpen(issue);
                 }}
               >
                 Create Post
               </button>
             )}
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <form className="ui form" onSubmit={handleSubmit}>
-                  <div className="" widths="equal">
-                    <div className="field ui fluid">
-                      <label></label>
-                      <input type="file" name="image" placeholder="Name" />
-                    </div>
-                    <div
-                      style={{ marginBottom: "1rem" }}
-                      className="field ui fluid"
-                    >
-                      <label>Message</label>
-                      <input type="text" name="message" placeholder="Name" />
-                    </div>
-                  </div>
-                  <button className="ui button" type="submit">
-                    Submit
-                  </button>
-                </form>
-              </Box>
-            </Modal>
+           
           </div>
           <h1
             className="switch"

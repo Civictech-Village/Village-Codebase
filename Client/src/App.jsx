@@ -41,7 +41,7 @@ export default function App() {
         <main>
           <Routes>
             <Route
-              path="/Feed"
+              path="/"
               element={
                 <>
                   <SideBar />
@@ -117,15 +117,6 @@ export default function App() {
                 <>
                   <SideBar />
                   <Map />
-                </>
-              }
-            />
-            <Route
-              path="/"
-              element={
-                <>
-                  <SideBar />
-                  <Feed />
                 </>
               }
             />
