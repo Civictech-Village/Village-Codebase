@@ -32,7 +32,7 @@ export default function LoginPage() {
   const [PasswordClass, setPasswordClass] = useState("");
 
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-
+console.log(currentUser)
   const handleTooltipOneClose = () => {
     setTooltipOne(false);
   };
