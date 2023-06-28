@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
   });
 });
 
-io.listen(8080);
+io.listen(3000);
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
