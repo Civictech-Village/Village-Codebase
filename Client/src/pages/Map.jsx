@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
-import ReactMapGL, { Marker } from "react-map-gl";
 import { getAllVillages } from "../adapters/organizations-adapter";
 import config from "../../config";
 import { Link } from "react-router-dom";
