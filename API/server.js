@@ -23,8 +23,10 @@ cloudinary.config({
 const app = express();
 const io = new Server({
   cors: {
-    origin: '*',
+    origin: 'https://village-codebase.onrender.com',
   },
+  methods: ["GET", "POST"],
+  credentials:true
 });
 io.on('connection', (socket) => {
   console.log('A user has connected');
@@ -51,14 +53,12 @@ io.on('connection', (socket) => {
     // io.emit("chat message", msg); // send the message only to clients in the same chat room
     io.to(id).emit("chat message", msg)
     // io.emit("chat message", msg)
-    console.log(msg)
-    if(msg.id){
-      const result = await sendMessage(msg.message, msg.id, id, msg.profilePic, msg.username);
+
+    if(msg.userId){
+      const result = await sendMessage(msg.message, msg.userId, id, msg.profilePic, msg.username);
     }
   });
 });
-
-io.listen(3000);
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
