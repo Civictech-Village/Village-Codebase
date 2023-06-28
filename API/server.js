@@ -7,7 +7,6 @@ const villageRoutes = require('./villageRoutes');
 const http = require('http')
 const {Server} = require("socket.io")
 const cors = require('cors')
-const { sendMessage } = require('./controllers/messages/');
 
 
 
@@ -21,44 +20,7 @@ cloudinary.config({
 });
 
 const app = express();
-const io = new Server({
-  cors: {
-    origin: '*',
-  },
-});
-io.on('connection', (socket) => {
-  console.log('A user has connected');
 
-  socket.on('disconnect', () => {
-    console.log('A user has disconnected');
-  });
-
-  socket.on('send_message', (data) => {
-    console.log(data)
-    socket.emit("received", data)
-  })
-
-  socket.on("joinRoom", (room) => {
-    socket.join(room);
-  });
-
-  // Handle other socket events and logic here
-
-  socket.on("chat message", async (msg, id) => {
-    console.log(`Received message: ${msg}`, id);
-    const roomId = msg;
-    console.log(msg)
-    // io.emit("chat message", msg); // send the message only to clients in the same chat room
-    io.to(id).emit("chat message", msg)
-    // io.emit("chat message", msg)
-    console.log(msg)
-    if(msg.id){
-      const result = await sendMessage(msg.message, msg.id, id, msg.profilePic, msg.username);
-    }
-  });
-});
-
-io.listen(3000);
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

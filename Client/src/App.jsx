@@ -138,6 +138,22 @@ export default function App() {
                 </>
               }
             />
+            <Route
+              path="/termsandconditions"
+              element={
+                <>
+                  <TermsAndConditions />
+                </>
+              }
+            />
+            <Route
+              path="/privacypolicy"
+              element={
+                <>
+                  <PrivacyPolicy />
+                </>
+              }
+            />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

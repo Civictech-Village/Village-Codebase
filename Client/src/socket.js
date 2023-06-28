@@ -1,5 +1,6 @@
 import { io } from 'socket.io-client';
 
-const socket = io("https://village-codebase.onrender.com:3000");
-//http://localhost:3000
+const socket = io.connect();
+console.log(socket, io.connect())
+//https://village-codebase.onrender.com/
 export default socket
