@@ -5,7 +5,12 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import CurrentUserContext from "../contexts/current-user-context";
-import { deleteOptions, fetchHandler, getPostOptions, serializeFormData } from "../utils";
+import {
+  deleteOptions,
+  fetchHandler,
+  getPostOptions,
+  serializeFormData,
+} from "../utils";
 import { createIssue } from "../adapters/issue-adapter";
 import { useParams } from "react-router-dom";
 
@@ -27,6 +32,8 @@ export default function VillageHead({
   handler,
   userJoined,
   leaveHandle,
+  setFetched,
+  fetched
 }) {
   const { id } = useParams();
   const { currentUser } = React.useContext(CurrentUserContext);
@@ -38,6 +45,7 @@ export default function VillageHead({
     const data = new FormData(e.target);
     const postObject = Object.fromEntries(data.entries());
     createIssue(postObject, id);
+    setFetched(!fetched)
     handleClose();
   };
 
@@ -49,10 +57,10 @@ export default function VillageHead({
           backgroundImage: `url(${village.image})`,
           width: "100%",
           borderRadius: "6px",
-          borderBottomLeftRadius:'0px',
-          borderBottomRightRadius:'0px',
+          borderBottomLeftRadius: "0px",
+          borderBottomRightRadius: "0px",
           height: "300px",
-          maxHeight:'300px',
+          maxHeight: "300px",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
@@ -72,13 +80,15 @@ export default function VillageHead({
           <h5>{village.location}</h5>
         </div>
         <div style={{ padding: "30px" }}>
-          {userJoined && <button
-            className="btn btn-success"
-            onClick={handleOpen}
-            style={{ marginRight: "1rem" }}
-          >
-            New Issue
-          </button>}
+          {userJoined && (
+            <button
+              className="btn btn-success"
+              onClick={handleOpen}
+              style={{ marginRight: "1rem" }}
+            >
+              New Issue
+            </button>
+          )}
           {!userJoined ? (
             <button className="btn btn-success" style={{}} onClick={handler}>
               Follow
@@ -100,19 +110,25 @@ export default function VillageHead({
           <form className="ui form" onSubmit={handleIssueSubmit}>
             <div className="four fields" widths="equal">
               <div className="field ui fluid">
-                <label>Issue Name</label>
-                <input type="text" name="name" placeholder="Name" />
+                <label className="form-label">Issue Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  className="form-control"
+                />
               </div>
               <div style={{ marginBottom: "1rem" }} className="field ui fluid">
-                <label>Issue Desc</label>
+                <label className="form-label">Issue Desc</label>
                 <input
                   type="text"
                   name="issue_desc"
                   placeholder="Description"
+                  className="form-control"
                 />
               </div>
             </div>
-            <button className="ui button" type="submit">
+            <button className="btn btn-success mt-3" type="submit">
               Submit
             </button>
           </form>

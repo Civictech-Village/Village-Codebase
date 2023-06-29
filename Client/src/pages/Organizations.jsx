@@ -17,6 +17,7 @@ import Footer from "../components/LandingPage/Footer";
 import ReactPaginate from "react-paginate";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 const style = {
   position: "absolute",
   top: "50%",
@@ -40,6 +41,7 @@ export default function HomePage() {
     setSelectedImage(URL.createObjectURL(file));
   };
   const inputPhotos = useRef();
+  const navigate = useNavigate()
 
   const handleRemoveImage = () => {
     setSelectedImage(null);
@@ -77,8 +79,10 @@ export default function HomePage() {
     data.append("user_id", String(currentUser.id));
     data.append("lat", lat);
     data.append("lon", lon);
-    createVillage(data);
+    const responseData = await createVillage(data);
+    console.log(responseData)
     handleClose();
+    navigate('/organizations/' + responseData[0].village.village_id)
   };
 
   function Items({ currentItems }) {
