@@ -12,8 +12,7 @@ Create a .env file in the root directory to the following enviorment variables
 - SESSION_SECRET = A generated key used for protecting your user cookies
 
 ```
-In addition create a cloudinary account and add the following varaibable to the env file. All of the information can be found on your cloudinary dash board as soon as you log in.
-
+In addition create a cloudinary account and add the following variables to the env file. All of the following information can be found on your cloudinary dash board as soon as you log in.
 ```
 - CLOUDINARY_CLOUD_NAME=""
 - CLOUDINARY_API_KEY=""
@@ -29,7 +28,6 @@ export default config;
 
 ```
 and run these commands from within the root directory:
-
 ```sh
 npm run kickstart
 
