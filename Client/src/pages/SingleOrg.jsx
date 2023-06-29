@@ -104,7 +104,14 @@ export default function SingleOrg() {
   }, []);
 
   return (
-    <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
       <div
         style={{
           width: "100%",
@@ -117,35 +124,46 @@ export default function SingleOrg() {
         <SearchBar />
         <Avatar />
       </div>
-      <div style={{borderRadius:'10px', width: "80%",
- }}>
+      <div style={{ borderRadius: "10px", width: "80%" }}>
         <CommentModal
           isOpen={show}
           closeModal={handleClose}
           post={selectedPost}
         />
-        <div style={{width:'100%'}}>
-        <VillageHead
-          village={village}
-          members={members.length}
-          handler={handleJoin}
-          leaveHandle={handleLeave}
-          userJoined={userJoined}
-          userType={userType}
-        ></VillageHead>
-        <div style={{ padding: "20px", display: "flex" }}>
-          <VillageBody
+        <div style={{ width: "100%" }}>
+          <VillageHead
+            village={village}
+            members={members.length}
+            handler={handleJoin}
+            leaveHandle={handleLeave}
             userJoined={userJoined}
-            handleShow={handleShow}
-          ></VillageBody>
-          <VillageMembers members={members}></VillageMembers>
+            userType={userType}
+          ></VillageHead>
+          <div
+            style={{
+              padding: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ width: "50%" }}>
+                <h3 style={{ borderBottom: "0.5px solid lightgrey" }}>
+                  Issues
+                </h3>
+              </div>
+              <VillageBody
+                userJoined={userJoined}
+                handleShow={handleShow}
+              ></VillageBody>
+            </div>
+            <VillageMembers members={members}></VillageMembers>
+          </div>
         </div>
-        </div>
-
       </div>
-      <div style={{ width: "100%"}}>
-          <Footer />
-        </div>
+      <div style={{ width: "100%" }}>
+        <Footer />
+      </div>
     </div>
   );
 }

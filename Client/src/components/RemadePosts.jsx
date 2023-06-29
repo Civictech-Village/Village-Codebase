@@ -60,22 +60,22 @@ export default function RemadePosts({ elem, handleShow }) {
     <div
       id="single-post"
       style={{
-        padding: "2rem",
+        padding: "1.5rem",
         border: "0.1rem solid black",
         borderRadius: "1rem",
         marginTop:'15px',
-        transform:'scale(0.94)'
+        width:'450px'
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div id="userinfo" style={{ display: "flex" }}>
+        <div id="userinfo" style={{ display: "flex", alignItems:'flex-start', }}>
           <img
             src={elem.profile_picture ? elem.profile_picture : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"}
             alt="Pfp"
-            style={{ width: "8rem", height: "8rem", borderRadius: "50%" }}
+            style={{height:'2em', width:'2em', borderRadius: "50%", marginRight:'10px', marginTop:'15px' }}
           />
           <div>
-            <h1>{elem.username}</h1>
+            <h3>{elem.username}</h3>
             <h5>
               {" "}
               {elem.created_at
@@ -91,7 +91,7 @@ export default function RemadePosts({ elem, handleShow }) {
       <div id="post-body">
         <div style={{ margin: "1rem 0px" }}>
           <img
-            style={{ width: "100%" }}
+            style={{ width: "100%", height:'300px' }}
             src={elem.image}
             alt=""
           />

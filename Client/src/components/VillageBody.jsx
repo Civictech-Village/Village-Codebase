@@ -6,15 +6,15 @@ import { createPost } from "../adapters/post-adapter";
 import IssueDropDown from "./IssueDropDown";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-export default function VillageBody({handleShow, userJoined}) {
+export default function VillageBody({ handleShow, userJoined }) {
   const [issues, setIssues] = useState([]);
   const [open, setOpen] = useState(false);
   const [issueID, setIssue] = useState(null);
 
   const handleOpen = (issue) => {
-    console.log(issue)
+    console.log(issue);
     setOpen(true);
-    setIssue(issue)
+    setIssue(issue);
   };
   const handleClose = () => {
     setOpen(false);
@@ -57,41 +57,35 @@ export default function VillageBody({handleShow, userJoined}) {
     handleClose();
   };
   return (
-    <div
-      id="body"
-      className="bodyboxes"
-      style={{ flex: "2"}}
-    >
-       <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <form className="ui form" onSubmit={handleSubmit}>
-                  <div className="" widths="equal">
-                    <div className="field ui fluid">
-                      <label></label>
-                      <input type="file" name="image" placeholder="Name" />
-                    </div>
-                    <div
-                      style={{ marginBottom: "1rem" }}
-                      className="field ui fluid"
-                    >
-                      <label>Message</label>
-                      <input type="text" name="message" placeholder="Name" />
-                    </div>
-                  </div>
-                  <button className="ui button" type="submit">
-                    Submit
-                  </button>
-                </form>
-              </Box>
-            </Modal>
-      <div id="Issue" style={{}}>
-        {issues.map((issue, i) => {
-          console.log(issue.issue_id)
+    <div id="body" className="bodyboxes" style={{ flex: "2" }}>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <form className="ui form" onSubmit={handleSubmit}>
+            <div className="" widths="equal">
+              <div className="field ui fluid">
+                <label></label>
+                <input type="file" name="image" placeholder="Name" />
+              </div>
+              <div style={{ marginBottom: "1rem" }} className="field ui fluid">
+                <label>Message</label>
+                <input type="text" name="message" placeholder="Name" />
+              </div>
+            </div>
+            <button className="ui button" type="submit">
+              Submit
+            </button>
+          </form>
+        </Box>
+      </Modal>
+      <div id="Issue" style={{ minWidth: "100%" }}>
+        {issues.length > 0 ? issues.map((issue, i) => {
+          console.log(issue.issue_id);
 
           return (
             <IssueDropDown
@@ -108,7 +102,7 @@ export default function VillageBody({handleShow, userJoined}) {
               userJoined={userJoined}
             ></IssueDropDown>
           );
-        })}
+        }) : <h3>Sorry, There are no issues</h3>}
       </div>
     </div>
   );

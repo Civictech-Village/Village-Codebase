@@ -7,8 +7,8 @@
   font-family: "Dancing";
   src: url("./assets/fonts/DancingScript-VariableFont_wght.ttf");
 
-  font-family: 'Bangers', cursive;
-
+  font-family:"Josefin";
+  src: url("./assets//fonts/JosefinSans-VariableFont_wght.ttf")
 }
 
 * {
@@ -19,6 +19,12 @@ body {
   margin: 0;
   height: 100vh;
 }
+
+.sidebar {
+  font-family: Josefin;
+}
+
+
 main {
   background-color: #f5f5f5;
   display: flex;
