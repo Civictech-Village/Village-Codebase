@@ -63,6 +63,7 @@ In any form of change or movement, the people are the most vital piece. Any elec
 ![image](https://github.com/Civictech-Village/Village-Codebase/assets/114108138/6f578e51-1db4-4458-bc95-47bcd8b4091b)
 
 ## ERD
+![Villages_ERD drawio](https://github.com/Civictech-Village/Village-Codebase/assets/114096538/2425defd-0a07-45a8-81b9-f5c2d79ba0b1)
 
 ## Key API Endpoints
 
