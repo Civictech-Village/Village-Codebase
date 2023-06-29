@@ -6,7 +6,7 @@ import { createPost } from "../adapters/post-adapter";
 import IssueDropDown from "./IssueDropDown";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-export default function VillageBody({ handleShow, userJoined }) {
+export default function VillageBody({ handleShow, userJoined,fetched }) {
   const [issues, setIssues] = useState([]);
   const [open, setOpen] = useState(false);
   const [issueID, setIssue] = useState(null);
@@ -29,7 +29,7 @@ export default function VillageBody({ handleShow, userJoined }) {
 
   useEffect(() => {
     fetchIssues();
-  }, []);
+  }, [fetched]);
 
   const toggle = (i) => {
     if (selected === i) {
@@ -70,11 +70,11 @@ export default function VillageBody({ handleShow, userJoined }) {
             <div className="" widths="equal">
               <div className="field ui fluid">
                 <label></label>
-                <input type="file" name="image" placeholder="Name" />
+                <input type="file" name="image" placeholder="Name" className="form-control" />
               </div>
               <div style={{ marginBottom: "1rem" }} className="field ui fluid">
                 <label>Message</label>
-                <input type="text" name="message" placeholder="Name" />
+                <input type="text" name="message" className="form-control" placeholder="Name" />
               </div>
             </div>
             <button className="ui button" type="submit">

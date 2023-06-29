@@ -29,6 +29,7 @@ export default function SingleOrg() {
   const [userType, setUserType] = useState(null);
   const [show, setShow] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [fetched, setFetched] = useState(false)
 
   const handleClose = () => {
     setShow(false);
@@ -138,6 +139,8 @@ export default function SingleOrg() {
             leaveHandle={handleLeave}
             userJoined={userJoined}
             userType={userType}
+            fetched={fetched}
+            setFetched={setFetched}
           ></VillageHead>
           <div
             style={{
@@ -155,6 +158,7 @@ export default function SingleOrg() {
               <VillageBody
                 userJoined={userJoined}
                 handleShow={handleShow}
+                fetched={fetched}
               ></VillageBody>
             </div>
             <VillageMembers members={members}></VillageMembers>
