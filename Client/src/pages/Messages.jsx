@@ -1,5 +1,5 @@
 import CurrentUserContext from "../contexts/current-user-context";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
 import socket from "../socket";
@@ -14,8 +14,8 @@ export default function Message() {
   const [users, setUsers] = useState([]);
   const [messagesArr, setMessagesArr] = useState([]);
   const [roomNumber, setRoomId] = useState(null);
-  const [selectedUsername, setSelectedUsername] = useState(null)
-  const [selectedProfilePic, setSelectedProfilePic] = useState(null)
+  const [selectedUsername, setSelectedUsername] = useState(null);
+  const [selectedProfilePic, setSelectedProfilePic] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -102,7 +102,7 @@ export default function Message() {
       id: currentUser.id,
     };
     socket.emit("chat message", message, roomNumber);
-    e.target.reset()
+    e.target.reset();
   };
 
   useEffect(() => {
@@ -111,8 +111,8 @@ export default function Message() {
 
   const handleClick = (roomId, username, profilePic) => {
     // Change the link to a query parameter on click
-    setSelectedUsername(username)
-    setSelectedProfilePic(profilePic)
+    setSelectedUsername(username);
+    setSelectedProfilePic(profilePic);
     navigate(`/Messages?roomId=${roomId}`);
   };
 
@@ -148,9 +148,7 @@ export default function Message() {
             {username}
           </h5>
         </div>
-        <div style={{ width: "51px", height: "40px" }}>
-
-        </div>
+        <div style={{ width: "51px", height: "40px" }}></div>
       </div>
     );
   };
@@ -219,6 +217,34 @@ export default function Message() {
     );
   };
 
+  const container = useRef(null);
+  const Scroll = () => {
+    console.log(container);
+    if (container.current !== null) {
+      const { offsetHeight, scrollHeight, scrollTop } = container.current;
+      if (scrollHeight <= scrollTop + offsetHeight + 100) {
+        container.current?.scrollTo(0, scrollHeight);
+      }
+    }
+  };
+  useEffect(() => {
+    Scroll();
+  }, [messagesArr]);
+
+  useEffect(() => {
+    const scrollToBottomWithSmoothScroll = () => {
+      if (container.current !== null) {
+        setTimeout(() => {
+          container.current.scrollTo({
+            top: container.current.scrollHeight,
+            behavior: "smooth",
+          });
+        }, 500); // Delay of 100 milliseconds
+      }
+    };
+    scrollToBottomWithSmoothScroll();
+  }, [messagesArr]);
+
   return (
     <div style={{ width: "100%" }}>
       <div
@@ -262,13 +288,19 @@ export default function Message() {
             />
           </div>
           <div id="users" style={{ padding: "0 30px" }}>
-            {users.length > 0 ? users.map((elem) => (
-              <Users
-                id={elem.id}
-                username={elem.username}
-                profilePic={elem.profilePicture}
-              />
-            )) : <h5 style={{color:'white', textAlign:'center'}}>Click on a users profile to begin direct messaging them</h5>}
+            {users.length > 0 ? (
+              users.map((elem) => (
+                <Users
+                  id={elem.id}
+                  username={elem.username}
+                  profilePic={elem.profilePicture}
+                />
+              ))
+            ) : (
+              <h5 style={{ color: "white", textAlign: "center" }}>
+                Click on a users profile to begin direct messaging them
+              </h5>
+            )}
           </div>
         </div>
         <div
@@ -301,8 +333,11 @@ export default function Message() {
                       marginRight: "15px",
                       width: "63.6px",
                       height: "62.4px",
-                      backgroundImage:
-                        `url(${selectedProfilePic ? selectedProfilePic : 'https://cdn4.iconfinder.com/data/icons/gray-toolbar-8/512/xxx046-512.png'})`,
+                      backgroundImage: `url(${
+                        selectedProfilePic
+                          ? selectedProfilePic
+                          : "https://cdn4.iconfinder.com/data/icons/gray-toolbar-8/512/xxx046-512.png"
+                      })`,
                       backgroundSize: "cover",
                     }}
                   ></div>
@@ -352,6 +387,8 @@ export default function Message() {
                 </div>
               </div>
               <div
+                ref={container}
+                id="MessageContainer"
                 style={{
                   maxHeight: "500px",
                   overflowY: "auto",
@@ -389,6 +426,7 @@ export default function Message() {
                     display: "flex",
                     width: "100%",
                     justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
                   <input
@@ -403,13 +441,29 @@ export default function Message() {
                       color: "white",
                     }}
                   ></input>
-                  <button type="submit" className="btn btn-light">
+                  <button
+                    type="submit"
+                    className="btn btn-light"
+                    style={{ height: "fit-content", marginLeft: "2em" }}
+                  >
                     Send
                   </button>
                 </form>
               </div>{" "}
             </>
-          ) : <h5 style={{color:"white", height:'100%', alignItems:'center',justifyContent:'center', display:'flex'}}>Click on a user to the left to view your messages</h5>}
+          ) : (
+            <h5
+              style={{
+                color: "white",
+                height: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                display: "flex",
+              }}
+            >
+              Click on a user to the left to view your messages
+            </h5>
+          )}
         </div>
       </div>
     </div>
