@@ -49,7 +49,10 @@ export default function VillageHead({
           backgroundImage: `url(${village.image})`,
           width: "100%",
           borderRadius: "6px",
-          height: "500px",
+          borderBottomLeftRadius:'0px',
+          borderBottomRightRadius:'0px',
+          height: "300px",
+          maxHeight:'300px',
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}

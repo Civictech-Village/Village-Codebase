@@ -8,24 +8,25 @@ import { Link } from "react-router-dom";
 
 export default function OrganizationCard({ village }) {
   return (
-    <div style={{ borderBottom: "2px solid #E5E7EB", marginBottom: "2em" }}>
+    <div style={{ borderBottom: "2px solid #E5E7EB", marginBottom: "2em", width:'300px' }}>
       <div
         className="card mb-3"
         style={{
-          width: "760px",
+          display:'flex',
+          alignItems:'center'
         }}
       >
-        <div className="row g-0">
-          <div className="col-md-4">
+        <div className="" style={{width:'100%'}}>
+          <div className="">
             <img
               src={village.image}
               style={{
-                width: "300px",
+                width: "100%",
                 height: "200px",
                 backgroundSize: "cover",
                 objectFit: "cover",
               }}
-              className="img-fluid rounded-start"
+              className="img-fluid rounded-top"
               alt="..."
             />
           </div>

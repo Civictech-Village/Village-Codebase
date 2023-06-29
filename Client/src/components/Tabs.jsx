@@ -15,7 +15,7 @@ export default function Tabs({ handlePopular, handleMyVillage, activeTab }) {
       <ul
         className="nav nav-tabs"
         style={{
-          width: "75%",
+          width: "60%",
           display: "flex",
           justifyContent: "space-between",
         }}
