@@ -50,3 +50,10 @@ In any form of change or movement, the people are the most vital piece. Any elec
 ## ERD
 
 ## Key API Endpoints
+
+| Endpoint      | Description | Example     |
+| :---        |    :----:   |          ---: |
+| `/villages`   | Allows you to see all communities on our website | `GET /villages`     |
+| `/issues/:vilageid`   | Allows you to see all issues that a community has        | `GET /issues/:vilageid` |
+| `/issues/:vilageid`     | Allows you to see all posts about an issue       |`GET /issues/:vilageid`  |
+
