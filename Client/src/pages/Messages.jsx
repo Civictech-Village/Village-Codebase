@@ -102,6 +102,7 @@ export default function Message() {
       id: currentUser.id,
     };
     socket.emit("chat message", message, roomNumber);
+    e.target.reset()
   };
 
   useEffect(() => {

@@ -100,7 +100,7 @@ console.log(currentUser)
     }
     setCurrentUser(user);
     console.log(user);
-    navigate(`/users/${user.id}`);
+    navigate(`/`);
   };
 
   if (currentUser) return <Navigate to="/" />;

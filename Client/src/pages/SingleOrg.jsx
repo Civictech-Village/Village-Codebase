@@ -104,7 +104,7 @@ export default function SingleOrg() {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "#f7f7f8", width: "100%" }}>
+    <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
       <div
         style={{
           width: "100%",
@@ -117,29 +117,35 @@ export default function SingleOrg() {
         <SearchBar />
         <Avatar />
       </div>
-      <CommentModal
-        isOpen={show}
-        closeModal={handleClose}
-        post={selectedPost}
-      />
-      <VillageHead
-        village={village}
-        members={members.length}
-        handler={handleJoin}
-        leaveHandle={handleLeave}
-        userJoined={userJoined}
-        userType={userType}
-      ></VillageHead>
-      <div style={{ padding: "20px", display: "flex" }}>
-        <VillageBody
+      <div style={{borderRadius:'10px', width: "80%",
+ }}>
+        <CommentModal
+          isOpen={show}
+          closeModal={handleClose}
+          post={selectedPost}
+        />
+        <div style={{width:'100%'}}>
+        <VillageHead
+          village={village}
+          members={members.length}
+          handler={handleJoin}
+          leaveHandle={handleLeave}
           userJoined={userJoined}
-          handleShow={handleShow}
-        ></VillageBody>
-        <VillageMembers members={members}></VillageMembers>
+          userType={userType}
+        ></VillageHead>
+        <div style={{ padding: "20px", display: "flex" }}>
+          <VillageBody
+            userJoined={userJoined}
+            handleShow={handleShow}
+          ></VillageBody>
+          <VillageMembers members={members}></VillageMembers>
+        </div>
+        </div>
+
       </div>
-      <div style={{ width: "100%", marginTop: "20px" }}>
-        <Footer />
-      </div>
+      <div style={{ width: "100%"}}>
+          <Footer />
+        </div>
     </div>
   );
 }

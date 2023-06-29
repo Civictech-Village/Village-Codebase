@@ -1,15 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
 @font-face {
   font-family: "Bebas";
   src: url("./assets/fonts/BebasNeue-Regular.ttf");
 
   font-family: "Dancing";
   src: url("./assets/fonts/DancingScript-VariableFont_wght.ttf");
+
+  font-family: 'Bangers', cursive;
+
 }
+
 * {
   box-sizing: border-box;
 }
 body {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Bangers;
   margin: 0;
   height: 100vh;
 }
@@ -381,7 +387,7 @@ ul.react-paginate {
 ul.react-paginate li a {
   border-radius: 7px;
   padding: 0.1rem 1rem;
-  border: gray 1px solid;
+  border: lightgray 1px solid;
   cursor: pointer;
 }
 ul.react-paginate li.previous a,
@@ -392,9 +398,9 @@ ul.react-paginate li.break a {
   font-size: 30px;
 }
 ul.react-paginate li.selected a {
-  background-color: #0366d6;
+  background-color: #b2f1d5;
   border-color: transparent;
-  color: white;
+  color: black;
   min-width: 32px;
 }
 ul.react-paginate li.disabled a {

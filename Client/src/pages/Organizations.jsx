@@ -15,7 +15,7 @@ import SearchBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
 import Footer from "../components/LandingPage/Footer";
 import ReactPaginate from "react-paginate";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useRef } from "react";
 const style = {
   position: "absolute",
@@ -39,11 +39,11 @@ export default function HomePage() {
     const file = event.target.files[0];
     setSelectedImage(URL.createObjectURL(file));
   };
-  const inputPhotos = useRef()
+  const inputPhotos = useRef();
 
   const handleRemoveImage = () => {
     setSelectedImage(null);
-    inputPhotos.current.value = ""
+    inputPhotos.current.value = "";
   };
 
   const { currentUser } = React.useContext(CurrentUserContext);
@@ -64,7 +64,6 @@ export default function HomePage() {
     };
     fetchOrganizations();
   }, [open]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -118,16 +117,18 @@ export default function HomePage() {
     return (
       <>
         <Items currentItems={currentItems} />
-        <ReactPaginate
-          className="react-paginate"
-          breakLabel="..."
-          nextLabel=">"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={pageCount}
-          previousLabel="<"
-          renderOnZeroPageCount={null}
-        />
+        <div style={{position:'absolute', bottom:'3em', width:'100%'}}>
+          <ReactPaginate
+            className="react-paginate"
+            breakLabel="..."
+            nextLabel=">"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="<"
+            renderOnZeroPageCount={null}
+          />
+        </div>
       </>
     );
   }
@@ -167,9 +168,9 @@ export default function HomePage() {
           height: "100%",
         }}
       >
-        <Button variant="contained" onClick={handleOpen}>
+        <button className="btn btn-success" onClick={handleOpen}>
           Create Villages
-        </Button>
+        </button>
         <Modal
           open={!open}
           onClose={handleClose}
@@ -205,7 +206,7 @@ export default function HomePage() {
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <label className="form-label">Image URL</label>
                     {selectedImage ? (
-                      <div style={{ height: "100%", maxheight:'304px' }}>
+                      <div style={{ height: "100%", maxheight: "304px" }}>
                         <div
                           style={{
                             width: "100%",
@@ -229,18 +230,18 @@ export default function HomePage() {
                       <img src="https://uploader-assets.s3.ap-south-1.amazonaws.com/codepen-default-placeholder.png" />
                     )}
                   </div>
-                  <div style={{display:'flex', width:'100%'}}>
+                  <div style={{ display: "flex", width: "100%" }}>
                     <input
                       className="form-control"
                       type="file"
                       name="image"
                       placeholder="Image"
                       onChange={handleImageChange}
-                      style={{marginRight:'5px'}}
+                      style={{ marginRight: "5px" }}
                       ref={inputPhotos}
                     />
                     <button className="btn btn-danger d-flex" type="button">
-                      <DeleteIcon onClick={handleRemoveImage}/>
+                      <DeleteIcon onClick={handleRemoveImage} />
                     </button>
                   </div>
                 </div>
@@ -251,8 +252,19 @@ export default function HomePage() {
             </form>
           </Box>
         </Modal>
-        <div id="org-gallery" style={{ height: "100%", padding: "100px" }}>
-          <PaginatedItems itemsPerPage={4} />,
+        <div
+          id="org-gallery"
+          style={{
+            height: "100%",
+            padding: "100px",
+            width: "100%",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            justifyItems: "center",
+            position:'relative'
+          }}
+        >
+          <PaginatedItems itemsPerPage={4} />
         </div>
       </div>
       <div style={{ width: "100%" }}>

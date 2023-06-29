@@ -260,7 +260,7 @@ export default function SignUpPage() {
         <CssBaseline />
         <Grid
           item
-          xs={false}
+          xs={12}
           sm={8}
           md={6}
           component={Paper}
@@ -294,7 +294,7 @@ export default function SignUpPage() {
                 component="form"
                 noValidate
                 onSubmit={handleSubmit}
-                sx={{ mt: 1, width: "90%" }}
+                sx={{ mt: 1, width: "100%", backgroundColor:'white', borderRadius:'20px' }}
               >
                 {renderStep()}
                 <div
@@ -309,7 +309,7 @@ export default function SignUpPage() {
                       fullWidth
                       onClick={handleNext}
                       variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
+                      sx={{ mt: 3, mb: 1 }}
                       disabled={formValidation ? false : true}
                     >
                       Next
@@ -321,7 +321,7 @@ export default function SignUpPage() {
                       disabled={currentStep === 1}
                       variant="contained"
                       color="error"
-                      sx={{ mt: 3, mb: 2 }}
+                      sx={{ mt: 3, mb: 1 }}
                     >
                       Previous
                     </Button>

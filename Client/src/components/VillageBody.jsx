@@ -60,7 +60,7 @@ export default function VillageBody({handleShow, userJoined}) {
     <div
       id="body"
       className="bodyboxes"
-      style={{ flex: "2", margin: "0px 2rem", padding: "0.5rem" }}
+      style={{ flex: "2"}}
     >
        <Modal
               open={open}

@@ -47,7 +47,7 @@ export default function IssueDropDown({
   return (
     <div
       className="item"
-      style={{ backgroundColor: "white", borderRadius: "1rem" }}
+      style={{ backgroundColor: "white", borderRadius: "1rem", width:'90%' }}
       key={i}
     >
       <div className="title">
