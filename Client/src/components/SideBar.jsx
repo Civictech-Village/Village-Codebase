@@ -11,18 +11,26 @@ import MapIcon from '@mui/icons-material/Map';
 import { NavLink } from "react-router-dom";
 import FeedIcon from '@mui/icons-material/Feed';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+
 export default function SideBar() {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+
+  let activeStyle = {
+    textDecoration: "underline",
+  };
+
+  let activeClassName = "underline";
+
   return (
     <div
       className="sidebar"
       style={{ display: "flex", alignItems: "flex-start" }}
     >
-      <StickyBox>
+      <StickyBox >
         <div style={{ marginTop: "20px" }}>
-          <h1 style={{ textAlign: "center",}}>Village</h1>
+          <h1 className="sideBarTitle" style={{ textAlign: "center",}}>Village</h1>
         </div>
-        <ul className="menu" style={{ marginTop: "2.5em", borderTop: "1px solid" }}>
+        <ul className="menu" style={{ marginTop: "1.5em", borderTop: "1px solid" }}>
         <li className="sideBarItem">
           <HomeIcon />
             <NavLink

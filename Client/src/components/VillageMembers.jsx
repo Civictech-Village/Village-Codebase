@@ -6,11 +6,13 @@ export default function VillageMembers({ members }) {
         padding: "20px",
         backgroundColor: "white",
         borderRadius: "1rem",
-        height:'100%'
+        height:'100%',
+        marginTop:'50px',
+        minWidth:'300px'
       }}
       id="members"
     >
-      <div style={{borderBottom:'1px solid black', marginBottom:'2em'}}>
+      <div style={{borderBottom:'1px solid black', marginBottom:'2em', textAlign:'center'}}>
         <h1>Members</h1>
       </div>
       <div>

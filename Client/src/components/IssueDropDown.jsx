@@ -47,7 +47,7 @@ export default function IssueDropDown({
   return (
     <div
       className="item"
-      style={{ backgroundColor: "white", borderRadius: "1rem", width:'90%' }}
+      style={{ backgroundColor: "white", borderRadius: "1rem", width:'80%' }}
       key={i}
     >
       <div className="title">
@@ -75,7 +75,7 @@ export default function IssueDropDown({
           </h1>
         </div>
       </div>
-      <div className={selected === i ? "contentshow" : "content"}>
+      <div className={selected === i ? "contentshow" : "content"} style={{display:'flex', alignItems:'center', flexDirection:'column'}}>
         {posts.length > 0 ? (
           posts.map((elem) => (
             <RemadePosts elem={elem} handleShow={handleShow}></RemadePosts>
