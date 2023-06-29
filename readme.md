@@ -9,10 +9,25 @@ Create a .env file in the root directory to the following enviorment variables
 - PG_USER = Your postgresql username
 - PG_PASS = Your postgresql password
 - PG_DB = = Your postgresql Database name
-
 - SESSION_SECRET = A generated key used for protecting your user cookies
-```
 
+```
+In addition create a cloudinary account and add the following varaibable to the env file. All of the information can be found on your cloudinary dash board as soon as you log in.
+
+```
+- CLOUDINARY_CLOUD_NAME=""
+- CLOUDINARY_API_KEY=""
+- CLOUDINARY_API_SECRET=""
+- CLOUDINARY_URL=""
+- SESSION_SECRET=''
+```
+Next, sign up for a map box account and create a file inside the client folder called `config.js` and fill out the mapboxAccessToken variable, then export it like below.
+```
+const config = {  mapboxAccessToken: "YOUR ACCESS TOKEN" };
+
+export default config;
+
+```
 and run these commands from within the root directory:
 
 ```sh
@@ -22,6 +37,8 @@ cd ./Client
 
 npm i
 ```
+
+All set! ;)
 
 ## Mission Statement:
 
